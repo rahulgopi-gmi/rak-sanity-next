@@ -1,0 +1,41 @@
+<svg width="390" height="694" viewBox="0 0 390 694" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_657_1178)">
+<rect width="390" height="694" fill="black"/>
+<g opacity="0.3" filter="url(#filter0_f_657_1178)">
+<circle cx="341.5" cy="330.5" r="313.5" fill="url(#paint0_radial_657_1178)"/>
+</g>
+<g style="mix-blend-mode:overlay" opacity="0.5">
+<line x1="29.1738" y1="-32" x2="29.1738" y2="694.447" stroke="white"/>
+<line x1="101.768" y1="-32" x2="101.768" y2="694.447" stroke="white"/>
+<line x1="174.361" y1="-32" x2="174.361" y2="694.447" stroke="white"/>
+<line x1="246.955" y1="-32" x2="246.955" y2="694.447" stroke="white"/>
+<line x1="319.548" y1="-32" x2="319.548" y2="694.447" stroke="white"/>
+<line x1="468.837" y1="41.0938" x2="-411.999" y2="41.0937" stroke="white"/>
+<line x1="468.837" y1="113.687" x2="-411.999" y2="113.687" stroke="white"/>
+<line x1="468.837" y1="186.281" x2="-411.999" y2="186.281" stroke="white"/>
+<line x1="468.837" y1="258.874" x2="-411.999" y2="258.874" stroke="white"/>
+<line x1="468.837" y1="331.468" x2="-411.999" y2="331.468" stroke="white"/>
+<line x1="468.837" y1="404.062" x2="-411.999" y2="404.061" stroke="white"/>
+<line x1="468.837" y1="476.655" x2="-411.999" y2="476.655" stroke="white"/>
+<line x1="468.837" y1="549.249" x2="-411.999" y2="549.249" stroke="white"/>
+<line x1="468.837" y1="621.842" x2="-411.999" y2="621.842" stroke="white"/>
+<line x1="468.837" y1="694.436" x2="-411.999" y2="694.436" stroke="white"/>
+<rect x="173.861" y="404.073" width="77.7058" height="72.5936" fill="white"/>
+<rect x="246.454" y="113.187" width="77.7058" height="72.5936" fill="white"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_657_1178" x="-25" y="-36" width="733" height="733" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="26.5" result="effect1_foregroundBlur_657_1178"/>
+</filter>
+<radialGradient id="paint0_radial_657_1178" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(341.5 330.5) rotate(90) scale(313.5)">
+<stop stop-color="#5FC2D5"/>
+<stop offset="1" stop-color="#5FC2D5" stop-opacity="0"/>
+</radialGradient>
+<clipPath id="clip0_657_1178">
+<rect width="390" height="694" fill="white"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,0 +1,51 @@
+<svg width="1440" height="1212" viewBox="0 0 1440 1212" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_508_2952" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1440" height="1212">
+<rect width="1440" height="1212" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_508_2952)">
+<g opacity="0.3" filter="url(#filter0_f_508_2952)">
+<circle cx="1329.5" cy="548.5" r="635.5" fill="url(#paint0_radial_508_2952)"/>
+</g>
+<g style="mix-blend-mode:overlay" opacity="0.5">
+<line x1="102.856" y1="42" x2="102.856" y2="1298.06" stroke="white"/>
+<line x1="228.373" y1="42" x2="228.373" y2="1298.06" stroke="white"/>
+<line x1="353.891" y1="42" x2="353.891" y2="1298.06" stroke="white"/>
+<line x1="479.408" y1="42" x2="479.408" y2="1298.06" stroke="white"/>
+<line x1="604.925" y1="42" x2="604.925" y2="1298.06" stroke="white"/>
+<line x1="730.441" y1="42" x2="730.441" y2="1298.06" stroke="white"/>
+<line x1="855.959" y1="42" x2="855.959" y2="1298.06" stroke="white"/>
+<line x1="981.477" y1="42" x2="981.477" y2="1298.06" stroke="white"/>
+<line x1="1106.99" y1="42" x2="1106.99" y2="1298.06" stroke="white"/>
+<line x1="1232.51" y1="42" x2="1232.51" y2="1298.06" stroke="white"/>
+<line x1="1358.03" y1="42" x2="1358.03" y2="1298.06" stroke="white"/>
+<line x1="1491" y1="42.5" x2="-31.9998" y2="42.4999" stroke="white"/>
+<line x1="1491" y1="168.017" x2="-31.9998" y2="168.017" stroke="white"/>
+<line x1="1491" y1="293.534" x2="-31.9998" y2="293.534" stroke="white"/>
+<line x1="1491" y1="419.051" x2="-31.9998" y2="419.051" stroke="white"/>
+<line x1="1491" y1="544.568" x2="-31.9998" y2="544.568" stroke="white"/>
+<line x1="1491" y1="670.086" x2="-31.9998" y2="670.086" stroke="white"/>
+<line x1="1491" y1="795.603" x2="-31.9998" y2="795.602" stroke="white"/>
+<line x1="1491" y1="921.12" x2="-31.9998" y2="921.12" stroke="white"/>
+<line x1="1491" y1="1046.64" x2="-31.9998" y2="1046.64" stroke="white"/>
+<line x1="1491" y1="1172.15" x2="-31.9998" y2="1172.15" stroke="white"/>
+<rect x="-32" y="293.034" width="134.356" height="125.517" fill="white"/>
+<rect x="227.873" y="167.517" width="134.356" height="125.517" fill="white"/>
+<rect x="353.391" y="670.469" width="134.356" height="125.517" fill="white"/>
+<rect x="980.976" y="795.987" width="134.356" height="125.517" fill="white"/>
+<rect x="1356.64" y="418.551" width="134.356" height="125.517" fill="white"/>
+<rect x="1106.49" y="293.034" width="134.356" height="125.517" fill="white"/>
+<rect x="102.356" y="920.62" width="134.356" height="125.517" fill="white"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_508_2952" x="641" y="-140" width="1377" height="1377" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="26.5" result="effect1_foregroundBlur_508_2952"/>
+</filter>
+<radialGradient id="paint0_radial_508_2952" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1329.5 548.5) rotate(90) scale(635.5)">
+<stop stop-color="#5FC2D5"/>
+<stop offset="1" stop-color="#5FC2D5" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

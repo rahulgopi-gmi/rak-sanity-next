@@ -1,0 +1,267 @@
+"use client";
+
+import { ArrowDown, ArrowUp, RotateCw, SearchIcon } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
+import { Button } from "../../ui/button";
+import { useState } from "react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
+import { Input } from "../../ui/input";
+import { ActivitiesTabProps, ActivitiesMainType } from "@/features/application/types/sanity";
+import Pagination from "@/components/ui/pagination";
+import Modal from "@/components/ui/modal";
+
+const PAGE_SIZE = 10; // Number of rows per page
+
+export default function ActivitiesTab({ keywords, activities }: ActivitiesTabProps) {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [sortField, setSortField] = useState<keyof ActivitiesMainType | null>(null);
+    const [sortDirection, setSortDirection] = useState<"asc" | "desc" | null>(null);
+    const [selectedActivity, setSelectedActivity] = useState<ActivitiesMainType | null>(null);
+
+    const standardActivities = activities.standard ?? [];
+    const premiumActivities = activities.premium ?? [];
+    const customActivities = activities.custom ?? [];
+    
+    /** --------------- GET ACTIVITIES BY TAB --------------- */
+    const getActivitiesByTab = (tab: string): ActivitiesMainType[] => {
+        switch (tab.toLowerCase()) {
+            case "standard":
+                return standardActivities;
+            case "premium":
+                return premiumActivities;
+            case "custom":
+                return customActivities;
+            default:
+                return [];
+        }
+    };
+
+    /** --------------- SEARCH --------------- */
+    const getFilteredActivities = (tab: string) => {
+        const allActivities = getActivitiesByTab(tab);
+        if (!searchTerm) return allActivities;
+
+        const search = searchTerm.toLowerCase();
+        return allActivities.filter((activity) =>
+            activity.name.toLowerCase().includes(search) ||
+            activity.code.toLowerCase().includes(search) ||
+            activity.group.toLowerCase().includes(search) ||
+            activity.description.toLowerCase().includes(search)
+        );
+    };
+
+    /** --------------- SORTING --------------- */
+    const sortActivities = (tab: string) => {
+        const filtered = [...getFilteredActivities(tab)];
+
+        if (!sortField || !sortDirection) return filtered;
+
+        return filtered.sort((a, b) => {
+            const valA = a[sortField]?.toLowerCase?.() ?? "";
+            const valB = b[sortField]?.toLowerCase?.() ?? "";
+
+            if (valA < valB) return sortDirection === "asc" ? -1 : 1;
+            if (valA > valB) return sortDirection === "asc" ? 1 : -1;
+            return 0;
+        });
+    };
+
+    const handleSort = (field: keyof ActivitiesMainType) => {
+        if (sortField !== field) {
+            setSortField(field);
+            setSortDirection("asc");
+        } else {
+            if (sortDirection === "asc") setSortDirection("desc");
+            else if (sortDirection === "desc") {
+                setSortField(null);
+                setSortDirection(null);
+            } else {
+                setSortDirection("asc");
+            }
+        }
+        setCurrentPage(1);
+    };
+
+    /** --------------- PAGINATION --------------- */
+    const paginatedActivities = (tab: string) => {
+        const sorted = sortActivities(tab);
+        const start = (currentPage - 1) * PAGE_SIZE;
+        return sorted.slice(start, start + PAGE_SIZE);
+    };
+
+    const totalPages = (tab: string) => {
+        const sorted = sortActivities(tab);
+        return Math.ceil(sorted.length / PAGE_SIZE) || 1;
+    };
+
+    const handleReset = () => {
+        setSearchTerm("");
+        setCurrentPage(1);
+        setSortField(null);
+        setSortDirection(null);
+    };
+
+    /** --------------- SORT ICON COMPONENT --------------- */
+    const SortIcon = ({ field }: { field: keyof ActivitiesMainType }) => {
+        if (sortField !== field) return <span className="opacity-40">↕</span>;
+        if (sortDirection === "asc") return <ArrowUp size={14} />;
+        if (sortDirection === "desc") return <ArrowDown size={14} />;
+        return <span className="opacity-40">↕</span>;
+    };
+
+    return (
+        <Tabs defaultValue="standard" className="w-full">
+            <TabsList className="flex w-full h-full">
+                {keywords.map((tab) => (
+                    <TabsTrigger
+                        key={tab._key}
+                        value={tab.header.toLowerCase()}
+                        className="flex-1 h-[95px] max-md:h-full data-[state=active]:border-b-0! border-b! border-[rgba(255,255,255,0.18)]! flex flex-col text-left whitespace-normal p-4 group"
+                    >
+                        <span className="uppercase font-sans">{tab.header}</span>
+                        <p className="invisible group-data-[state=active]:visible text-xs! leading-[normal] font-sans mt-2 font-normal text-[#D5D5D5] text-center">
+                            {tab.content}
+                        </p>
+                    </TabsTrigger>
+                ))}
+            </TabsList>
+
+            {
+                keywords.map((tab) => (
+                    <TabsContent
+                        key={tab._key}
+                        value={tab.header.toLowerCase()}
+                        className="w-full"
+                    >
+                        <div className="border pt-10 pb-10 border-[rgba(255,255,255,0.18)] border-t-0 border-b-0 w-full flex gap-10 max-md:gap-0 justify-center">
+                            <div className="w-[49.65vw] max-md:w-full max-md:px-4 relative">
+                                <Input
+                                    type="text"
+                                    placeholder="Search Activity"
+                                    value={searchTerm}
+                                    onChange={(e) => {
+                                        setSearchTerm(e.target.value);
+                                        setCurrentPage(1);
+                                    }}
+                                    className="focus:border-teal-500 h-[50px] bg-[rgba(255,255,255,0.09)] pr-12 text-white"
+                                />
+                                <SearchIcon className="text-[#A3A3A3] size-5 absolute right-4 max-md:right-8 top-6 -translate-y-1/2 pointer-events-none" />
+                            </div>
+
+                            <div className="w-fit flex justify-center">
+                                <Button type="button" variant="link" className="cursor-pointer no-underline" onClick={handleReset}>
+                                    Reset <RotateCw />
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div className="w-full -mt-2">
+                            <div className="overflow-x-auto rounded-t-[10px] border border-[rgba(255,255,255,0.18)]">
+                                <Table>
+                                    <TableHeader className="bg-[#5FC2D54D] text-sm hover:bg-[#5FC2D54D]">
+                                        <TableRow>
+                                            <TableHead 
+                                                onClick={() => handleSort("code")}
+                                                className="cursor-pointer px-4 py-4 text-gray-300 border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[10%]">
+                                                <span className="flex items-center gap-2">
+                                                    Code <SortIcon field="code" />
+                                                </span>
+                                            </TableHead>
+                                            <TableHead
+                                                onClick={() => handleSort("name")} 
+                                                className="cursor-pointer px-4 py-4 text-gray-300 border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[30%]">
+                                                    <span className="flex items-center gap-2">
+                                                        Activity Name <SortIcon field="name" />
+                                                    </span>    
+                                            </TableHead>
+                                            <TableHead 
+                                                onClick={() => handleSort("group")}
+                                                className="cursor-pointer px-4 py-4 text-gray-300 border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[30%]">
+                                                    <span className="flex items-center gap-2">
+                                                        Activity Group  <SortIcon field="group" />                                                    
+                                                    </span>
+                                            </TableHead>
+                                            <TableHead 
+                                                onClick={() => handleSort("description")}
+                                                className="cursor-pointer px-4 py-4 text-gray-300 border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[30%]">
+                                                    <span className="flex items-center gap-2">
+                                                        Description <SortIcon field="description" />
+                                                    </span>
+                                            </TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody className="text-white">
+                                        {
+                                            paginatedActivities(tab.header.toLowerCase()).length > 0 ? (
+                                            paginatedActivities(tab.header.toLowerCase()).map((activity) => (
+                                                <TableRow key={activity._id}>
+                                                    <TableCell>{activity.code}</TableCell>
+                                                    <TableCell>{activity.name}</TableCell>
+                                                    <TableCell>{activity.group}</TableCell>                                                  
+                                                    <TableCell>
+                                                        <p className="line-clamp-2 desc overflow-hidden text-ellipsis leading-[normal] font-normal text-sm! font-montserrat text-[#D5D5D5]">
+                                                            {activity.description}
+                                                        </p>
+                                                        <p 
+                                                            onClick={() => setSelectedActivity(activity)}
+                                                            className="cursor-pointer show-more-btn text-xs! mt-2 font-montserrat font-medium text-[#5FC2D5]">
+                                                                Show More
+                                                        </p>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        ) : (
+                                            <TableRow>
+                                                <TableCell colSpan={4} className="text-center py-4">
+                                                    No results.
+                                                </TableCell>
+                                            </TableRow>
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        </div>
+
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages(tab.header.toLowerCase())}
+                            onPageChange={(page) => setCurrentPage(page)}
+                        />    
+
+                        {
+                            selectedActivity && (
+                                <Modal onClose={() => setSelectedActivity(null)}>
+                                    <div className="w-full p-10">
+                                        <h2 className="text-white text-lg! font-sans font-semibold mb-4">{selectedActivity.name}</h2>                                        
+
+                                        <div className="space-y-3 text-sm text-white overflow-y-auto pr-4 max-h-[55vh] overflow-x-hidden custom-scroll">
+                                            <div className="flex justify-between border-b border-white/20 pb-2">
+                                                <span className="font-medium text-gray-300 w-full lg:w-[25%] text-sm!">Code</span>
+                                                <span className="w-full lg:w-[75%] text-sm!">{selectedActivity.code}</span>
+                                            </div>
+
+                                            <div className="flex justify-between max-lg:flex-col border-b border-white/20 pb-2">
+                                                <span className="font-medium text-gray-300 w-full lg:w-[25%] text-sm!">Activity Name</span>
+                                                <span className="w-full lg:w-[75%] text-sm!">{selectedActivity.name}</span>
+                                            </div>
+
+                                            <div className="flex justify-between  max-lg:flex-col border-b border-white/20 pb-2">
+                                                <span className="font-medium text-gray-300 w-full lg:w-[25%] text-sm!">Activity Group</span>
+                                                <span className="w-full lg:w-[75%] text-sm!">{selectedActivity.group}</span>
+                                            </div>
+
+                                            <div className="pt-2 flex  max-lg:flex-col">
+                                                <span className="block font-medium text-gray-300 mb-1 w-full lg:w-[25%]">Description</span>
+                                                <p className="text-sm! text-white leading-normal w-full lg:w-[75%] font-mono">{selectedActivity.description}</p>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                </Modal>
+                            )
+                        }                                
+                </TabsContent>                
+            ))}
+        </Tabs>
+    );
+}
