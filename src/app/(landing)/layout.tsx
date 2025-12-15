@@ -1,5 +1,7 @@
 import { Fragment } from "react/jsx-runtime";
 import { Toaster } from "react-hot-toast";
+import LandingLayoutClient from "./LandingLayoutClient";
+import { Suspense } from "react";
 
 export default function MarketingLayout({
     children,
@@ -7,17 +9,10 @@ export default function MarketingLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <Fragment>
-            {children}
-            <Toaster 
-                position="bottom-right"
-                toastOptions={{
-                    style: {
-                        background: "#333",
-                        color: "#fff"
-                    }
-                }}
-            />            
-        </Fragment>
+        <Suspense fallback={null}>
+            <LandingLayoutClient>
+                {children}
+            </LandingLayoutClient>
+        </Suspense>
     );
 }
