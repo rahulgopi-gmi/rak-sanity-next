@@ -1,4 +1,4 @@
-import { ActivityIcon, FeedbackIcon } from '@sanity/icons'
+import { ActivityIcon, CogIcon, DocumentsIcon, FeedbackIcon, TagsIcon } from '@sanity/icons'
 import type { StructureResolver } from 'sanity/structure'
 
   export const structure: StructureResolver = (S) =>
@@ -27,7 +27,7 @@ import type { StructureResolver } from 'sanity/structure'
               ])
           ),
 
-        S.divider(),
+        //S.divider(),
 
         // ACTIVITIES SECTION
         S.listItem()
@@ -51,8 +51,25 @@ import type { StructureResolver } from 'sanity/structure'
               ])
           ),
 
-        S.divider(),
+        //S.divider(),
+        S.listItem()
+          .title("Packages")
+          .icon(TagsIcon)
+          .child(S.documentTypeList("packages").title("Packages")),
 
+        S.divider(),
+        S.listItem()
+          .title("Pages")
+          .icon(DocumentsIcon)
+          .child(S.documentTypeList("page").title("Pages")),
+
+        S.divider(),
+        S.listItem()
+          .title("Settings")
+          .icon(CogIcon)
+          .child(S.documentTypeList("settings").title("Settings")),
+
+        //S.divider(),
         // ALL OTHER DOCUMENT TYPES
         ...S.documentTypeListItems().filter(
           (item) =>
@@ -64,6 +81,9 @@ import type { StructureResolver } from 'sanity/structure'
               'standardActivities',
               'customActivities',
               'premiumActivities',
+              'packages',
+              'page',
+              'settings'
             ].includes(item.getId()!)
         ),
       ])

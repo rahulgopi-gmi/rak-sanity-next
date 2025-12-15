@@ -46,17 +46,91 @@ export function resolveOpenGraphImage(image: any, width = 1200, height = 627) {
     return { url, alt: image?.alt as string, width, height };
 }
 
+export const slugify = (str: string) =>
+  str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w]+/g, "-") 
+    .replace(/-+/g, "-") 
+    .replace(/^-|-$/g, "");
 
-export const getBodyText = (body: any[]) => {
+export const getBodyText = (body: any[] = []) => {
+    let html = "";
+    let inUL = false;
+    let inOL = false;    
 
-    if (!body) return "";
+    body.forEach((block) => {
+        if (block._type !== "block" || !block.children) return;
 
-    return body
-        .map((block) => {
-            if (block._type === "block" && block.children) {
-                return block.children.map((child: any) => child.text).join("");
+        const text = block.children.map((c: any) => c.text).join("");
+
+        // ----- LIST ITEMS -----
+        if (block.listItem === "bullet") {
+            // open <ul> if not open
+            if (!inUL) {
+                if (inOL) { html += "</ol>"; inOL = false; }
+                html += "<ul>";
+                inUL = true;
             }
-            return "";
-        })
-        .join("\n"); // join with newline between blocks
-}
+            html += `<li>${text}</li>`;
+            return;
+        }
+
+        if (block.listItem === "number") {
+            // open <ol> if not open
+            if (!inOL) {
+                if (inUL) { html += "</ul>"; inUL = false; }
+                html += "<ol>";
+                inOL = true;
+            }
+            html += `<li>${text}</li>`;
+            return;
+        }
+
+        // If block is NOT list, close lists
+        if (inUL) { html += "</ul>"; inUL = false; }
+        if (inOL) { html += "</ol>"; inOL = false; }
+
+        // ----- HEADING & NORMAL TEXT -----
+        switch (block.style) {
+            case "h1":
+                html += `<h1>${text}</h1>`;
+                break;
+            case "h2":                
+                html += `<h2 id=${slugify(text)}>${text}</h2>`;
+                break;
+            case "h3":
+                html += `<h3>${text}</h3>`;
+                break;
+            case "blockquote":
+                html += `<blockquote>${text}</blockquote>`;
+                break;
+            case "normal":
+            default:
+                html += `<p>${text}</p>`;
+                break;
+        }
+    });
+
+    // Ensure lists are closed at end
+    if (inUL) html += "</ul>";
+    if (inOL) html += "</ol>";
+
+    return html;
+};
+
+export const getBodyJSON = (body: any[] = []) => {
+    return body
+        .filter(block => block._type === "block" && block.style === "h2")
+        .map(block => ({
+            type: "h2",
+            text: block.children.map((c: any) => c.text).join(""),
+        }));
+};
+
+export const scrollToId = (id: string, offset = 0) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: "smooth" });
+};

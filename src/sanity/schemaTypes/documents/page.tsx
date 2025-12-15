@@ -38,7 +38,8 @@ export const page = defineType({
       of: [
         { type: "heroSection" },
         { type: "aboutSection" },
-        { type: "featureItem" }
+        { type: "featureItem" },
+        { type: "campaigns"}
       ]
     }),
 

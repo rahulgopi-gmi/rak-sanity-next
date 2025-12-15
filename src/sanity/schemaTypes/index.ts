@@ -5,7 +5,6 @@ import {postType} from './postType'
 import {authorType} from './authorType'
 import { page } from './documents/page'
 import { packages } from './documents/package'
-import aboutSection from './objects/aboutSection'
 import heroSection from './objects/heroSection'
 import card from './objects/card'
 import imageView from './objects/imageView'
@@ -16,16 +15,19 @@ import contactForm from './objects/contactForm'
 import standardActivities from './documents/standardActivities'
 import customActivities from './documents/customActivities'
 import premiumActivities from './documents/premiumActivities'
+import campaigns from './objects/campaigns'
+import settings from './documents/settings'
+import aboutSection from './objects/aboutSection'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [    
     page,
     blockContentType,
     categoryType, 
-    postType, 
+    postType,
+    aboutSection,
     authorType,
     heroSection,
-    aboutSection,
     card,
     imageView,
     packages,
@@ -35,6 +37,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     referAFriendForm,
     standardActivities,
     customActivities,
-    premiumActivities
+    premiumActivities,
+    campaigns,
+    settings
   ],
 }

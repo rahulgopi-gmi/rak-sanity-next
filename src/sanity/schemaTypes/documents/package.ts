@@ -22,6 +22,12 @@ export const packages = defineType({
         }),
 
         defineField({
+            name: "content",
+            title: "Content",
+            type: "text"            
+        }),
+
+        defineField({
             name: "currency",
             title: "Currency",
             type: "string",

@@ -125,11 +125,10 @@ export default {
                         }                        
                     ],
                     preview: {
-                        prepare() {
-                            return {
-                                title: "Keywords Data"
-                            };
-                        },
+                        select: {
+                            media: "image",
+                            title: "content"
+                        }
                     }
                 }
             ]

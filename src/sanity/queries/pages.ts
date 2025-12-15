@@ -15,9 +15,10 @@ export const getPageBySlug = `
             lqip,
             dimensions
           }
-        },
+        },        
         alt
-      }
+      },
+      openGraphUrl
     },
     sections[]{
       ...,       
@@ -31,6 +32,7 @@ export const getPackages = `
     _id,
     _createdAt,
     title,
+    content,
     label,
     currency,
     price,
@@ -40,7 +42,7 @@ export const getPackages = `
     sectionTitle,
     features[]
   }
-`
+`;
 
 export const getActivitiesItems = `
 {
@@ -69,4 +71,174 @@ export const getActivitiesItems = `
     description
   }
 }
-`
+`;
+
+export const getCategories = `
+  * [_type == "category"] | order(title asc) {
+    _id,
+    title,
+    description
+  }
+`;
+
+
+export const getAllPostsQuery = `
+*[_type == "post"] | order(publishedAt desc) {
+  _id,
+  title,
+  "slug": slug.current,
+  publishedAt,
+  body,
+  mainImage{
+    asset->{
+      _id,
+      url
+    },
+    alt
+  },
+  author->{
+    _id,
+    name,
+    role,
+    bio,
+    image{
+      asset->{
+        _id,
+        url
+      }
+    }
+  },
+  categories[]->{
+    _id,
+    title,
+    description
+  }
+}
+`;
+
+export const getPostBySlug = `
+  *[_type == "post" && slug.current == $slug][0]{
+    _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    body,    
+    mainImage{
+      asset->{
+        _id,
+        url
+      },
+      alt
+    },
+
+    author->{
+      _id,
+      name,
+      role,
+      bio,
+      image{
+        asset->{
+          _id,
+          url
+        }
+      }
+    },
+
+    categories[]->{
+      _id,
+      title,
+      description
+    },
+
+    seo {
+      metaTitle,
+      metaDescription,
+      openGraphImage{
+        asset->{
+          url
+        }
+      },
+      openGraphUrl
+    }
+  }
+`;
+
+export const getRelatedPosts = `
+  *[_type == "post" && references($categoryId) && slug.current != $slug]{
+    title,
+    _id,
+    "slug": slug.current,
+    mainImage,
+    publishedAt,
+    body, 
+    author->{
+      _id,
+      name,
+      role,
+      bio,
+      image{
+        asset->{
+          _id,
+          url
+        }
+      }
+    },
+    categories[]->{
+      _id,
+      title,
+      description
+    }
+  }[0..3]
+`;
+
+export const globalSettingsQuery = `*[_type == "settings"][0]{
+  siteName,
+  logo{
+    asset->{
+      url
+    },
+    alt
+  },
+
+  // Header Menu
+  headerMenu[]{
+    label,
+    slug,
+    children[]{
+      label,
+      url
+    }
+  },
+
+  // Footer Menu
+  footerMenu[]{
+    label,
+    url
+  },
+
+  // Social Links
+  socialLinks[]{
+    platform,
+    url,
+    icon{
+      asset->{
+        url
+      }
+    }
+  },
+
+  // Contact Fields
+  contactEmail,
+  phone,
+  address,
+
+  // SEO
+  seoTitle,
+  seoDescription,
+  seoImage{
+    asset->{
+      url
+    },
+    alt
+  }
+}`;

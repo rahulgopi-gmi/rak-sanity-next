@@ -1,18 +1,18 @@
 import ActivitiesTab from "@/components/layout/activities-tab/ActivitiesTab";
 import PillTag from "@/components/layout/pill-tag/PillTag";
-import { ActivitiesTabProps, ActivitiesType, CardType, KeywordsType, PageDataType, SectionType, SEOType } from "@/features/application/types/sanity";
+import { ActivitiesType, KeywordsType, PageDataType } from "@/features/application/types/sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 import { getBodyText } from "@/sanity/lib/utils";
 import { getActivitiesItems, getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
-import toast from "react-hot-toast";
+import { cache } from "react";
 
 /** 
- *  Fetch Sanity Data
+ *  Fetch Sanity Data (cached)
 */
-async function getData(slug: string): Promise<{ page: PageDataType | null, activities: ActivitiesType }> {
+const getData = cache(async (slug: string): Promise<{ page: PageDataType | null; activities: ActivitiesType }> => {
     try {
         const [{ data: page }, { data: activitiesData }] = await Promise.all([
             sanityFetch({
@@ -34,37 +34,23 @@ async function getData(slug: string): Promise<{ page: PageDataType | null, activ
 
         return { page: page ?? null, activities: activities ?? [] };
     }
-    catch (error) {
-        toast.error(`Sanity Fetch Error ${slug}`);
+    catch (error) {        
         console.error(`Sanity Fetch Error ${slug}: `, error);
         return { page: null, activities: { standard: [], premium: [], custom: [] } };
     }
-}
+});
 
 /**
  * Generate metadata for the page.
 */
 export async function generateMetadata(): Promise<Metadata> {
-    const meta = await getData('activities') as PageDataType;
+    const { page } = await getData('activities');
 
-    if (!meta?.seo) {
-        return {
-            title: "Activities",
-            description: "Activities page",
-            openGraph: {
-                title: "Activities",
-                description: "Activities page",
-                type: "website",
-                url: "",
-            }
-        };
-    }
-
-    const title = meta?.seo?.metaTitle
-    const description = toPlainText(meta?.seo?.metaDescription);
-    const ogImageUrl = meta?.seo?.openGraphImage?.asset?.url
-
-    const keywords = meta?.seo?.keywords?.map((k: string) => k) || [];
+    const seo = page?.seo;
+    const title = seo?.metaTitle || "Innovation City";
+    const description = seo ? toPlainText(seo.metaDescription || []) : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
+    const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
+    const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
 
     return{
         title,
@@ -74,7 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
             title,
             description,
             type: "website",
-            url: "",
+            url: seo?.openGraphUrl || "https://innovationcity.com",
             images: ogImageUrl ? [{ url: ogImageUrl }] : [],
         },
         twitter: {
@@ -84,7 +70,11 @@ export async function generateMetadata(): Promise<Metadata> {
             images: ogImageUrl ? [ogImageUrl] : [],
         },
         other: {
-            "fb:app_id": meta.seo.facebookAppId || ""
+            author: "Innovation City",
+            robots: "index, follow",
+            "fb:app_id": seo?.facebookAppId || "",            
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin"
         }
     } satisfies Metadata;
 }
@@ -93,10 +83,11 @@ export async function generateMetadata(): Promise<Metadata> {
  * Page Component
 */
 export default async function Page() {
-    try {        
+    try {
         const { page, activities } = await getData("activities");
         if (!page) return notFound();
-        const section = page.sections?.[0] as PageDataType;        
+        const section: PageDataType | undefined = page?.sections?.[0];
+        if (!section) return notFound();
 
         const keywords: KeywordsType[] = Array.isArray(section.keywords)
                 ? section.keywords
@@ -109,19 +100,32 @@ export default async function Page() {
                 <section className="relative w-full bg-[url('/bg-grd-banner.jpg')] max-md:bg-[url('/bg-grd-banner-mob.png')] bg-cover bg-no-repeat with-overlay">
                     <div className="container max-auto">
                         <div className="activities-top-section activities-top-section-wd mx-auto flex flex-col items-center justify-center text-center pt-[211px] pb-[30px]">
-                            <PillTag className="mx-auto mb-[30px] max-md:mb-5">
-                                {section.title}
-                            </PillTag>
+                            {
+                                section.title && (
+                                    <PillTag className="mx-auto mb-[30px] max-md:mb-5">
+                                        {section.title}
+                                    </PillTag>
+                                )
+                            }
 
-                            <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>                           
-                            <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}></div>                            
+                            {
+                                section.header && (
+                                    <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>
+                                )
+                            }
+
+                            {
+                                section.header && (
+                                    <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}></div>
+                                )
+                            }
                         </div>
                     </div>
 
                     <div className="container mx-auto pt-12 pb-44" data-aos="fade-up">
                         <div className="w-full">
                             <ActivitiesTab 
-                                keywords={keywords} 
+                                keywords={keywords}
                                 activities={activities} 
                             />
                         </div>
@@ -130,9 +134,10 @@ export default async function Page() {
             </main>
         )
     }
-    catch(error){
-        toast.error("Page render failed");
+    catch(error){        
         console.error("Page render failed:", error);
-        return <p>Something went wrong. Please try again later.</p>;
+        return <div className="w-full h-screen flex items-center justify-center">
+            <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
+        </div>;
     }    
 }   

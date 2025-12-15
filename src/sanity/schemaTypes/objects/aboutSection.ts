@@ -2,7 +2,7 @@ import { BookIcon } from "@sanity/icons";
 
 export default {
     name: "aboutSection",
-    title: "About Section",
+    title: "About",
     type: "object",
     icon: BookIcon,
     fields: [
@@ -36,24 +36,66 @@ export default {
             fields: [{ name: "alt", type: "string", title: "Alt Text" }]
         },
         {
-            name: "subHeader",
-            title: "Sub Header",
-            type: "blockContent",
-        },        
-        {
-            name: "sectionContent",
-            type: "array",
-            title: "Image Section Content",
-            of: [
-                { type: "card" }
-            ]
+            name: "sectionImage",
+            type: "image",
+            title: "Section Image",
+            options: { hotspot: true },
+            fields: [{ name: "alt", type: "string", title: "Alt Text" }]
         },
         {
-            name: "card",
+            name: "sectionHeader",
+            title: "Section Header",
+            type: "blockContent",
+        }, 
+        {
+            name: "sectionSubHeader",
+            title: "Section Sub Header",
+            type: "text",
+        },
+        {
+            name: "sectionContent",
+            title: "Section Content",
+            type: "text",
+        },
+        {
+            name: "keywords",
             type: "array",
-            title: "Card",
+            title: "Keywords",
             of: [
-                { type: "card" }
+                {
+                    type: "object",
+                    title: "Keywords Item",
+                    fields: [
+                        {
+                            name: "image",
+                            type: "image",
+                            title: "Image",
+                            options: { hotspot: true },
+                            fields: [{ name: "alt", type: "string", title: "Alt Text" }]
+                        },
+                        {
+                            name: "tag",
+                            title: "Tag",
+                            type: "string"
+                        },
+                        {
+                            name: "header",
+                            title: "Header",
+                            type: "string"
+                        },
+                        {
+                            name: "content",
+                            title: "Content",
+                            type: "text"
+                        },
+                    ],
+                    preview: {
+                        select: {
+                            media: "image",
+                            title: "tag"
+                        }
+                    }
+                }
             ]
         }
     ],

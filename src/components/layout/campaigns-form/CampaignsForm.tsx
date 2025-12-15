@@ -1,0 +1,238 @@
+"use client";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import * as Yup from "yup";
+import PhoneInput from "react-phone-input-2";
+import 'react-phone-input-2/lib/style.css';
+import { isValidPhoneNumber } from "react-phone-number-input";
+import { useFormik } from "formik";
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { useSearchParams, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { Error } from "@/components/ui/error";
+import { Spinner } from "@/components/ui/spinner";
+
+export default function CampaignsForm() {
+    const [value, setValue] = useState<any>();
+
+    const searchParams = useSearchParams();
+    const router = useRouter();        
+    
+    const utm_source = searchParams.get("utm_source") || "";
+    const utm_medium = searchParams.get("utm_medium") || "";
+    const utm_campaign = searchParams.get("utm_campaign") || "";
+    const utm_term = searchParams.get("utm_term") || "";
+    const utm_content = searchParams.get("utm_content") || "";
+    const referrer_name = searchParams.get("referrer_name") || "";
+    const referrer_email = searchParams.get("referrer_email") || "";    
+
+    const initialValues = {
+        first_name : "",
+        last_name : "",
+        email: "",
+        phone: "",
+        business_activity: ""
+    }
+
+    const validationSchema = Yup.object({
+        first_name: Yup.string()
+            .max(50, "First Name cannot exceed 50 characters")
+            .matches(/^[\p{L} ]+$/u, "First Name can only contain letters and spaces")
+            .required("First Name is required"),
+        email: Yup.string().email("Invalid email").required("Email is required"),
+        phone: Yup.string().required("Phone is required")
+        .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
+            .test("valid", "Phone number is invalid", value => isValidPhoneNumber(value || "")),
+        business_activity: Yup.string()
+            .required("Business Activity is required")
+            .max(50, "Business Activity cannot exceed 50 characters")
+    });
+
+    const formik = useFormik({
+        initialValues: initialValues,
+        validationSchema: validationSchema,
+        onSubmit: async (values, { resetForm, setSubmitting }) => {
+            try {
+                const {  first_name } = values;
+
+                let refFirst = "";
+                let refLast = "";
+
+                if (first_name?.trim()) {
+                    const parts = first_name.trim().split(/\s+/);
+                    refFirst = parts[0];
+                    refLast = parts.slice(1).join(" ") || parts[0];
+                }
+
+                const formDataWithUTM = {
+                    ...values,
+                    first_name: refFirst,
+                    last_name: refLast,                   
+                    ...(utm_source && { utm_source }),
+                    ...(utm_medium && { utm_medium }),
+                    ...(utm_campaign && { utm_campaign }),
+                    ...(utm_term && { utm_term }),
+                    ...(utm_content && { utm_content }),
+                    ...(referrer_name && { referrer_name }),
+                    ...(referrer_email && { referrer_email }),
+                }                
+
+                const res = await fetch("/api/contact", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formDataWithUTM),
+                });            
+
+                if (res.ok) {
+                    toast.success("Message sent successfully!");
+                    router.push('/thankyou');
+                    setSubmitting(false);
+                    resetForm();
+                    setValue('');
+                } 
+                else {
+                    toast.error("Error sending message");
+                    setSubmitting(false);                
+                }
+            } 
+            catch (error) {
+                console.error(error);
+                toast.error("Something went wrong. Please try again.");
+                setSubmitting(false);
+            }
+        }
+    });    
+
+    return(
+        <form onSubmit={formik.handleSubmit} className="flex justify-center lg:justify-end">
+            <div className="w-full max-w-[588px] mr-0 rounded-3xl form-bg p-8 shadow-xl py-14 sm:px-[38px] px-[30px]" data-aos="fade-up">
+                <div className="mb-8 w-full">
+                    <Label size="sm" className="font-semibold">Your Name</Label>
+                    <Input
+                        type="text"
+                        placeholder="Your Name"
+                        name="first_name"
+                        id="first_name"
+                        value={formik.values.first_name}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className="bg-white/5 text-white"
+                    />
+
+                    {
+                        formik.touched.first_name && formik.errors.first_name &&
+                        (<Error className="mt-3">{formik.errors.first_name}</Error>)
+                    }
+                </div>
+
+                <div className="mb-8 w-full campaigns-form-phone">
+                    <Label size="sm" className="font-semibold">Your Phone Number</Label>
+                    <PhoneInput
+                        country="ae"                    
+                        placeholder="Enter phone number"
+                        value={value}
+                        onChange={(phone) => {
+                            setValue(phone);
+                            formik.setFieldValue("phone", phone);
+                        }}
+                        onBlur={() => formik.setFieldTouched("phone", true)}           
+                        enableSearch={true}
+                        containerStyle={{
+                            width: "100%"
+                        }}
+                        inputStyle={{
+                            width: "100%",
+                            height: "60px",
+                            background: "rgba(255,255,255,0.05)",
+                            color: "white",
+                            borderRadius: "14px",
+                            border: "1px solid rgba(255,255,255,0.2)",
+                            paddingLeft: "70px"
+                        }}
+                        buttonStyle={{
+                            background: "rgba(255,255,255,0.1)",
+                            border: "1px solid rgba(255,255,255,0.2)",
+                            borderRadius: "14px 0 0 14px"
+                        }}
+                        dropdownStyle={{
+                            background: "#111",
+                            color: "white"
+                        }}
+                    />
+
+                    {
+                        formik.touched.phone && formik.errors.phone &&
+                        (<Error className="mt-3">{formik.errors.phone}</Error>)
+                    }
+                </div>
+
+                <div className="mb-8 w-full">
+                    <Label size="sm" className="font-semibold">Your Email Address</Label>
+                    <Input
+                        type="email" 
+                        name="email"
+                        id="email"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        placeholder="Your Email Address"
+                        className="bg-white/5 text-white"
+                    />   
+
+                    {
+                        formik.touched.email && formik.errors.email &&
+                        (<Error className="mt-3">{formik.errors.email}</Error>)
+                    }
+                </div>
+                                
+                <div className="mb-8 w-full">
+                    <Label size="sm" className="font-semibold">Business Activity</Label>
+                    <Input
+                        type="text"
+                        name="business_activity"
+                        value={formik.values.business_activity}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        placeholder="Business Activity"
+                        className="bg-white/5 text-white"
+                    /> 
+
+                    {
+                        formik.touched.business_activity && formik.errors.business_activity &&
+                        (<Error className="mt-3">{formik.errors.business_activity}</Error>)
+                    }                        
+                </div>
+
+                <div className="mb-8 w-full">
+                    <p className="text-[rgba(255,255,255,0.60)] font-sans text-[12px]! font-normal leading-[22.4px]! mb-6">
+                        By submitting the form, you agree to the  
+                        <Link href="https://freezone.innovationcity.com/rules-and-regulations/" target="_blank" className="text-[#5EBED3] inline-block font-montserrat text-[12px] font-normal leading-[22.4px] underline">
+                            Terms and Conditions
+                        </Link>
+                        and
+                        <Link href="/privacy-policy" className="text-[#5EBED3] inline-block font-sans text-[12px] font-normal leading-[22.4px]! underline">
+                            Privacy Policy
+                        </Link> 
+                        of INC. You consent to INC collecting your name, email address, phone number
+                        and contacting you either by the email address or phone number supplied.
+                    </p>
+                </div>
+            
+                <div className="flex justify-center items-center gap-5 md:justify-start mt-4">
+                    <Button type="submit" disabled={formik.isSubmitting}>Submit</Button>        
+                    {
+                        formik.isSubmitting &&
+                        (
+                            <div id="loader" className="w-[30px]">
+                                <Spinner />
+                            </div>
+                        )
+                    } 
+                </div>
+            </div>    
+        </form>
+    )
+}

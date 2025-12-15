@@ -6,14 +6,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Textarea } from "../../ui/textArea";
 import { Spinner } from "../../ui/spinner";
 import { Input } from "../../ui/input";
-import * as Yup from "yup"
+import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Error } from "@/components/ui/error";
 import { useState } from "react";
-import PhoneInput, { isPossiblePhoneNumber, isValidPhoneNumber } from 'react-phone-number-input'
-import 'react-phone-number-input/style.css'
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
+import PhoneInput from "react-phone-input-2";
+import 'react-phone-input-2/lib/style.css';
+import { isValidPhoneNumber } from "react-phone-number-input";
+import PillTag from "../pill-tag/PillTag";
 
 type Props = {
     formonly?: boolean;
@@ -29,8 +31,7 @@ export default function ContactForm({ formonly = true }: Props) {
     const utm_content = searchParams.get("utm_content") || "";
     const referrer_name = searchParams.get("referrer_name") || "";
     const referrer_email = searchParams.get("referrer_email") || "";
-
-    const [loader, setLoader] = useState<boolean>(false);
+    
     const [value, setValue] = useState<any>();
     const router = useRouter();
     
@@ -49,13 +50,15 @@ export default function ContactForm({ formonly = true }: Props) {
             .matches(/^[\p{L} ]+$/u, "First Name can only contain letters and spaces")
             .required("First Name is required"),
         last_name: Yup.string()
-            .max(50, "First Name cannot exceed 50 characters")
-            .matches(/^[\p{L} ]+$/u, "First Name can only contain letters and spaces")
+            .max(50, "Last Name cannot exceed 50 characters")
+            .matches(/^[\p{L} ]+$/u, "Last Name can only contain letters and spaces")
             .required("Last Name is required"),
         email: Yup.string().email("Invalid email").required("Email is required"),
-        phone: Yup.string().required("Phone is required"),
+        phone: Yup.string().required("Phone is required")
+        .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
+            .test("valid", "Phone number is invalid", value => isValidPhoneNumber(value || "")),
         message: Yup.string()
-            .max(1000, "First Name cannot exceed 1000 characters")    
+            .max(1000, "Message cannot exceed 1000 characters")    
             .required("Message is required"),
         enquiry_type: Yup.string().required("Enquiry Type is required")
     });
@@ -63,48 +66,53 @@ export default function ContactForm({ formonly = true }: Props) {
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: validationSchema,
-        onSubmit: async (values, { resetForm }) => {
-            setLoader(true);
-            const formDataWithUTM = {
-                ...values,
-                ...(utm_source && { utm_source }),
-                ...(utm_medium && { utm_medium }),
-                ...(utm_campaign && { utm_campaign }),
-                ...(utm_term && { utm_term }),
-                ...(utm_content && { utm_content }),
-                ...(referrer_name && { referrer_name }),
-                ...(referrer_email && { referrer_email }),
-            };
+        onSubmit: async (values, { resetForm, setSubmitting }) => {
+            try{
+                const formDataWithUTM = {
+                    ...values,
+                    ...(utm_source && { utm_source }),
+                    ...(utm_medium && { utm_medium }),
+                    ...(utm_campaign && { utm_campaign }),
+                    ...(utm_term && { utm_term }),
+                    ...(utm_content && { utm_content }),
+                    ...(referrer_name && { referrer_name }),
+                    ...(referrer_email && { referrer_email }),
+                };
 
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formDataWithUTM),
-            });            
+                const res = await fetch("/api/contact", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formDataWithUTM),
+                });            
 
-            if (res.ok) {
-                toast.success("Message sent successfully!");
-                router.push('/thankyou');
-                setLoader(false);
-                resetForm();
-            } 
-            else {
-                toast.error("Error sending message");
-                setLoader(false);                
+                if (res.ok) {
+                    toast.success("Message sent successfully!");
+                    router.push('/thankyou');
+                    setSubmitting(false);
+                    resetForm();
+                    setValue('');
+                } 
+                else {
+                    toast.error("Error sending message");
+                    setSubmitting(false);                
+                }
             }
+             catch (error) {
+                console.error(error);
+                toast.error("Something went wrong. Please try again.");
+                setSubmitting(false);
+            }    
         }
     });
 
     return (
         <div id="contact" className="contact-wrapper">
             <div className={formonly ? "container mx-auto" : ""}>
-                <div className="row flex -mx-2">
+                <div className="row flex -mx-2 max-lg:flex-col">
                     {
                         formonly &&
-                            <div className="w-full px-2 [@media(max-width:991px)]:text-center [@media(max-width:991px)]:pb-[18px]" data-aos="fade-up" data-aos-duration="2000">
-                                <h4 className="rounded-[17.5px] border transition border-[#5FC2D5] text-black bg-[linear-gradient(0deg,rgba(255,255,255,0.11)_0%,rgba(95,194,213,0.23)_0.01%,rgba(95,194,213,0.01)_88.24%)] [box-shadow:0_0_14px_0_rgba(255,255,255,0.19)_inset] font-sans text-[16px]! not-italic font-normal! leading-[normal]! uppercase px-[25px] py-2 inline-block mb-[30px]">
-                                    Get Started
-                                </h4>
+                            <div className="w-full px-2 [@media(max-width:991px)]:text-center [@media(max-width:991px)]:pb-[18px]" data-aos="fade-up" data-aos-duration="2000">                                
+                                <PillTag className="mb-[30px] max-lg:mx-auto" variant={'light'}>Get Started</PillTag>
 
                                 <h2 className="font-extrabold uppercase text-black mb-8">
                                     Let’s start building the&nbsp;
@@ -154,7 +162,6 @@ export default function ContactForm({ formonly = true }: Props) {
                                     value={formik.values.last_name}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-
                                 />
 
                                 {
@@ -182,14 +189,37 @@ export default function ContactForm({ formonly = true }: Props) {
 
                             <div className="w-full phone-section">
                                 <PhoneInput
-                                    defaultCountry="AE"
+                                    country="ae"                    
                                     placeholder="Enter phone number"
                                     value={value}
-                                    onChange={(e) => {                                        
-                                        formik.setFieldValue("phone", e);
+                                    onChange={(phone) => {
+                                        setValue(phone);
+                                        formik.setFieldValue("phone", phone);
                                     }}
-                                    error={value ? (isValidPhoneNumber(value) ? undefined : 'Invalid phone number') : 'Phone number required'}
-                                    countryCallingCodeEditable={false}
+                                    onBlur={() => formik.setFieldTouched("phone", true)}           
+                                    enableSearch={true}
+                                    containerStyle={{
+                                        width: "100%"
+                                    }}
+                                    inputStyle={{
+                                        width: "100%",
+                                        height: "60px",
+                                        background: "#c3c3c333",
+                                        color: "white",
+                                        borderRadius: "14px",
+                                        border: "1px solid rgba(255,255,255,0.2)",
+                                        paddingLeft: "70px"
+                                    }}
+                                    buttonStyle={{
+                                        background: "rgba(255,255,255,0.1)",
+                                        border: "1px solid rgba(255,255,255,0.2)",
+                                        borderRadius: "14px 0 0 14px",
+                                        width: "50px"
+                                    }}
+                                    dropdownStyle={{
+                                        background: "#111",
+                                        color: "white"
+                                    }}
                                 />
 
                                 {
@@ -263,10 +293,10 @@ export default function ContactForm({ formonly = true }: Props) {
                             <div id="formStatus" className="success-msg w-full mt-6"></div>
 
                             <div className="w-full flex items-center gap-8">
-                                <Button type="submit" className="uppercase">Send Message</Button>
+                                <Button type="submit" disabled={formik.isSubmitting} className="uppercase">Send Message</Button>
 
                                 {
-                                    loader &&
+                                    formik.isSubmitting &&
                                     (
                                         <div id="loader" className="w-[30px]">
                                             <Spinner />

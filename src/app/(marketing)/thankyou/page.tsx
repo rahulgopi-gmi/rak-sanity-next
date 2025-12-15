@@ -8,8 +8,6 @@ import { toPlainText } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import toast from "react-hot-toast";
-
 
 /** 
  *  Fetch Sanity Data
@@ -26,8 +24,7 @@ async function getData(slug: string): Promise<PageDataType | null>{
         });
         return data ?? null;
     }
-    catch (error){
-        toast.error(`Sanity Fetch Error ${slug}`);
+    catch (error){        
         console.error(`Sanity Fetch Error ${slug} : `, error);
         return null;
     }    
@@ -149,9 +146,10 @@ export default async function Page() {
             </section>
         )
     } 
-    catch (error) {        
-        toast.error("Page render failed");
-        console.log("Page render failed");        
-        return <p>Something went wrong. Please try again later.</p>;
+    catch (error) {
+        console.error("Page render failed");        
+        return <div className="w-full h-screen flex items-center justify-center">
+            <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
+        </div>;
     }    
 }

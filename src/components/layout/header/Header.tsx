@@ -4,13 +4,22 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "../../ui/button";
+import { PageSettingsType } from "@/features/application/types/sanity";
+import { urlFor } from "@/sanity/lib/image";
 
-export default function Header() {
+interface HeaderProps {
+  settings : PageSettingsType 
+}
+
+export default function Header({ settings }: HeaderProps) {
   const headerContentRef = useRef<HTMLDivElement>(null);
   const headerInnerRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const menu = settings?.headerMenu || [];
+  const logo = settings?.logo;
+  const socials = settings?.socialLinks || [];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,50 +93,57 @@ export default function Header() {
                 href="/"
                 className="main-logo mr-0 relative h-10 w-32 lg:w-[300px] lg:h-14"
               >
-                <Image
-                  src={"/logo.svg"}
-                  fill
-                  alt="Innovation City Logo"
-                  className="transition-all duration-500 ease-in-out"
-                />
+                {
+                  logo?.asset && (
+                    <Image
+                      src={urlFor(logo).url()}
+                      fill
+                      alt={logo.alt || "Innovation City Logo"}
+                      className="transition-all duration-500 ease-in-out"
+                    />
+                  )
+                }
               </Link>
 
               <ul className="hidden md:flex space-x-12 justify-start ml-12 w-full">
-                <li className="flex items-center">
-                  <Link
-                    href="/activities"
-                    className="text-white font-sans text-md font-semibold"
-                  >
-                    Activities
-                  </Link>
-                </li>
-                <li className="flex items-center">
-                  <Link
-                    href="/packages"
-                    className="text-white font-sans text-md font-semibold"
-                  >
-                    Packages
-                  </Link>
-                </li>
-                <li className="flex items-center">
-                  <Link
-                    href="/about"
-                    className="text-white font-sans text-md font-semibold"
-                  >
-                    About Us
-                  </Link>
-                </li>
-                <li className="ml-auto flex items-center">
-                  <Link href={'/contact'}>
-                    <Button size={"sm"}>GET STARTED</Button>
-                  </Link>
-                </li>
+                {
+                  menu.map((item) => {
+                    const slug = item.slug?.current || "";
+                    const isContact = slug === "contact";
+
+                    return (
+                      <li key={item.label} className="flex items-center last:ml-auto">
+                        {
+                          isContact ? (                          
+                            <Link href={`/${slug}`}>
+                              <Button size="sm">GET STARTED</Button>
+                            </Link>
+                          ) 
+                        : 
+                          (                          
+                            <Link
+                              href={`/${slug}`}
+                              className="text-white font-sans text-md font-semibold"
+                            >
+                              {item.label}
+                            </Link>
+                          )
+                        }
+                      </li>
+                    );
+                  })
+                }
               </ul>
             </div>
 
             <div className="md:hidden flex items-center">
-              <Button type="button" className="text-white w-6 h-6 relative cursor-pointer" onClick={handleHamberger}>
-                <Image src={"/hamberger-menu.svg"} fill alt="menu icon" />
+              <Button 
+                type="button"
+                variant={'link'}
+                className="text-white w-6 h-6 px-0 relative cursor-pointer" 
+                onClick={handleHamberger}
+              >
+                <Image src={"/hamburger-menu.svg"} fill alt="menu icon" />
               </Button>
             </div>
           </div>
@@ -138,46 +154,63 @@ export default function Header() {
         isOpen &&
         (
           <div id="mobileMenu" className="flex flex-col h-screen items-center text-white pr-9 pl-9 pt-[122px] absolute w-full top-0 left-0 bg-mobile-menu">
-            <Button type="button" onClick={handleMenuClose} className="absolute cursor-pointer top-9 right-9 text-white w-5 h-5">
-              <Image src="./close-icon.svg" fill alt="Close Menu" className="w-5 h-5" />
+            <Button 
+              type="button" 
+              onClick={handleMenuClose} 
+              variant={'link'}
+              className="absolute cursor-pointer px-0 top-9 right-9 text-white w-5 h-5"
+            >
+              <Image src="/close-icon.svg" fill alt="Close Menu" className="w-5 h-5" />
             </Button>
 
-            <Link href="/" className="text-white font-sans text-lg font-semibold py-8 border-b border-gray-700 w-full text-left">Activities</Link>
-            <Link href="/" className="text-white font-sans text-lg font-semibold py-8 border-b border-gray-700 w-full text-left">Packages</Link>
-            <Link href="/" className="text-white font-sans text-lg font-semibold py-8 w-full text-left">About Us</Link>
+            {
+              menu.map((item) => {
+                  const slug = item.slug?.current || "";
+                  const isContact = slug === "contact";
 
-            <Link href="/" className="md:block hover:bg-white transition text-black font-sans text-lg font-semibold uppercase px-6 py-2 rounded-lg bg-[rgb(var(--primary-color))] shadow-[0_0_14px_0_rgba(255,255,255,0.19)_inset] mt-9 w-full text-center">
-              Get Started
-            </Link>
+                  return isContact ? (
+                    <Link
+                      key={item.label}
+                      href={`/${slug}`}
+                      className="md:block hover:bg-white transition text-black font-sans text-lg font-semibold uppercase px-6 py-2 rounded-lg bg-[rgb(var(--primary-color))] shadow-[0_0_14px_0_rgba(255,255,255,0.19)_inset] mt-6 w-full text-center"
+                    >
+                      GET STARTED
+                    </Link>
+                  ) : (
+                    <Link
+                      key={item.label}
+                      href={`/${slug}`}
+                      className="text-white font-sans text-lg font-semibold py-8 border-b border-gray-700 w-full text-left"
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
+              )
+          }            
 
-            <div className="flex space-x-6 mt-6 items-center">
-              <Link href="https://x.com/InnovationCityX" rel="noopener noreferrer" target="_blank" className="text-white mr-0 relative w-5 h-5">
-                <Image src="./twitter-icon.svg" fill alt="" />
-              </Link>
+            <div className="flex gap-14 mt-6 items-center">
+              {
+                socials.map((s,i)=> {
+                  if (!s?.icon?.asset) return null; 
 
-              <Link href="https://www.facebook.com/rakinnovationcity/" rel="noopener noreferrer" target="_blank" className="text-white relative w-5 h-5">
-                <Image src="./facebook-icon.svg" fill alt="" />
-              </Link>
-
-              <Link href="https://www.youtube.com/@Innovationcity_inc" rel="noopener noreferrer" target="_blank" className="text-white relative w-4 h-4">
-                <Image src="./youtube-icon.svg" fill alt="" />
-              </Link>
-
-              <Link href="https://www.tiktok.com/@Innovationcity_inc" rel="noopener noreferrer" target="_blank" className="text-white relative w-4 h-4">
-                <Image src="./music-icon.svg" fill alt="" />
-              </Link>
-
-              <Link href="https://t.me/Innovationcity" rel="noopener noreferrer" target="_blank" className="text-white relative w-4 h-4">
-                <Image src="./telegram-icon.svg" fill alt="" />
-              </Link>
-
-              <Link href="https://www.linkedin.com/company/innovationcityinc/" rel="noopener noreferrer" target="_blank" className="text-white relative w-4 h-4">
-                <Image src="./linkedin-icon.svg" fill alt="" />
-              </Link>
-
-              <Link href="https://www.instagram.com/innovationcity_inc/" rel="noopener noreferrer" target="_blank" className="text-white relative w-4 h-4">
-                <Image src="./instagram-icon.svg" fill alt="" />
-              </Link>
+                  return(
+                    <Link
+                      key={s.platform || i}
+                      href={s?.url || "#"} 
+                      rel="noopener noreferrer" 
+                      target="_blank" 
+                      className="text-white mr-0 relative w-4 h-4"
+                    >
+                      <Image
+                        src={urlFor(s?.icon).url()}
+                        fill
+                        alt={s?.platform || ""}
+                      />
+                    </Link>
+                  )
+                })
+              }                          
             </div>
           </div>
         )

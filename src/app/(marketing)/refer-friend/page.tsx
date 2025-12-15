@@ -8,12 +8,10 @@ import ReferForm from "@/components/layout/refer-form/ReferForm";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { getBodyText } from "@/sanity/lib/utils";
-import toast from "react-hot-toast";
+import { cache } from "react";
 
-/** 
- *  Fetch Sanity Data
-*/
-async function getData(slug: string): Promise<PageDataType | null>{    
+/** Fetch Sanity Data with cache */
+const getData = cache(async (slug: string): Promise<PageDataType | null> => {
     try {
         const { data } = await sanityFetch({
             query: getPageBySlug,
@@ -25,36 +23,26 @@ async function getData(slug: string): Promise<PageDataType | null>{
         return data ?? null;
     }
     catch (error){
-        console.error(`Sanity Fetch Error ${slug} : `, error);
-        toast.error(`Sanity Fetch Error ${slug}`);
+        console.error(`Sanity Fetch Error ${slug} : `, error);        
         return null;
     }    
-}
+});
 
 /**
  * Generate metadata for the page.
 */
 export async function generateMetadata(): Promise<Metadata> {
-    const meta = await getData('refer-friend');
+    const data  = await getData('refer-friend');
+    const seo = data?.seo;
 
-    if (!meta?.seo) {
-        return {
-            title: "Refer a friend",
-            description: "Refer a friend page",
-            openGraph: {
-                title: "Refer a friend",
-                description: "Refer a friend page",
-                type: "website",
-                url: "",
-            }
-        };
-    }
-
-    const title = meta?.seo?.metaTitle
-    const description = toPlainText(meta?.seo?.metaDescription);
-    const ogImageUrl = meta?.seo?.openGraphImage?.asset?.url
-
-    const keywords = meta?.seo?.keywords?.map((k: string) => k) || [];
+    const title = seo?.metaTitle || "Innovation City";
+    const description = 
+        seo ? toPlainText(seo.metaDescription) 
+        : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
+    const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
+    const keywords = seo?.keywords?.map((k: string) => k) 
+    || 
+    ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
 
     return{
         title,
@@ -64,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
             title,
             description,
             type: "website",
-            url: "",
+            url: seo?.openGraphUrl || "https://innovationcity.com",
             images: ogImageUrl ? [{ url: ogImageUrl }] : [],
         },
         twitter: {
@@ -74,7 +62,11 @@ export async function generateMetadata(): Promise<Metadata> {
             images: ogImageUrl ? [ogImageUrl] : [],
         },
         other: {
-            "fb:app_id": meta.seo.facebookAppId || ""
+            author: "Innovation City",
+            robots: "index, follow",
+            "fb:app_id": seo?.facebookAppId || "",            
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin"
         }
     } satisfies Metadata;
 }
@@ -86,40 +78,41 @@ export default async function Page() {
     try{
         const data = await getData('refer-friend');
         if (!data) return notFound();
-        const section = data.sections?.[0] as any;
-
-        const keywords: CardType[] = Array.isArray(section.keywords)
-            ? section.keywords
-            : section.keywords
-                ? [section.keywords]
+        const section: PageDataType | undefined = data?.sections?.[0];
+        const keywords: CardType[] = Array.isArray(section?.keywords)
+            ? section?.keywords
+            : section?.keywords
+                ? [section?.keywords]
                 : [];
 
         return (
             <main className="relative w-full">
-                <section className="md:h-[520px] relative">
-                    <div className="hidden md:block w-full">
-                        {
-                            section?.bannerdesktop ? 
-                                (<Image fill alt={section?.bannerdesktop.alt} src={urlFor(section?.bannerdesktop).url()} />)
-                            :
-                            null
-                        }
-                    </div>
-
-                    <div className="w-full md:hidden">
-                        {
-                            section?.bannermobile ?
-                            (<Image fill alt={''} src={urlFor(section?.bannermobile).url()} />)
-                            :
-                            null
-                        }
-                    </div>
+                <section className="h-[520px] relative">                    
+                    {
+                        section?.bannerdesktop && (
+                            <div className="hidden md:block w-full">
+                                <Image fill alt={section?.bannerdesktop.alt} src={urlFor(section?.bannerdesktop).url()} />
+                            </div>
+                        )
+                    }
+                
+                    {
+                        section?.bannermobile && (
+                            <div className="w-full md:hidden">
+                                <Image fill alt={section?.bannerdesktop.alt} src={urlFor(section?.bannermobile).url()} />
+                            </div>
+                        )        
+                    }
 
                     <div className="w-full absolute">
                         <div className="container">
                             <div className="w-full pt-[210px] lg:pt-[340px] pb-[100px] lg:pb-[50px]">
-                                <div className="max-w-[580px] md:w-full refer-page-hdr">                                    
-                                    <div className="refer-section" dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>                                    
+                                <div className="max-w-[580px] md:w-full refer-page-hdr">
+                                    {
+                                        section?.header && (
+                                            <div className="refer-section" dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>
+                                        )
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -131,8 +124,10 @@ export default async function Page() {
                         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-14">
                             <div className="w-full -mt-20 lg:mt-0">
                                 <div className="w-full">
-                                    {                                       
-                                        <div className="refer-section" dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}></div>
+                                    {
+                                        section?.body && (
+                                            <div className="refer-section" dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}></div>
+                                        )
                                     }                                    
                                 </div>
     
@@ -141,12 +136,16 @@ export default async function Page() {
                                         {
                                             keywords.map((i: any, index: number) => (
                                                 <li key={index} className="text-[#FFFFFFCC] flex gap-6 items-center text-[16px] leading-7! tracking-[0.16px] font-normal font-sans">
-                                                    <span className="li-sub-icon flex items-center justify-center">
-                                                        <span className="inline-block w-5 h-5 relative">
-                                                            <Image fill alt={i.icon.alt} src={urlFor(i.icon).url()} />
-                                                        </span>
-                                                    </span>
-                                                    <div dangerouslySetInnerHTML={{ __html: getBodyText(i?.body) }}></div>                                                    
+                                                    {
+                                                        i.icon && (
+                                                            <span className="li-sub-icon flex items-center justify-center">
+                                                                <span className="inline-block w-5 h-5 relative">
+                                                                    <Image fill alt={i.icon.alt} src={urlFor(i.icon).url()} />
+                                                                </span>
+                                                            </span>
+                                                        )
+                                                    }
+                                                    <div className="refer-friend-items" dangerouslySetInnerHTML={{ __html: getBodyText(i?.body) }}></div>
                                                 </li>
                                             ))
                                         }                                                                                
@@ -166,8 +165,9 @@ export default async function Page() {
         )
     }
     catch(error){
-        console.error("Page render failed:", error);
-        toast.error("Page render failed");
-        return <p>Something went wrong. Please try again later.</p>;
+        console.error("Page render failed:", error);        
+        return <div className="w-full h-screen flex items-center justify-center">
+            <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
+        </div>;
     }
 }

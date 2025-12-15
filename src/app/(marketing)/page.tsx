@@ -10,11 +10,10 @@ import { getPackages, getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
-/** 
- * Fetch Sanity Data
-*/
-async function getData(slug: string): Promise<{ page: PageDataType | null, packages: any[] }> {
+/** Fetch Sanity Data with cache */
+const getData = cache(async (slug: string): Promise<{ page: PageDataType | null; packages: any[] }> => {
     try {
         const [{ data: page }, { data: packages }] = await Promise.all([
             sanityFetch({
@@ -34,31 +33,19 @@ async function getData(slug: string): Promise<{ page: PageDataType | null, packa
         console.error(`Sanity Fetch Error ${slug}: `, error);
         return { page: null, packages: [] };
     }
-}
+});
+
 /**
  * Generate metadata for the page.
 */
 export async function generateMetadata(): Promise<Metadata> {
-    const meta = await getData('home') as PageDataType;
+    const { page } = await getData('home');
 
-    if (!meta?.seo) {
-        return {
-            title: "Home",
-            description: "Home page",
-            openGraph: {
-                title: "Home",
-                description: "Home page",
-                type: "website",
-                url: "",
-            }
-        };
-    }
-
-    const title = meta?.seo?.metaTitle
-    const description = toPlainText(meta?.seo?.metaDescription);
-    const ogImageUrl = meta?.seo?.openGraphImage?.asset?.url
-
-    const keywords = meta?.seo?.keywords?.map((k: string) => k) || [];
+    const seo = page?.seo;
+    const title = seo?.metaTitle || "Innovation City";
+    const description = seo ? toPlainText(seo.metaDescription || []) : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
+    const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
+    const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
 
     return{
         title,
@@ -68,7 +55,7 @@ export async function generateMetadata(): Promise<Metadata> {
             title,
             description,
             type: "website",
-            url: "",
+            url: seo?.openGraphUrl || "https://innovationcity.com",
             images: ogImageUrl ? [{ url: ogImageUrl }] : [],
         },
         twitter: {
@@ -78,7 +65,11 @@ export async function generateMetadata(): Promise<Metadata> {
             images: ogImageUrl ? [ogImageUrl] : [],
         },
         other: {
-            "fb:app_id": meta.seo.facebookAppId || ""
+            author: "Innovation City",
+            robots: "index, follow",
+            "fb:app_id": seo?.facebookAppId || "",            
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin"
         }
     } satisfies Metadata;
 }
@@ -87,43 +78,49 @@ export async function generateMetadata(): Promise<Metadata> {
  * Page Component
 */
 export default async function Page() {
-    try {        
+    try {
         const { page, packages } = await getData("home");
-        if (!page) return notFound();
-        const section = page.sections?.[0] as any;
-        const banner = section?.banner;
+        if (!page) return notFound();        
+        const section: PageDataType | undefined = page?.sections?.[0];
+        if (!section) return notFound();        
 
-        const banners: HomeBannerType[] = Array.isArray(banner)
-            ? banner
-            : banner
-                ? [banner]
-                : [];                  
-
-        console.log(section, 'data');        
+        const banners: HomeBannerType[] = Array.isArray(section?.banner)
+            ? section?.banner
+            : section?.banner
+                ? [section?.banner]
+                : [];
         
         return(
             <main className="w-full">
                 {
                     banners.map((b,i)=>(
                         <section key={`banner-${b._key}`} className="home-banner relative [@media(min-width:1025px)]:h-screen">
-                            <video
-                                className=" block w-full h-full [@media(max-width:992px)]:h-[814px] [@media(max-width:992px)]:object-cover [@media(min-width:1025px)]:object-cover"
-                                width="100%"
-                                height="100%"
-                                playsInline
-                                muted
-                                preload="auto"
-                                autoPlay
-                                loop
-                            >
-                                <source src={getVideoUrl(b.videoDesktop)} type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
+                            {
+                                b.videoDesktop && (
+                                    <video
+                                        className=" block w-full h-full [@media(max-width:992px)]:h-[814px] [@media(max-width:992px)]:object-cover [@media(min-width:1025px)]:object-cover"
+                                        width="100%"
+                                        height="100%"
+                                        playsInline
+                                        muted
+                                        preload="auto"
+                                        autoPlay
+                                        loop
+                                    >
+                                        <source src={getVideoUrl(b.videoDesktop)} type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </video>
+                                )
+                            }
 
                             <div className="w-full h-full absolute top-0 left-0 flex flex-wrap items-end pb-[113px]">
                                 <div className="container mx-auto">
                                     <div className="mt-20 mx-auto mb-0 text-center uppercase aos-init aos-animate" data-aos="fade-up">
-                                        <div className="w-full flex justify-center" dangerouslySetInnerHTML={{ __html: getBodyText(b.header) }}></div>
+                                        {
+                                            b.header && (                                            
+                                                <div className="w-full flex justify-center" dangerouslySetInnerHTML={{ __html: getBodyText(b.header) }}></div>
+                                            )
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -132,18 +129,29 @@ export default async function Page() {
                 }
 
                 <section className="w-full">
-                    <Hero data={section} />
+                    <Hero data={section} key={'hero-section'} />
                 </section>    
 
                 <section className="w-full home-package-wraper relative section-space-top section-space-bottom">
-                    <div className="container mx-auto text-center">
-                        <PillTag className="mx-auto relative mb-4">{section.packageTitle}</PillTag>                        
-                        <div className="w-full flex justify-center" dangerouslySetInnerHTML={{ __html: getBodyText(section?.packageHeader) }}></div>
+                    <div className="container mx-auto text-center mb-10">
+                        {
+                            section.packageTitle && (
+                                <PillTag className="mx-auto relative mb-4">{section.packageTitle}</PillTag>
+                            )
+                        }
+
+                        {
+                            section.packageHeader && (                        
+                                <div className="w-full flex justify-center package-header-txt" dangerouslySetInnerHTML={{ __html: getBodyText(section?.packageHeader) }}></div>
+                            )
+                        }
                     </div>
-
                     <PackagesDetails packages={packages} />
-
-                    <div className="w-full flex justify-center relative" dangerouslySetInnerHTML={{ __html: getBodyText(section?.packageContent) }}></div>
+                    {
+                        section.packageContent && (
+                            <div className="w-full flex justify-center relative package-btm-txt" dangerouslySetInnerHTML={{ __html: getBodyText(section?.packageContent) }}></div>
+                        )
+                    }
                 </section>
 
                 <section className="wh-contact w-full section-space-top section-space-bottom bg-white">
@@ -151,7 +159,11 @@ export default async function Page() {
                 </section>
             </main>
         )
-    } catch (error) {
-        
+    } 
+    catch (error) {
+        console.error("Page render failed:", error);
+        return <div className="w-full h-screen flex items-center justify-center">
+            <p>Something went wrong. Please try again later.</p>
+        </div>;
     }
 }

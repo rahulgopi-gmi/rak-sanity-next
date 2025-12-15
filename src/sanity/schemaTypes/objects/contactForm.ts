@@ -6,10 +6,24 @@ export default {
     type: "object",
     fields: [
         {
-        name: "name",
-        title: "Name",
-        type: "string",
-        validation: (Rule: Rule) => Rule.required().error("Name is required"),
+            name: "name",
+            title: "Name",
+            type: "string"        
+        },
+        {
+            name: "header",
+            title: "Header",
+            type: "blockContent"        
+        },
+        {
+            name: "subheader",
+            title: "SubHeader",
+            type: "text"        
+        },
+        {
+            name: "phone",
+            title: "Phone",
+            type: "text"        
         }
     ],
     preview: {        

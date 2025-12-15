@@ -8,12 +8,12 @@ import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import toast from "react-hot-toast";
+import { cache } from "react";
 
 /** 
- *  Fetch Sanity Data
+ *  Fetch Sanity Data (cached)
 */
-async function getData(slug: string): Promise<PageDataType | null>{
+const getData = cache(async (slug: string): Promise<PageDataType | null> => {
     try {
         const { data } = await sanityFetch({
             query: getPageBySlug,
@@ -24,39 +24,29 @@ async function getData(slug: string): Promise<PageDataType | null>{
         });
         return data ?? null;
     }
-    catch (error){
-        toast.error(`Sanity Fetch Error ${slug}`);
+    catch (error){        
         console.error(`Sanity Fetch Error ${slug} : `, error);
         return null;
-    }    
-}
+    }
+});
 
 /**
  * Generate metadata for the page.
 */
 export async function generateMetadata(): Promise<Metadata> {
-    const meta = await getData('about');
+    const page  = await getData('about');
+    const seo = page?.seo;
 
-    if (!meta?.seo) {
-        return {
-            title: "About",
-            description: "About page",
-            openGraph: {
-                title: "About",
-                description: "About page",
-                type: "website",
-                url: "",
-            }
-        };
-    }
+    const title = seo?.metaTitle || "Innovation City";
+    const description = 
+        seo ? toPlainText(seo.metaDescription) 
+        : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
+    const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
+    const keywords = seo?.keywords?.map((k: string) => k) 
+    || 
+    ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
 
-    const title = meta?.seo?.metaTitle
-    const description = toPlainText(meta?.seo?.metaDescription);
-    const ogImageUrl = meta?.seo?.openGraphImage?.asset?.url
-
-    const keywords = meta?.seo?.keywords?.map((k: string) => k) || [];
-
-    return {
+    return{
         title,
         description,
         keywords,
@@ -64,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
             title,
             description,
             type: "website",
-            url: "",
+            url: seo?.openGraphUrl || "https://innovationcity.com",
             images: ogImageUrl ? [{ url: ogImageUrl }] : [],
         },
         twitter: {
@@ -74,7 +64,11 @@ export async function generateMetadata(): Promise<Metadata> {
             images: ogImageUrl ? [ogImageUrl] : [],
         },
         other: {
-            "fb:app_id": meta.seo.facebookAppId || ""
+            author: "Innovation City",
+            robots: "index, follow",
+            "fb:app_id": seo?.facebookAppId || "",            
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin"
         }
     } satisfies Metadata;
 }
@@ -86,104 +80,144 @@ export default async function Page() {
     try {
         const data = await getData('about');
         if (!data) return notFound();
-        const section = data.sections?.[0] as any;
-
-        const innerContent: ContentType[] = Array.isArray(section.sectionContent)
-            ? section.sectionContent
-            : section.sectionContent
-                ? [section.sectionContent]
-                : [];
         
-        const cards: CardType[] = Array.isArray(section.card)
-            ? section.card
-            : section.card
-                ? [section.card]
-                : [];
+        const section: PageDataType | undefined = data?.sections?.[0];
+        if (!section) return notFound();
+        
+        const keywords: CardType[] = Array.isArray(section.keywords)
+            ? section.keywords
+            : [];
+
+        const desktopImage = section?.imageDesktop && urlFor(section.imageDesktop).url();
+        const mobileImage = section?.imageMobile && urlFor(section.imageMobile).url();        
 
         return(
-            <main className="w-full">
-                {/***************  TOP SECTION  *****************/}
+            <main className="w-full">                
                 <section className="about-sec relative bg-black max-md:bg-[url('/aboutbgmob.jpg')] bg-[url('/aboutbgdesk.jpg')]  bg-no-repeat bg-cover pt-[218px] pb-[7px] text-center overflow-hidden max-md:pb-[25px]">
-                    <div className="container mx-auto about-top-section">
-                        
-                        <PillTag className="mx-auto mb-[30px] max-md:mb-5">{section.title}</PillTag>                        
-                        <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>                        
-                        <div className="w-full flex justify-center" dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}></div>                        
+                    <div className="container mx-auto about-top-section">                        
+                        <PillTag className="mx-auto mb-[30px] max-md:mb-5">
+                            {section.title ?? ""}
+                        </PillTag>  
 
-                        <div className="abtimg-wrap mb-[90px] md:mb-[65px]" data-aos="fade-up">
-                            <div className="w-full h-[495px] relative hidden md:block">
-                                <Image fill alt={section.imageDesktop.alt} src={urlFor(section.imageDesktop).url()} className="rounded-[10px]" />
-                            </div>
+                        {
+                            section.header && (                      
+                                <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>
+                            )
+                        }
 
-                            <div className="w-full h-[495px] relative block md:hidden">
-                                <Image fill alt={section.imageMobile.alt} src={urlFor(section.imageMobile).url()} className="rounded-[10px]" />
-                            </div>
-                        </div>
+                        {
+                            section.body && (
+                                <div className="w-full flex justify-center" dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}></div>
+                            )
+                        }    
 
-                        <div className="about-sub-hdr" dangerouslySetInnerHTML={{ __html: getBodyText(section.subHeader) }}></div>                        
-                    </div>
-                </section>
 
-                {/***************  CONTENT SECTION (AFTER BANNER)  *****************/}
-                {
-                    innerContent.map((e: any) => (
-                        <section className="imgcon-wrapper text-white bg-black w-full md:w-auto">
-                            <div className="container">
-                                <div className="imgcon-inner-wrapper">
-                                    <div className="split-wrap flex flex-col-reverse md:flex-row max-md:mb-0 max-lg:mb-10 w-full">
-                                        <div className="w-full lg:w-7/12 md:w-full">
-                                            <div className="w-full h-[410px] relative">
-                                                <Image
-                                                    src={urlFor(e.image).url()}
-                                                    alt={e.image?.alt || ""}
-                                                    fill
+                        {
+                            (desktopImage || mobileImage) && (
+                                <div className="abtimg-wrap mb-[90px] md:mb-[65px]" data-aos="fade-up">
+                                    {
+                                        desktopImage && (
+                                            <div className="w-full h-[495px] relative hidden md:block">
+                                                <Image 
+                                                    fill 
+                                                    alt={section.imageDesktop?.alt ?? ""}
+                                                    src={desktopImage}
+                                                    className="rounded-[10px]" 
                                                 />
                                             </div>
-                                        </div>
+                                        )
+                                    }
 
-                                        <div className="w-full lg:w-7/12 md:w-full max-md:pl-4">
-                                            <h3 className="text-[#D5D5D5] text-[20px]! font-sans font-normal leading-[27px]! text-center md:text-left mb-[30px] md:mb-10 max-w-[486px] ml-auto mr-auto md:ml-auto md:mr-0" data-aos="fade-up">
-                                                {e.header}
-                                            </h3>
+                                    {
+                                        mobileImage && (
+                                            <div className="w-full h-[495px] relative block md:hidden">
+                                                <Image 
+                                                    fill 
+                                                    alt={section.imageMobile?.alt ?? ""}
+                                                    src={mobileImage}
+                                                    className="rounded-[10px]" 
+                                                />
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            )
+                        }
 
-                                            <p className="text-[#D5D5D5] text-[16px]! font-sans leading-normal! text-center md:text-left max-w-[486px] ml-auto mr-auto md:ml-auto md:mr-0" data-aos="fade-up">
-                                                {e.content}
-                                            </p>
-                                        </div>
+                        {
+                            section.sectionHeader && (
+                                <div className="about-sub-hdr" dangerouslySetInnerHTML={{ __html: getBodyText(section.sectionHeader)}}></div>
+                            )
+                        }
+                    </div>
+                </section>
+                           
+                <section className="imgcon-wrapper text-white bg-black w-full md:w-auto">
+                    <div className="container">
+                        <div className="imgcon-inner-wrapper">
+                            <div className="split-wrap flex flex-col-reverse md:flex-row max-md:mb-0 max-lg:mb-10 w-full">
+                                <div className="w-full lg:w-7/12 md:w-full">
+                                    <div className="w-full h-[410px] relative">
+                                        <Image
+                                            src={section?.sectionImage && urlFor(section.sectionImage).url()}
+                                            alt={section?.sectionImage?.alt ?? ""}
+                                            fill
+                                        />
                                     </div>
                                 </div>
-                            </div>
-                        </section>
-                    ))
-                }
 
-                {/***************** CARDS SECTION *****************/}
+                                <div className="w-full lg:w-7/12 md:w-full max-md:pl-4">
+                                    <h3 className="text-[#D5D5D5] text-[20px]! font-sans font-normal leading-[27px]! text-center md:text-left mb-[30px] md:mb-10 max-w-[486px] ml-auto mr-auto md:ml-auto md:mr-0" data-aos="fade-up">
+                                        {section?.sectionSubHeader || ""}
+                                    </h3>
+
+                                    <p className="text-[#D5D5D5] text-[16px]! font-sans leading-normal! text-center md:text-left max-w-[486px] ml-auto mr-auto md:ml-auto md:mr-0" data-aos="fade-up">
+                                        {section?.sectionContent || ""}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>             
+                
                 {
-                    cards.length > 0 && (
+                    keywords.length > 0 && (
                         <section className="ourvmv-sec w-full max-md:py-[90px] py-[120px]">
                             <div className="container">
                                 {
-                                    cards.map((c: any) => (
-                                        <div className="ourvmv flex flex-col-reverse md:flex-row items-center max-md:mb-0 mb-[110px] last:mb-0" data-aos="fade-up">
-                                            <div className="md:w-1/2 w-full max-md:mb-10">
-                                                <div className="m-wrap relative w-full h-[269px]">
-                                                    <Image fill alt={c.image.alt} src={urlFor(c.image).url()} className="flex m-auto" />
+                                    keywords.map((c: CardType, index:number) => {
+                                        const cardImage = c.image && urlFor(c.image).url();
+                                        if (!cardImage) return null;
+
+                                        return(                                        
+                                            <div 
+                                                key={`about-card-${index}`}
+                                                className="ourvmv flex flex-col-reverse md:flex-row items-center max-md:mb-0 mb-[110px] last:mb-0" 
+                                                data-aos="fade-up"
+                                            >
+                                                <div className="md:w-1/2 w-full max-md:mb-10">
+                                                    <div className="m-wrap relative w-full h-[269px]">
+                                                        <Image 
+                                                            fill 
+                                                            alt={c.image?.alt ?? ""}
+                                                            src={cardImage} 
+                                                            className="flex m-auto" 
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="md:w-1/2 w-full max-md:mb-10">
+                                                    <PillTag variant={'light'} className="mb-4 max-lg:mx-auto">{c.tag || ""}</PillTag>
+                                                    <h3 className="font-semibold font-mono mb-5! text-center md:text-left text-[45px]!">
+                                                        {c.header || ""}
+                                                    </h3>
+                                                    <p className="text-base! font-sans leading-normal! text-center max-w-[348px] mx-auto md:text-left md:mr-auto md:ml-0 md:max-w-[420px]">
+                                                        {c.content || ""}
+                                                    </p>
                                                 </div>
                                             </div>
-
-                                            <div className="md:w-1/2 w-full max-md:mb-10">
-                                                <h4 className="text-[16px]! font-sans uppercase leading-normal text-black px-[17px] py-2 rounded-[17.5px] w-fit mb-3 border border-[#5FC2D5] bg-[linear-gradient(0deg,rgba(255,255,255,0.11)_0%,rgba(95,194,213,0.23)_0.01%,rgba(95,194,213,0.01)_88.24%)] shadow-[inset_0_0_14px_rgba(255,255,255,0.19)] mx-auto md:mx-0 text-center md:text-left">
-                                                    {c.tag}
-                                                </h4>
-                                                <h3 className="font-semibold font-mono mb-5! text-center md:text-left text-[45px]!">
-                                                    {c.header}
-                                                </h3>
-                                                <p className="text-[16px] font-sans leading-normal! text-center max-w-[348px] mx-auto md:text-left md:mr-auto md:ml-0 md:max-w-[420px]">
-                                                    {c.content}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    ))
+                                        )
+                                    })
                                 }
                             </div>
                         </section>
@@ -192,9 +226,10 @@ export default async function Page() {
             </main>
         )
     } 
-    catch (error) {
-        toast.error("Page render failed");
+    catch (error) {        
         console.error("Page render failed:", error);
-        return <p>Something went wrong. Please try again later.</p>;
+        return <div className="w-full h-screen flex items-center justify-center">
+            <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
+        </div>;
     }
 }

@@ -9,14 +9,13 @@ import { useState } from "react";
 import * as Yup from "yup"
 import { useFormik } from "formik";
 import { Error } from "@/components/ui/error";
-import PhoneInput, { isPossiblePhoneNumber, isValidPhoneNumber } from 'react-phone-number-input'
-import 'react-phone-number-input/style.css'
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
+import { isValidPhoneNumber } from "react-phone-number-input";
+import PhoneInput from "react-phone-input-2";
+import 'react-phone-input-2/lib/style.css';
 
 export default function ReferForm() {
-    const [loader, setLoader] = useState<boolean>(false);
     const [value, setValue] = useState<any>();
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -46,12 +45,16 @@ export default function ReferForm() {
             .matches(/^[\p{L} ]+$/u, "First Name can only contain letters and spaces")
             .required("First Name is required"),
         email: Yup.string().email("Invalid email").required("Email is required"),
-        phone: Yup.string().required("Phone is required"),
+        phone: Yup.string().required("Phone is required")
+        .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
+                    .test("valid", "Phone number is invalid", value => isValidPhoneNumber(value || "")),
         referrer_name: Yup.string()
             .max(50, "First Name cannot exceed 50 characters")
             .matches(/^[\p{L} ]+$/u, "Referral Name can only contain letters and spaces")
             .required("Last Name is required"),
-        referrer_phone: Yup.string().required("Referral Phone is required"),
+        referrer_phone: Yup.string().required("Referral Phone is required")
+        .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
+                    .test("valid", "Phone number is invalid", value => isValidPhoneNumber(value || "")),
         referrer_email: Yup.string().email("Invalid email").required("Referral Email is required"),
         referrer_has_company_registered: Yup.boolean()
             .required("Company Registered is required")
@@ -61,60 +64,65 @@ export default function ReferForm() {
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: validationSchema,
-        onSubmit: async (values, { resetForm }) => {
-            const { 
-                referrer_name, 
-                referrer_email, 
-                referrer_phone, 
-                first_name,
-                phone,
-                email
-            } = values;
+        onSubmit: async (values, { resetForm, setSubmitting }) => {
+            try {
+                const { 
+                    referrer_name, 
+                    referrer_email, 
+                    referrer_phone, 
+                    first_name,
+                    phone,
+                    email
+                } = values;               
 
-            setLoader(true);
+                let refFirst = "";
+                let refLast = "";
 
-            let refFirst = "";
-            let refLast = "";
+                if (referrer_name?.trim()) {
+                    const parts = referrer_name.trim().split(/\s+/);
+                    refFirst = parts[0];
+                    refLast = parts.slice(1).join(" ") || parts[0];
+                }
 
-            if (referrer_name?.trim()) {
-                const parts = referrer_name.trim().split(/\s+/);
-                refFirst = parts[0];
-                refLast = parts.slice(1).join(" ") || parts[0];
+                const formDataWithUTM = {
+                    ...values,
+                    first_name: refFirst,
+                    last_name: refLast,
+                    email: referrer_email,  
+                    phone: referrer_phone,
+                    referrer_name: first_name,
+                    referrer_phone: phone,
+                    referrer_email: email,
+                    ...(utm_source && { utm_source }),
+                    ...(utm_medium && { utm_medium }),
+                    ...(utm_campaign && { utm_campaign }),
+                    ...(utm_term && { utm_term }),
+                    ...(utm_content && { utm_content }),
+                    ...(referrer_name && { referrer_name_parms }),
+                    ...(referrer_email && { referrer_email_parms }),
+                }
+
+                const res = await fetch("/api/contact", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formDataWithUTM),
+                });
+
+                if (res.ok) {
+                    toast.success("Message sent successfully!");
+                    router.push('/thankyou');                    
+                    resetForm();
+                    setSubmitting(false);
+                } 
+                else {
+                    toast.error("Error sending message");                    
+                    setSubmitting(false);             
+                }
             }
-
-            const formDataWithUTM = {
-                ...values,
-                first_name: refFirst,
-                last_name: refLast,
-                email: referrer_email,  
-                phone: referrer_phone,
-                referrer_name: first_name,
-                referrer_phone: phone,
-                referrer_email: email,
-                ...(utm_source && { utm_source }),
-                ...(utm_medium && { utm_medium }),
-                ...(utm_campaign && { utm_campaign }),
-                ...(utm_term && { utm_term }),
-                ...(utm_content && { utm_content }),
-                ...(referrer_name && { referrer_name_parms }),
-                ...(referrer_email && { referrer_email_parms }),
-            }
-
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formDataWithUTM),
-            });
-
-            if (res.ok) {
-                toast.success("Message sent successfully!");
-                router.push('/thankyou');
-                setLoader(false);
-                resetForm();
-            } 
-            else {
-                toast.error("Error sending message");
-                setLoader(false);                
+            catch (error) {
+                console.error(error);
+                toast.error("Something went wrong. Please try again.");
+                setSubmitting(false);
             }
         }
      });     
@@ -143,20 +151,41 @@ export default function ReferForm() {
                 }
             </div>
 
-            <div className="w-full mb-7">
-                <Label>Your Phone Number</Label>                      
+            <div className="w-full mb-7 refer-phone">
+                <Label>Your Phone Number</Label>
                 <PhoneInput
-                    defaultCountry="AE"
+                    country="ae"                    
                     placeholder="Enter phone number"
                     value={value}
-                    onChange={(e) =>{                        
-                        formik.setFieldValue("phone", e);
+                    onChange={(phone) => {
+                        setValue(phone);
+                        formik.setFieldValue("phone", phone);
                     }}
-                    error={value ? (isValidPhoneNumber(value) ? undefined : 'Invalid phone number') : 'Phone number required'}
-                    countryCallingCodeEditable={false}
-                />
-                {/* Is possible: {value && isPossiblePhoneNumber(value) ? 'true' : 'false'}
-                Is valid: {value && isValidPhoneNumber(value) ? 'true' : 'false'} */}
+                    onBlur={() => formik.setFieldTouched("phone", true)}           
+                    enableSearch={true}
+                    containerStyle={{
+                        width: "100%"
+                    }}
+                    inputStyle={{
+                        width: "100%",
+                        height: "60px",
+                        background: "#c3c3c333",
+                        color: "white",
+                        borderRadius: "14px",
+                        border: "1px solid rgba(255,255,255,0.2)",
+                        paddingLeft: "70px"
+                    }}
+                    buttonStyle={{
+                        background: "rgba(255,255,255,0.1)",
+                        border: "1px solid rgba(255,255,255,0.2)",
+                        borderRadius: "14px 0 0 14px",
+                        width: "50px"
+                    }}
+                    dropdownStyle={{
+                        background: "#111",
+                        color: "white"
+                    }}
+                />                
                 
                 {
                     formik.touched.phone && formik.errors.phone &&
@@ -238,17 +267,40 @@ export default function ReferForm() {
                 }
             </div>
 
-            <div className="w-full mb-7">
+            <div className="w-full mb-7 refer-phone">
                 <Label>Referral Phone Number</Label>  
                 <PhoneInput
-                    defaultCountry="AE"
+                    country="ae"                    
                     placeholder="Enter phone number"
                     value={value}
-                    onChange={(e) => {                        
-                        formik.setFieldValue("referrer_phone", e);
+                    onChange={(phone) => {
+                        setValue(phone);
+                        formik.setFieldValue("referrer_phone", phone);
                     }}
-                    error={value ? (isValidPhoneNumber(value) ? undefined : 'Invalid phone number') : 'Phone number required'}
-                    countryCallingCodeEditable={false}
+                    onBlur={() => formik.setFieldTouched("referrer_phone", true)}           
+                    enableSearch={true}
+                    containerStyle={{
+                        width: "100%"
+                    }}
+                    inputStyle={{
+                        width: "100%",
+                        height: "60px",
+                        background: "#c3c3c333",
+                        color: "white",
+                        borderRadius: "14px",
+                        border: "1px solid rgba(255,255,255,0.2)",
+                        paddingLeft: "70px"
+                    }}
+                    buttonStyle={{
+                        background: "rgba(255,255,255,0.1)",
+                        border: "1px solid rgba(255,255,255,0.2)",
+                        borderRadius: "14px 0 0 14px",
+                        width: "50px"
+                    }}
+                    dropdownStyle={{
+                        background: "#111",
+                        color: "white"
+                    }}
                 />
                 
                 {
@@ -283,10 +335,10 @@ export default function ReferForm() {
             </div>
 
             <div className="flex justify-center md:justify-start mt-4 gap-4">
-                <Button type="submit">Submit</Button>                
+                <Button type="submit" disabled={formik.isSubmitting}>Submit</Button>                
 
                 {
-                    loader &&
+                    formik.isSubmitting &&
                     (
                         <div id="loader" className="w-[30px] my-auto">
                             <Spinner />

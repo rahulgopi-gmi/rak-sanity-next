@@ -6,10 +6,16 @@ export const postType = defineType({
   title: 'Post',
   type: 'document',
   icon: DocumentTextIcon,
+  groups: [
+    { name: "content", title: "Content" },
+    { name: "seo", title: "SEO" },
+  ],
+
   fields: [
     defineField({
       name: 'title',
       type: 'string',
+      group: 'content',
     }),
     defineField({
       name: 'slug',
@@ -17,15 +23,18 @@ export const postType = defineType({
       options: {
         source: 'title',
       },
+      group: 'content'
     }),
     defineField({
       name: 'author',
       type: 'reference',
       to: {type: 'author'},
+      group: 'content',
     }),
     defineField({
       name: 'mainImage',
       type: 'image',
+      group: 'content',
       options: {
         hotspot: true,
       },
@@ -41,15 +50,24 @@ export const postType = defineType({
       name: 'categories',
       type: 'array',
       of: [defineArrayMember({type: 'reference', to: {type: 'category'}})],
+      group: 'content'
     }),
     defineField({
       name: 'publishedAt',
       type: 'datetime',
+      group: 'content'
     }),
     defineField({
       name: 'body',
       type: 'blockContent',
+      group: 'content'
     }),
+    defineField({
+      name: "seo",
+      title: "SEO Metadata",
+      type: "seoMeta",
+      group: 'seo',
+    })
   ],
   preview: {
     select: {

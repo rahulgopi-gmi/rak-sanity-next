@@ -2,26 +2,50 @@ import Footer from "@/components/layout/footer/Footer";
 import Header from "@/components/layout/header/Header";
 import { Fragment } from "react/jsx-runtime";
 import { Toaster } from "react-hot-toast";
+import { PageSettingsType } from "@/features/application/types/sanity";
+import { sanityFetch } from "@/sanity/lib/live";
+import { globalSettingsQuery } from "@/sanity/queries/pages";
+import { Suspense } from "react";
+import MarketingLayoutClient from "./MarketingLayoutClient";
 
-export default function MarketingLayout({
-    children,
-}: Readonly<{
+/** 
+ *  Fetch Global Settings
+*/
+async function getData(): Promise<PageSettingsType | null>{
+    try {
+        const { data } = await sanityFetch({
+            query: globalSettingsQuery,        
+            stega: false,
+        });
+        return data ?? null;
+    }
+    catch (error){        
+        console.error(`Sanity Fetch Error  : `, error);
+        return null;
+    }    
+}
+
+/**
+ * Layout Component
+*/
+export default async function MarketingLayout({ children }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const settings = await getData();    
+
+    if (!settings) {
+        return (
+            <div className="w-full h-screen flex items-center justify-center">
+                <p>Something went wrong. Please try again later.</p>
+            </div>
+        );
+    }
+
     return (
-        <Fragment>
-            <Header />
-            {children}
-            <Toaster 
-                position="bottom-right"
-                toastOptions={{
-                    style: {
-                        background: "#333",
-                        color: "#fff"
-                    }
-                }}
-            /> 
-            <Footer />
-        </Fragment>
-    );
+        <Suspense fallback={null}>
+            <MarketingLayoutClient settings={settings}>
+                {children}
+            </MarketingLayoutClient>
+        </Suspense>
+    );       
 }

@@ -101,7 +101,20 @@ export default {
                 {
                     type: "object",
                     title: "Keyword Item",
-                    fields: [                        
+                    fields: [ 
+                        {
+                            name: "date",
+                            type: "date",
+                            title: "Select Date",
+                            options: {
+                                dateFormat: "DD-MM-YYYY",
+                                calendarTodayLabel: "Today"
+                            },
+                            hidden: ({ document }: any) => {
+                                const hiddenSlugs = ["blog"];
+                                return !hiddenSlugs.includes(document?.slug?.current);
+                            }
+                        },                       
                         {
                             name: "icon",
                             type: "image",
@@ -136,18 +149,28 @@ export default {
                             type: "text",
                             title: "Content",
                             hidden: ({ document }: any) => {
-                                const hiddenSlugs = ["refer-friend"];
+                                const hiddenSlugs = ["refer-friend", "blog"];
                                 return hiddenSlugs.includes(document?.slug?.current);
+                            }
+                        },
+                        {
+                            name: "subtitle",
+                            type: "string",
+                            title: "Subtitle",
+                            hidden: ({ document }: any) => {
+                                const hiddenSlugs = ["blog"];
+                                return !hiddenSlugs.includes(document?.slug?.current);
                             }
                         },
                     ],
                     preview: {
                         select: {
                             media: "icon",
+                            title: "header"
                         },
-                        prepare({ media } : any) {
+                        prepare({ media, title } : any) {
                             return {
-                                title: "Keywords",
+                                title: title ? title : "Keywords",
                                 media: media,
                             };
                         },
