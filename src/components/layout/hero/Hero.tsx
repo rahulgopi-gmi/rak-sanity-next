@@ -94,7 +94,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
     return(
         <div className="w-full">                
             <section className="second-fold-wrapper-outer">
-                <div id="about" className="second-fold-wrapper section-space-top section-space-sub-bottom m-0 bg-[linear-gradient(180deg,#1F1F1F_0%,#030303_50%,#000_100%)] relative [@media(max-width:992px)]:text-center">
+                <div id="about" className="second-fold-wrapper section-space-top section-space-sub-bottom m-0 relative max-lg:text-center">
                     <div className="container mx-auto relative z-10">
                         {
                             aboutItems.map((a: HomeAboutType, index: number) => (

@@ -255,6 +255,10 @@ p {
   padding-bottom: 120px;
 }
 
+.second-fold-wrapper{
+  background-image: linear-gradient(180deg, #1F1F1F 0%, #1d1d1d 50%, #000 100%);
+}
+
 .second-fold-wrapper h2 span {
   background: linear-gradient(90deg, #5FC2D5 0%, #5AA6C7 50%, #453C92 100%);
   background-clip: text;
@@ -596,9 +600,21 @@ body .phone-section .iti {
   font-size: 14px !important;
 }
 
+.pill-tag-light{
+  border:solid 1px #5fc2d5;
+  background-image: linear-gradient(0deg, #ffffff1c 0%, #5fc2d53b .01%, #5fc2d503 88.24%);
+  box-shadow: inset 0 0 14px #ffffff30;
+  height:35px;
+  display: flex;
+    align-items: center;
+}
+
 .pill-tag{
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
   box-shadow: 0 0 14px 0 rgba(255, 255, 255, 0.19) inset;
+  height:35px;
+  display:flex;
+  align-items: center;
 }
 
 .refer-page-hdr h2{
@@ -709,7 +725,7 @@ body .phone-section .iti {
 
 .banner-bottom-text{
   letter-spacing: 0px;
-  line-height: normal;
+  line-height: 40px;
   text-transform: uppercase;
   font-weight: 400;
   font-size: 22px;

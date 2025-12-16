@@ -34,7 +34,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pr
             {/* Prev Button */}
             <button
                 onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
-                className="px-3 py-2 rounded-lg text-[#5FC2D5] disabled:opacity-30"
+                className="px-3 py-2 rounded-lg text-[#5FC2D5] disabled:opacity-30 cursor-pointer"
                 disabled={currentPage === 1}
             >
                 <ChevronLeft size={18} />
@@ -53,7 +53,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pr
                     <button
                         key={p}
                         onClick={() => onPageChange(p as number)}
-                        className={`px-4 py-2 rounded-lg border font-sans text-sm border-transparent ${currentPage === p
+                            className={`px-4 py-2 rounded-lg border font-sans cursor-pointer text-sm border-transparent ${currentPage === p
                                 ? "bg-[#5FC2D5] text-black"
                                 : "bg-[#0E1A1F] text-gray-300 hover:bg-[#12282F]"
                             }`}
@@ -66,7 +66,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pr
             {/* Next Button */}
             <button
                 onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
-                className="px-3 py-2 rounded-lg text-[#5FC2D5] disabled:opacity-30"
+                className="px-3 py-2 rounded-lg text-[#5FC2D5] disabled:opacity-30 cursor-pointer"
                 disabled={currentPage === totalPages}
             >
                 <ChevronRight size={18} />
