@@ -221,8 +221,9 @@ export interface ActivitiesMainType {
     _id: string;
     _createdAt: string;
     code: string;
-    name: string;
-    group: string;
+    activityName: string;
+    activityGroup: string;
+    active: any;
     description: string;
 }
 

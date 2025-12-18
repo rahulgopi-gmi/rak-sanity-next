@@ -7,8 +7,15 @@ export default {
     icon: MasterDetailIcon,
     fields: [
         { name: "code", type: "string", title: "Code" },
-        { name: "name", type: "string", title: "Activity Name" },
-        { name: "group", type: "string", title: "Activity Group" },
+        { name: "activityName", type: "string", title: "Activity Name" },
+        { name: "activityGroup", type: "string", title: "Activity Group" },
+        {
+            name: "active",
+            type: "boolean",
+            title: "Active",
+            description: "Enable or disable this activity",
+            initialValue: true,
+        },
         { name: "description", type: "text", title: "Description" },
     ],
     preview: {

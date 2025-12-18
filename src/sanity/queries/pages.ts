@@ -50,25 +50,28 @@ export const getActivitiesItems = `
     _id,
     _createdAt,
     code,
-    name,
-    group,
-    description
+    activityName,
+    activityGroup,
+    description,
+    active
   },
   "premium": *[_type == "premiumActivities"]{
     _id,
     _createdAt,
     code,
-    name,
-    group,
-    description
+    activityName,
+    activityGroup,
+    description,
+    active
   },
   "custom": *[_type == "customActivities"]{
     _id,
     _createdAt,
     code,
-    name,
-    group,
-    description
+    activityName,
+    activityGroup,
+    description,
+    active
   }
 }
 `;

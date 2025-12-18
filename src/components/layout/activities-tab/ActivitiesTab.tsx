@@ -22,20 +22,31 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
     const standardActivities = activities.standard ?? [];
     const premiumActivities = activities.premium ?? [];
     const customActivities = activities.custom ?? [];
+
+    console.log(standardActivities, 'standardActivities')
     
     /** --------------- GET ACTIVITIES BY TAB --------------- */
     const getActivitiesByTab = (tab: string): ActivitiesMainType[] => {
+        let activitiesByTab: ActivitiesMainType[] = [];
+
         switch (tab.toLowerCase()) {
             case "standard":
-                return standardActivities;
+                activitiesByTab = standardActivities;
+                break;
             case "premium":
-                return premiumActivities;
+                activitiesByTab = premiumActivities;
+                break;
             case "custom":
-                return customActivities;
+                activitiesByTab = customActivities;
+                break;
             default:
                 return [];
         }
+
+        // Return only activities where active === true
+        return activitiesByTab.filter(activity => activity.active === true);
     };
+
 
     /** --------------- SEARCH --------------- */
     const getFilteredActivities = (tab: string) => {
@@ -44,9 +55,9 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
 
         const search = searchTerm.toLowerCase();
         return allActivities.filter((activity) =>
-            activity.name.toLowerCase().includes(search) ||
+            activity.activityName.toLowerCase().includes(search) ||
             activity.code.toLowerCase().includes(search) ||
-            activity.group.toLowerCase().includes(search) ||
+            activity.activityGroup.toLowerCase().includes(search) ||
             activity.description.toLowerCase().includes(search)
         );
     };
@@ -115,7 +126,7 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
             <TabsList className="flex w-full h-full">
                 {keywords.map((tab) => (
                     <TabsTrigger
-                        key={tab._key}
+                        key={tab.header}
                         value={tab.header.toLowerCase()}
                         className="flex-1 h-[95px] max-md:h-full data-[state=active]:border-b-0! border-b! border-[rgba(255,255,255,0.18)]! flex flex-col text-left whitespace-normal p-4 group"
                     >
@@ -130,7 +141,7 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
             {
                 keywords.map((tab) => (
                     <TabsContent
-                        key={tab._key}
+                        key={`tab-content-${tab._key}`}
                         value={tab.header.toLowerCase()}
                         className="w-full"
                     >
@@ -169,17 +180,17 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                                                 </span>
                                             </TableHead>
                                             <TableHead
-                                                onClick={() => handleSort("name")} 
+                                                onClick={() => handleSort("activityName")} 
                                                 className="cursor-pointer px-4 py-4 text-gray-300 border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[30%]">
                                                     <span className="flex items-center gap-2">
-                                                        Activity Name <SortIcon field="name" />
+                                                    Activity Name <SortIcon field="activityName" />
                                                     </span>    
                                             </TableHead>
                                             <TableHead 
-                                                onClick={() => handleSort("group")}
+                                                onClick={() => handleSort("activityGroup")}
                                                 className="cursor-pointer px-4 py-4 text-gray-300 border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[30%]">
                                                     <span className="flex items-center gap-2">
-                                                        Activity Group  <SortIcon field="group" />                                                    
+                                                    Activity Group  <SortIcon field="activityGroup" />                                                    
                                                     </span>
                                             </TableHead>
                                             <TableHead 
@@ -197,8 +208,8 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                                             paginatedActivities(tab.header.toLowerCase()).map((activity) => (
                                                 <TableRow key={activity._id}>
                                                     <TableCell>{activity.code}</TableCell>
-                                                    <TableCell>{activity.name}</TableCell>
-                                                    <TableCell>{activity.group}</TableCell>                                                  
+                                                    <TableCell>{activity.activityName}</TableCell>
+                                                    <TableCell>{activity.activityGroup}</TableCell>                                                  
                                                     <TableCell>
                                                         <p className="line-clamp-2 desc overflow-hidden text-ellipsis leading-[normal] font-normal text-sm! font-montserrat text-[#D5D5D5]">
                                                             {activity.description}
@@ -233,7 +244,7 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                             selectedActivity && (
                                 <Modal onClose={() => setSelectedActivity(null)}>
                                     <div className="w-full p-10">
-                                        <h2 className="text-white text-lg! font-sans font-semibold mb-4">{selectedActivity.name}</h2>                                        
+                                        <h2 className="text-white text-lg! font-sans font-semibold mb-4">{selectedActivity.activityName}</h2>                                        
 
                                         <div className="space-y-3 text-sm text-white overflow-y-auto pr-4 max-h-[55vh] overflow-x-hidden custom-scroll">
                                             <div className="flex justify-between border-b border-white/20 pb-2">
@@ -243,12 +254,12 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
 
                                             <div className="flex justify-between max-lg:flex-col border-b border-white/20 pb-2">
                                                 <span className="font-medium text-gray-300 w-full lg:w-[25%] text-sm!">Activity Name</span>
-                                                <span className="w-full lg:w-[75%] text-sm!">{selectedActivity.name}</span>
+                                                <span className="w-full lg:w-[75%] text-sm!">{selectedActivity.activityName}</span>
                                             </div>
 
                                             <div className="flex justify-between  max-lg:flex-col border-b border-white/20 pb-2">
                                                 <span className="font-medium text-gray-300 w-full lg:w-[25%] text-sm!">Activity Group</span>
-                                                <span className="w-full lg:w-[75%] text-sm!">{selectedActivity.group}</span>
+                                                <span className="w-full lg:w-[75%] text-sm!">{selectedActivity.activityGroup}</span>
                                             </div>
 
                                             <div className="pt-2 flex  max-lg:flex-col">
