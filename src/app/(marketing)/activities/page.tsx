@@ -12,17 +12,17 @@ import { cache } from "react";
 /** 
  *  Fetch Sanity Data (cached)
 */
-const getData = cache(async (slug: string): Promise<{ page: PageDataType | null; activities: ActivitiesType }> => {
+const getData = async (slug: string): Promise<{ page: PageDataType | null; activities: ActivitiesType }> => {
     try {
         const [{ data: page }, { data: activitiesData }] = await Promise.all([
             sanityFetch({
                 query: getPageBySlug,
                 params: { slug },
-                stega: false,
+                stega: false
             }),
             sanityFetch({
                 query: getActivitiesItems,
-                stega: false,
+                stega: false
             })
         ]);
 
@@ -38,7 +38,7 @@ const getData = cache(async (slug: string): Promise<{ page: PageDataType | null;
         console.error(`Sanity Fetch Error ${slug}: `, error);
         return { page: null, activities: { standard: [], premium: [], custom: [] } };
     }
-});
+};
 
 /**
  * Generate metadata for the page.
