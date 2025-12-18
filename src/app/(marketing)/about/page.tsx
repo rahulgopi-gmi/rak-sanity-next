@@ -152,12 +152,12 @@ export default async function Page() {
                     </div>
                 </section>
                            
-                <section className="imgcon-wrapper text-white bg-black w-full md:w-auto">
+                <section className="imgcon-wrapper max-lg:pt-5 text-white bg-black w-full md:w-auto">
                     <div className="container">
                         <div className="imgcon-inner-wrapper">
                             <div className="split-wrap flex flex-col-reverse md:flex-row max-md:mb-0 max-lg:mb-10 w-full">
                                 <div className="w-full lg:w-7/12 md:w-full">
-                                    <div className="w-full h-[410px] relative">
+                                    <div className="w-full h-[410px] max-md:h-[235px] relative">
                                         <Image
                                             src={section?.sectionImage && urlFor(section.sectionImage).url()}
                                             alt={section?.sectionImage?.alt ?? ""}
@@ -182,7 +182,7 @@ export default async function Page() {
                 
                 {
                     keywords.length > 0 && (
-                        <section className="ourvmv-sec w-full max-md:py-[90px] py-[120px]">
+                        <section className="ourvmv-sec w-full max-md:pt-[90px] max-md:pb-[50px] py-[120px]">
                             <div className="container">
                                 {
                                     keywords.map((c: CardType, index:number) => {
@@ -192,11 +192,11 @@ export default async function Page() {
                                         return(                                        
                                             <div 
                                                 key={`about-card-${index}`}
-                                                className="ourvmv flex flex-col-reverse md:flex-row items-center max-md:mb-0 mb-[110px] last:mb-0" 
+                                                className="ourvmv flex flex-col-reverse md:flex-row items-center max-md:mb-0 mb-[120px] last:mb-0" 
                                                 data-aos="fade-up"
                                             >
                                                 <div className="md:w-1/2 w-full max-md:mb-10">
-                                                    <div className="m-wrap relative w-full h-[269px]">
+                                                    <div className="m-wrap relative w-full h-[269px] max-md:h-[170px]">
                                                         <Image 
                                                             fill 
                                                             alt={c.image?.alt ?? ""}
@@ -207,8 +207,8 @@ export default async function Page() {
                                                 </div>
 
                                                 <div className="md:w-1/2 w-full max-md:mb-10">
-                                                    <PillTag variant={'light'} className="mb-4 max-lg:mx-auto">{c.tag || ""}</PillTag>
-                                                    <h3 className="font-semibold font-mono mb-5! text-center md:text-left text-[45px]!">
+                                                    <PillTag variant={'light'} className="mb-3 max-lg:mx-auto px-4">{c.tag || ""}</PillTag>
+                                                    <h3 className="font-semibold font-mono mb-5! text-center md:text-left text-[45px]! max-md:text-[44px]! max-md:leading-[44px]">
                                                         {c.header || ""}
                                                     </h3>
                                                     <p className="text-base! font-sans leading-normal! text-center max-w-[348px] mx-auto md:text-left md:mr-auto md:ml-0 md:max-w-[420px]">

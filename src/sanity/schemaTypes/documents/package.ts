@@ -1,33 +1,40 @@
-import { DocumentTextIcon, TagsIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { TagsIcon } from "@sanity/icons";
+import { defineType } from "sanity";
 
 export const packages = defineType({
     name: "packages",
     title: "Packages",
     type: "document",
-    icon: TagsIcon,
-    fields: [
-        defineField({
+    icon: TagsIcon,    
+    fields: [        
+        {
+            name: "order",
+            title: "Order",
+            type: "number",
+            validation: (Rule) => Rule.required(),
+            initialValue: 1
+        },
+        {
             name: "title",
             title: "Title",
             type: "string",
             validation: (Rule) => Rule.required(),
-        }),
+        },
 
-        defineField({
+        {
             name: "label",
             title: "Label",
             type: "string",
             validation: (Rule) => Rule.required(),
-        }),
+        },
 
-        defineField({
+        {
             name: "content",
             title: "Content",
             type: "text"            
-        }),
+        },
 
-        defineField({
+        {
             name: "currency",
             title: "Currency",
             type: "string",
@@ -39,16 +46,16 @@ export const packages = defineType({
                 ],
             },
             validation: (Rule) => Rule.required(),
-        }),
+        },
 
-        defineField({
+        {
             name: "price",
             title: "Price",
             type: "number",
             validation: (Rule) => Rule.required(),
-        }),
+        },
 
-        defineField({
+        {
             name: "billingCycle",
             title: "Billing Cycle",
             type: "string",
@@ -59,31 +66,31 @@ export const packages = defineType({
                 ],
             },
             initialValue: "annually",
-        }),
+        },
 
-        defineField({
+        {
             name: "ctaText",
             title: "Button Text",
             type: "string",
-        }),
+        },
 
-        defineField({
+        {
             name: "ctaLink",
             title: "Button Link",
             type: "string",
-        }),
+        },
 
-        defineField({
+        {
             name: "sectionTitle",
             title: "Features Section Title",
             type: "string",
-        }),
+        },
 
-        defineField({
+        {
             name: "features",
             title: "Included Features",
             type: "array",
             of: [{ type: "string" }],
-        })
+        }
     ]
 })

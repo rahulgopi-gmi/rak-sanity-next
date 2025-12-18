@@ -18,6 +18,9 @@ export default function PackagesDetails(
             ? [packages]
             : [];
 
+    const sortedPackageItems = [...packageItems].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    
+
     return (
         <Fragment>
             {
@@ -26,7 +29,7 @@ export default function PackagesDetails(
                     <div className="rounded-3xl border border-white/20 bg-linear-to-b from-[rgba(87,82,163,0.06)] to-[rgba(87,82,163,0.30)] overflow-x-auto" data-aos="fade-up">
                         <div className="flex w-full">
                                 {
-                                    packageItems.map((p: PackageType, index: number) => (
+                                    sortedPackageItems.map((p: PackageType, index: number) => (
                                         <div 
                                             key={p._id}
                                             className="p-[30px] relative sm:min-w-[293px] min-w-[360px] col-min-w">
@@ -94,7 +97,7 @@ export default function PackagesDetails(
                                     className="mySwiper max-w-full mx-auto"
                                 >
                                     {
-                                        packageItems.map((p: PackageType, index: number) => (
+                                            sortedPackageItems.map((p: PackageType, index: number) => (
                                             <SwiperSlide key={p._id}>
                                                 <div className="rounded-[20px] border border-[rgba(255,255,255,0.14)] bg-[linear-gradient(129deg,rgba(255,255,255,0.19)_8.15%,rgba(255,255,255,0.04)_93.89%)] backdrop-blur-[21.5px] min-h-[560px] sm:min-h-[660px] p-[23px] text-left max-w-[287px] mx-auto sm:max-w-none sm:mx-0">
                                                     <h4 className="text-white text-[16px]! font-sans font-normal uppercase mb-[25px]">

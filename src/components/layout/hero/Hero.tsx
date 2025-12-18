@@ -198,7 +198,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                                         {img}
                                                     </div>
 
-                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-normal! mb-0 relative">Power
+                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-normal! mb-0 relative">
                                                         {t?.content || ""}
                                                     </p>
                                                 </div>

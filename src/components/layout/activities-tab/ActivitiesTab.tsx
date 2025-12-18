@@ -21,9 +21,7 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
 
     const standardActivities = activities.standard ?? [];
     const premiumActivities = activities.premium ?? [];
-    const customActivities = activities.custom ?? [];
-
-    console.log(standardActivities, 'standardActivities')
+    const customActivities = activities.custom ?? [];    
     
     /** --------------- GET ACTIVITIES BY TAB --------------- */
     const getActivitiesByTab = (tab: string): ActivitiesMainType[] => {
@@ -124,18 +122,20 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
     return (
         <Tabs defaultValue="standard" className="w-full">
             <TabsList className="flex w-full h-full">
-                {keywords.map((tab) => (
-                    <TabsTrigger
-                        key={tab.header}
-                        value={tab.header.toLowerCase()}
-                        className="flex-1 h-[95px] max-md:h-full data-[state=active]:border-b-0! border-b! border-[rgba(255,255,255,0.18)]! flex flex-col text-left whitespace-normal p-4 group"
-                    >
-                        <span className="uppercase font-sans">{tab.header}</span>
-                        <p className="invisible group-data-[state=active]:visible text-xs! leading-[normal] font-sans mt-2 font-normal text-[#D5D5D5] text-center">
-                            {tab.content}
-                        </p>
-                    </TabsTrigger>
-                ))}
+                {
+                    keywords.map((tab) => (
+                        <TabsTrigger
+                            key={tab.header}
+                            value={tab.header.toLowerCase()}
+                            className="flex-1 h-[95px] max-md:h-full data-[state=active]:border-b-0! border-b! border-[rgba(255,255,255,0.18)]! flex flex-col text-left whitespace-normal p-4 group"
+                        >
+                            <span className="uppercase font-sans">{tab.header}</span>
+                            <p className="invisible group-data-[state=active]:visible text-xs! leading-[normal] font-sans mt-2 font-normal text-[#D5D5D5] text-center">
+                                {tab.content}
+                            </p>
+                        </TabsTrigger>
+                    ))
+                }
             </TabsList>
 
             {
@@ -145,25 +145,39 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                         value={tab.header.toLowerCase()}
                         className="w-full"
                     >
-                        <div className="border pt-10 pb-10 border-[rgba(255,255,255,0.18)] border-t-0 border-b-0 w-full flex gap-10 max-md:gap-0 justify-center">
-                            <div className="w-[49.65vw] max-md:w-full max-md:px-4 relative">
-                                <Input
-                                    type="text"
-                                    placeholder="Search Activity"
-                                    value={searchTerm}
-                                    onChange={(e) => {
-                                        setSearchTerm(e.target.value);
-                                        setCurrentPage(1);
-                                    }}
-                                    className="focus:border-teal-500 h-[50px] bg-[rgba(255,255,255,0.09)] pr-12 text-white"
-                                />
-                                <SearchIcon className="text-[#A3A3A3] size-5 absolute right-4 max-md:right-8 top-6 -translate-y-1/2 pointer-events-none" />
-                            </div>
+                        <div className="border flex-col items-center pt-10 pb-5 border-[rgba(255,255,255,0.18)] border-t-0 border-b-0 w-full flex justify-center">
+                            <div className="w-full flex justify-center gap-10 max-md:gap-0">
+                                <div className="w-[49.65vw] max-md:w-full max-md:px-4 relative">
+                                    <Input
+                                        type="text"
+                                        placeholder="Search Activity"
+                                        value={searchTerm}
+                                        onChange={(e) => {
+                                            setSearchTerm(e.target.value);
+                                            setCurrentPage(1);
+                                        }}
+                                        className="focus:border-teal-500 h-[50px] bg-[rgba(255,255,255,0.09)] pr-12 text-white"
+                                    />
+                                    <SearchIcon className="text-[#A3A3A3] size-5 absolute right-4 max-md:right-8 top-6 -translate-y-1/2 pointer-events-none" />
+                                </div>
 
-                            <div className="w-fit flex justify-center">
-                                <Button type="button" variant="link" className="cursor-pointer no-underline" onClick={handleReset}>
-                                    Reset <RotateCw />
-                                </Button>
+                                <div className="w-fit flex justify-center">
+                                    <Button type="button" variant="link" className="cursor-pointer no-underline" onClick={handleReset}>
+                                        Reset <RotateCw />
+                                    </Button>
+                                </div>
+                            </div>    
+
+                            <div className="w-full mt-3">
+                                {
+                                    tab.price && (
+                                        <p className="text-center text-[12px]! font-sans font-normal pb-4">
+                                            <span className="text-[#FFFFFF87]">{tab.header} Activity starting at </span>
+                                            <span className="text-white">{tab.price}.</span>
+                                        </p>
+                                    )
+                                }
+                                
                             </div>
                         </div>
 

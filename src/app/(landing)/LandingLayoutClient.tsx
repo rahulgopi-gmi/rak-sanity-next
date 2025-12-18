@@ -1,7 +1,6 @@
 "use client";
 
 import { Toaster } from "react-hot-toast";
-import { PageSettingsType } from "@/features/application/types/sanity";
 import { Fragment } from "react/jsx-runtime";
 
 export default function LandingLayoutClient({

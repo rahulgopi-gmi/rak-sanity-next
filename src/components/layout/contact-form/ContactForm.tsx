@@ -32,7 +32,7 @@ export default function ContactForm({ formonly = true }: Props) {
     const referrer_name = searchParams.get("referrer_name") || "";
     const referrer_email = searchParams.get("referrer_email") || "";
     
-    const [value, setValue] = useState<any>();
+    const [value, setValue] = useState<any>("");
     const router = useRouter();
     
     const initialValues = {
@@ -54,9 +54,9 @@ export default function ContactForm({ formonly = true }: Props) {
             .matches(/^[\p{L} ]+$/u, "Last Name can only contain letters and spaces")
             .required("Last Name is required"),
         email: Yup.string().email("Invalid email").required("Email is required"),
-        phone: Yup.string().required("Phone is required")
+        phone: Yup.string().required("Phone Number is required")
         .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
-            .test("valid", "Phone number is invalid", value => isValidPhoneNumber(value || "")),
+            .test("valid", "Phone Number is invalid", value => isValidPhoneNumber(value || "")),
         message: Yup.string()
             .max(1000, "Message cannot exceed 1000 characters")    
             .required("Message is required"),
@@ -119,7 +119,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     <span className="bg-linear-to-r from-[#81BCD2] via-[#7DB2CD] to-[#5752A3] bg-clip-text text-transparent">future</span>
                                 </h2>
 
-                                <h5 className="text-black font-sans text-base mt-6 text-[16px]! not-italic font-normal leading-[normal]">
+                                <h5 className="text-black font-sans text-base mt-12 text-[16px]! not-italic font-normal leading-[normal]">
                                     GIVE US A CALL
                                 </h5>
 
@@ -143,12 +143,12 @@ export default function ContactForm({ formonly = true }: Props) {
                                     id="first_name"
                                     value={formik.values.first_name}
                                     onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
+                                    onBlur={formik.handleBlur}                                    
                                 />
                                 
                                 {
                                     formik.touched.first_name && formik.errors.first_name &&
-                                    (<Error className="mt-3">{formik.errors.first_name}</Error>)
+                                    (<Error className="mt-1">{formik.errors.first_name}</Error>)
                                 }                                
                                 
                             </div>
@@ -166,7 +166,7 @@ export default function ContactForm({ formonly = true }: Props) {
 
                                 {
                                     formik.touched.last_name && formik.errors.last_name &&
-                                    (<Error className="mt-3">{formik.errors.last_name}</Error>)
+                                    (<Error className="mt-1">{formik.errors.last_name}</Error>)
                                 }  
                             </div>
 
@@ -183,15 +183,18 @@ export default function ContactForm({ formonly = true }: Props) {
 
                                 {
                                     formik.touched.email && formik.errors.email &&
-                                    (<Error className="mt-3">{formik.errors.email}</Error>)
+                                    (<Error className="mt-1">{formik.errors.email}</Error>)
                                 } 
                             </div>
 
                             <div className="w-full phone-section">
                                 <PhoneInput
-                                    country="ae"                    
-                                    placeholder="Enter phone number"
+                                    country="ae"
                                     value={value}
+                                    inputProps={{
+                                        placeholder: "Enter Phone Number",
+                                        name: "phone"
+                                    }}
                                     onChange={(phone) => {
                                         setValue(phone);
                                         formik.setFieldValue("phone", phone);
@@ -208,7 +211,9 @@ export default function ContactForm({ formonly = true }: Props) {
                                         color: "white",
                                         borderRadius: "14px",
                                         border: "1px solid rgba(255,255,255,0.2)",
-                                        paddingLeft: "70px"
+                                        paddingLeft: "70px",
+                                        fontSize: "16px",
+                                        fontFamily: "Montserrat"
                                     }}
                                     buttonStyle={{
                                         background: "rgba(255,255,255,0.1)",
@@ -224,7 +229,7 @@ export default function ContactForm({ formonly = true }: Props) {
 
                                 {
                                     formik.touched.phone && formik.errors.phone &&
-                                    (<Error className="mt-3">{formik.errors.phone}</Error>)
+                                    (<Error className="mt-1">{formik.errors.phone}</Error>)
                                 }
                             </div>
 
@@ -270,7 +275,7 @@ export default function ContactForm({ formonly = true }: Props) {
 
                                 {
                                     formik.touched.enquiry_type && formik.errors.enquiry_type &&
-                                    (<Error className="mt-3">{formik.errors.enquiry_type}</Error>)
+                                    (<Error className="mt-1">{formik.errors.enquiry_type}</Error>)
                                 } 
                             </div>
 
@@ -286,15 +291,12 @@ export default function ContactForm({ formonly = true }: Props) {
                                
                                 {
                                     formik.touched.message && formik.errors.message &&
-                                    (<Error className="mt-3">{formik.errors.message}</Error>)
+                                    (<Error className="mt-1">{formik.errors.message}</Error>)
                                 } 
-                            </div>
-
-                            <div id="formStatus" className="success-msg w-full mt-6"></div>
+                            </div>                            
 
                             <div className="w-full flex items-center gap-8">
-                                <Button type="submit" disabled={formik.isSubmitting} className="uppercase">Send Message</Button>
-
+                                <Button type="submit" disabled={formik.isSubmitting} className="uppercase text-base">Send Message</Button>
                                 {
                                     formik.isSubmitting &&
                                     (

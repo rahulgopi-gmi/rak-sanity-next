@@ -31,6 +31,7 @@ export const getPackages = `
   *[_type == "packages"] {
     _id,
     _createdAt,
+    order,
     title,
     content,
     label,

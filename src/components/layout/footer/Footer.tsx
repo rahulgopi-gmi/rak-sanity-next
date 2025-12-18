@@ -11,7 +11,7 @@ interface HeaderProps {
 export default function Footer({ settings }: HeaderProps) {
 
     const socials = settings?.socialLinks || [];
-    const footerMenu = settings?.footerMenu || [];
+    const footerMenu = settings?.footerMenu || [];    
 
     return(
         <footer

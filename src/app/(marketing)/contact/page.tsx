@@ -88,7 +88,7 @@ export default async function Page() {
 
         return (
             <main className="w-full">
-                <section className="relative w-full bg-[url('/bg-grd-banner.jpg')] max-md:bg-[url('/bg-grd-banner-mob.png')] bg-cover bg-no-repeat">
+                <section className="relative w-full bg-[url('/bg-grd-banner.jpg')] max-md:bg-[url('/bg-grd-banner-mob.png')] max-md:bg-contain bg-cover bg-no-repeat">
                     <div className="flex flex-col items-center justify-center text-center pt-[211px]">
                         <div className="container contact-section">
                             {
@@ -116,7 +116,7 @@ export default async function Page() {
                                             keywords.map((i: any, index: number) => (
                                                 <li key={`keyword-${index}`} className="flex items-start">
                                                     <span className="mr-6 flex items-center justify-center bg-[rgba(95,194,213,0.18)] rounded-tl-[18px] rounded-tr-[18px] rounded-bl-[18px] rounded-br-none p-4">
-                                                        <span className="inline-block w-5 h-5 relative">
+                                                        <span className="inline-block w-5 h-5 max-md:w-6 max-md:h-6 relative">
                                                             {
                                                                 i.icon && (
                                                                     <Image fill alt={i.icon.alt} src={urlFor(i.icon).url()} />

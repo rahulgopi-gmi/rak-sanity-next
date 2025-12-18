@@ -81,23 +81,24 @@ export default async function Page() {
     try {
         const { page, packages } = await getData("packages");
         if (!page) return notFound();
-        const section: PageDataType | undefined = page?.sections?.[0];
+        
+        const data: PageDataType | undefined = page?.sections?.[0];
 
         return (
             <main className="w-full">
                 <section className="package-sec relative bg-[url('/packagebg.jpg')] max-md:bg-[url('/packagebgmob.jpg')] bg-no-repeat bg-cover pt-[218px] pb-[120px] text-center overflow-hidden max-md:pt-[200] max-md:pb-[90]">
                     <div className="container mx-auto package-top-section">
                         {
-                            section?.title && (
+                            data?.title && (
                                 <PillTag className="mx-auto mb-[30px] max-md:mb-5">
-                                    {section?.title}
+                                    {data?.title}
                                 </PillTag>
                             )
                         }
 
                         {
-                            section?.header && (
-                                <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>
+                            data?.header && (
+                                <div dangerouslySetInnerHTML={{ __html: getBodyText(data?.header) }}></div>
                             )
                         }
                     </div>
@@ -111,9 +112,9 @@ export default async function Page() {
                     }
 
                     {
-                        section?.body && (
+                        data?.body && (
                             <div className="package-btn-text">
-                                <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}></div>
+                                <div dangerouslySetInnerHTML={{ __html: getBodyText(data?.body) }}></div>
                             </div>
                         )
                     }

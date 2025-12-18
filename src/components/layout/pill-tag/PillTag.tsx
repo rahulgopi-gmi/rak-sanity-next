@@ -8,7 +8,7 @@ export default function PillTag({ variant = "dark", className, children, ...prop
 
     const variantClasses =
         variant === "light"
-            ? "pill-tag-light leading-[1]! text-black px-8"
+            ? "pill-tag-light leading-[normal]! text-black px-8"
             : "pill-tag border border-white/20 text-white px-6";
 
     return(

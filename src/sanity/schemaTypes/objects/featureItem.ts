@@ -162,6 +162,15 @@ export default {
                                 return !hiddenSlugs.includes(document?.slug?.current);
                             }
                         },
+                        {
+                            name: "price",
+                            type: "string",
+                            title: "Price",
+                            hidden: ({ document }: any) => {
+                                const hiddenSlugs = ["activities"];
+                                return !hiddenSlugs.includes(document?.slug?.current);
+                            }
+                        }
                     ],
                     preview: {
                         select: {

@@ -73,6 +73,7 @@ export type PackageType ={
     _id?: null | undefined;
     title?: string;
     label?: string;
+    order?:number;
     currency?: string;
     price?: number;
     ctaText?:string;
@@ -180,7 +181,7 @@ export interface PageDataType {
     packageHeader?:any;
     packageContent?:any;
     bannerdesktop?: SanityImage | any;
-    bannermobile?: SanityImage | any;
+    bannermobile?: SanityImage | any;    
     seo?: {
         metaTitle?: string;
         metaDescription?: any;
@@ -215,6 +216,7 @@ export interface KeywordsType {
     subtitle?: string;
     title?:string;
     content?:string;
+    price?:string;
 }
 
 export interface ActivitiesMainType {

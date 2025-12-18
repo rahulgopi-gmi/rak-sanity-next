@@ -1108,6 +1108,35 @@ body .phone-section .iti {
   font-family: var(--font-montserrat);
 }
 
+.wh-contact input::placeholder, 
+.wh-contact textarea::placeholder{
+  color:rgb(112, 112, 112)!important;
+}
+
+.wh-contact [data-placeholder]{
+  color: rgb(112, 112, 112) !important;
+}
+
+@media (max-width: 768px) {
+  .blog-top-section h2,
+  .contact-section h2,
+  .about-top-section h2,
+  .package-top-section h2,
+  .activities-top-section h2{
+    font-size:45px;
+    line-height:45px;
+  }
+
+  .about-sub-hdr h3{
+    font-size:45px;
+    line-height:47px;
+  }
+
+  .imgcon-inner-wrapper {
+    margin-left: calc(-50vw + 50% + (0px / 2));
+  }
+}
+
 @media (max-width: 1024px) {
   .about-top-section p{
     font-size:16px !important;

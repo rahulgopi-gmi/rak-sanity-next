@@ -65,9 +65,14 @@ import type { StructureResolver } from 'sanity/structure'
 
         S.divider(),
         S.listItem()
-          .title("Settings")
+          .title('Settings')
           .icon(CogIcon)
-          .child(S.documentTypeList("settings").title("Settings")),
+          .child(
+            S.document()
+              .schemaType('settings')
+              .documentId('settings')
+              .title('Settings')
+          ),
 
         //S.divider(),
         // ALL OTHER DOCUMENT TYPES

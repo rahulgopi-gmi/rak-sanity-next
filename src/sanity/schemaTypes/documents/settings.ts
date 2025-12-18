@@ -5,7 +5,7 @@ export default {
     title: "Global Settings",
     type: "document",
     icon: CogIcon,
-    __experimental_actions: ["update", "publish"], // disable delete & create
+    __experimental_actions: ["update", "publish"],
     fields: [
         // ========== GENERAL ==========
         {

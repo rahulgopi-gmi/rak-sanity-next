@@ -3,6 +3,7 @@ import CampaignsForm from "@/components/layout/campaigns-form/CampaignsForm";
 import PackagesDetails from "@/components/layout/packages-details/PackagesDetails";
 import { Button } from "@/components/ui/button";
 import { KeywordsType, PageDataType } from "@/features/application/types/sanity";
+import { normalizeArray } from "@/lib/helpers";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { getBodyText } from "@/sanity/lib/utils";
@@ -84,21 +85,12 @@ export default async function Page() {
     try {
         const { page, packages } = await getData('campaigns');
         if (!page) return notFound();
+        
         const section = page.sections?.[0];
+        if (!section) return notFound();
 
-        const keywords: KeywordsType[] = Array.isArray(section?.keywords)
-                ? section?.keywords
-                : section?.keywords
-                    ? [section?.keywords]
-                    : [];
-
-        const techkeywords: KeywordsType[] = Array.isArray(section?.techkeywords)
-            ? section?.techkeywords
-            : section?.techkeywords
-                ? [section?.techkeywords]             
-                : [];
-
-        console.log(section, 'section');
+        const keywords: KeywordsType[] = normalizeArray(section.keywords);
+        const techkeywords: KeywordsType[] = normalizeArray(section.techkeywords);      
 
         return(
             <main className="w-full bg-black">

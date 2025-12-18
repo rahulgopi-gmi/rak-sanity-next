@@ -123,7 +123,7 @@ export default function Header({ settings }: HeaderProps) {
                           (                          
                             <Link
                               href={`/${slug}`}
-                              className="text-white font-sans text-md font-semibold"
+                              className="text-white hover:text-primary transition-all ease-in  font-sans text-md md:max-lg:text-sm! font-semibold"
                             >
                               {item.label}
                             </Link>
@@ -153,22 +153,24 @@ export default function Header({ settings }: HeaderProps) {
       {
         isOpen &&
         (
-          <div id="mobileMenu" className="flex flex-col h-screen items-center text-white pr-9 pl-9 pt-[122px] absolute w-full top-0 left-0 bg-mobile-menu">
+          <div id="mobileMenu" className="flex flex-col h-screen items-center text-white pr-9 pl-9 pt-[100px] absolute w-full top-0 left-0 bg-mobile-menu">
             <Button 
               type="button" 
               onClick={handleMenuClose} 
               variant={'link'}
-              className="absolute cursor-pointer px-0 top-9 right-9 text-white w-5 h-5"
+              className="absolute cursor-pointer px-0 top-9 right-9 text-white w-3.5 h-3.5"
             >
-              <Image src="/close-icon.svg" fill alt="Close Menu" className="w-5 h-5" />
+              <Image src="/close-icon.svg" fill alt="Close Menu" className="w-3 h-3" />
             </Button>
 
             {
-              menu.map((item) => {
-                  const slug = item.slug?.current || "";
-                  const isContact = slug === "contact";
+              menu.map((item, index) => {
+                const slug = item.slug?.current || "";
+                const isContact = slug === "contact";
+                const isLast = index === menu.length - 1;
 
-                  return isContact ? (
+                if (isContact) {
+                  return (
                     <Link
                       key={item.label}
                       href={`/${slug}`}
@@ -176,20 +178,23 @@ export default function Header({ settings }: HeaderProps) {
                     >
                       GET STARTED
                     </Link>
-                  ) : (
-                    <Link
-                      key={item.label}
-                      href={`/${slug}`}
-                      className="text-white font-sans text-lg font-semibold py-8 border-b border-gray-700 w-full text-left"
-                    >
-                      {item.label}
-                    </Link>
                   );
                 }
-              )
-          }            
 
-            <div className="flex gap-14 mt-6 items-center">
+                return (
+                  <Link
+                    key={item.label}
+                    href={`/${slug}`}
+                    className={`text-white font-sans text-lg font-semibold py-8 w-full text-left ${!isLast ? "border-b border-[#374151]" : ""
+                      }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })
+            }
+
+            <div className="flex gap-8 mt-6 items-center mx-auto">
               {
                 socials.map((s,i)=> {
                   if (!s?.icon?.asset) return null; 
