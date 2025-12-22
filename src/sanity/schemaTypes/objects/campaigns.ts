@@ -7,6 +7,19 @@ export default {
     icon: TiersIcon,
     fields: [
         {
+            name: "mode",
+            title: "Mode",
+            type: "string",
+            options: {
+                list: [
+                    { title: "Dark", value: "dark" },
+                    { title: "Light", value: "light" },
+                ],
+                layout: "dropdown",
+            },
+            initialValue: "dark",            
+        },     
+        {
             name: "bannerdesktop",
             title: "Banner Desktop",
             type: "image",
@@ -16,6 +29,13 @@ export default {
         {
             name: "bannermobile",
             title: "Banner Mobile",
+            type: "image",
+            options: { hotspot: true },
+            fields: [{ name: "alt", type: "string", title: "Alt Text" }]           
+        },
+        {
+            name: "logo",
+            title: "Logo",
             type: "image",
             options: { hotspot: true },
             fields: [{ name: "alt", type: "string", title: "Alt Text" }]           
@@ -193,7 +213,40 @@ export default {
                 }
             ]
         },
-        
+        {
+            name: "secondarydesktop",
+            title: "Secondary Desktop",
+            type: "image",
+            options: { hotspot: true },
+            fields: [{ name: "alt", type: "string", title: "Alt Text" }]
+        },
+        {
+            name: "secondarymobile",
+            title: "Secondary Mobile",
+            type: "image",
+            options: { hotspot: true },
+            fields: [{ name: "alt", type: "string", title: "Alt Text" }]
+        },
+        {
+            name: "secondaryHeader",
+            title: "Secondary Header",
+            type: "blockContent",
+        },
+        {
+            name: "secondarycontent",
+            title: "Secondary Content",
+            type: "text"
+        },
+        {
+            name: "secondaryCtaName",
+            title: "Secondary CTA Name",
+            type: "string"
+        },
+        {
+            name: "secondaryCtaLink",
+            title: "Secondary CTA Link",
+            type: "string"
+        }               
     ],
     preview: {
         select: {

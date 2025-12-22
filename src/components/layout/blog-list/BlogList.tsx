@@ -60,12 +60,5 @@ export default function BlogList({ posts }: BlogItemsProps){
                 </div>
             </div>
         </Link>
-        
-      
-
-     
-        //         </div>
-        //     </div>
-        // </Link>
     )
 }

@@ -1,6 +1,7 @@
 import ActivitiesTab from "@/components/layout/activities-tab/ActivitiesTab";
 import PillTag from "@/components/layout/pill-tag/PillTag";
 import { ActivitiesType, KeywordsType, PageDataType } from "@/features/application/types/sanity";
+import { normalizeArray } from "@/lib/helpers";
 import { sanityFetch } from "@/sanity/lib/live";
 import { getBodyText } from "@/sanity/lib/utils";
 import { getActivitiesItems, getPageBySlug } from "@/sanity/queries/pages";
@@ -12,12 +13,15 @@ import { cache } from "react";
 /** 
  *  Fetch Sanity Data (cached)
 */
-const getData = async (slug: string): Promise<{ page: PageDataType | null; activities: ActivitiesType }> => {
+const getData = async (slug: string, template:string): Promise<{ page: PageDataType | null; activities: ActivitiesType }> => {
     try {
         const [{ data: page }, { data: activitiesData }] = await Promise.all([
             sanityFetch({
                 query: getPageBySlug,
-                params: { slug },
+                params: { 
+                    slug,
+                    template
+                },
                 stega: false
             }),
             sanityFetch({
@@ -44,7 +48,9 @@ const getData = async (slug: string): Promise<{ page: PageDataType | null; activ
  * Generate metadata for the page.
 */
 export async function generateMetadata(): Promise<Metadata> {
-    const { page } = await getData('activities');
+    const slug = "activities";
+    const template = "other";
+    const { page } = await getData(slug, template);
 
     const seo = page?.seo;
     const title = seo?.metaTitle || "Innovation City";
@@ -53,29 +59,31 @@ export async function generateMetadata(): Promise<Metadata> {
     const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
 
     return{
+      title,
+      description,
+      keywords,
+      robots: {
+        index: true,
+        follow: true,
+      },
+      openGraph: {
         title,
         description,
-        keywords,
-        openGraph: {
-            title,
-            description,
-            type: "website",
-            url: seo?.openGraphUrl || "https://innovationcity.com",
-            images: ogImageUrl ? [{ url: ogImageUrl }] : [],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title,
-            description,
-            images: ogImageUrl ? [ogImageUrl] : [],
-        },
-        other: {
-            author: "Innovation City",
-            robots: "index, follow",
-            "fb:app_id": seo?.facebookAppId || "",            
-            "X-Content-Type-Options": "nosniff",
-            "Referrer-Policy": "strict-origin-when-cross-origin"
-        }
+        type: "website",
+        url: seo?.openGraphUrl || "https://innovationcity.com",
+        images: ogImageUrl ? [{ url: ogImageUrl }] : []        
+      },
+      twitter: {
+          card: "summary_large_image",
+          title,
+          description,
+          images: ogImageUrl ? [ogImageUrl] : [],
+      },
+      other: seo?.facebookAppId
+        ? {
+            "fb:app_id": seo.facebookAppId,
+          }
+        : undefined        
     } satisfies Metadata;
 }
 
@@ -84,16 +92,15 @@ export async function generateMetadata(): Promise<Metadata> {
 */
 export default async function Page() {
     try {
-        const { page, activities } = await getData("activities");
+        const slug = "activities";
+        const template = "other";
+        const { page, activities } = await getData(slug, template);
         if (!page) return notFound();
+
         const section: PageDataType | undefined = page?.sections?.[0];
         if (!section) return notFound();
 
-        const keywords: KeywordsType[] = Array.isArray(section.keywords)
-                ? section.keywords
-                : section.keywords
-                    ? [section.keywords]
-                    : [];
+        const keywords: KeywordsType[] = normalizeArray(section?.keywords);
 
         return (
             <main className="w-full">

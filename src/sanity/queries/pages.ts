@@ -1,9 +1,10 @@
 // /sanity/queries/pages.ts
 export const getPageBySlug = `
-  *[_type == "page" && slug.current == $slug][0]{
+  *[_type == "page" && slug.current == $slug && template == $template][0]{
     _id,
     title,
     slug,
+    template,
     seo{
       metaTitle,
       metaDescription,
@@ -18,14 +19,14 @@ export const getPageBySlug = `
         },        
         alt
       },
-      openGraphUrl
+      openGraphUrl,
+      facebookAppId
     },
     sections[]{
       ...,       
     }
   }
 `;
-
 
 export const getPackages = `
   *[_type == "packages"] {
@@ -237,12 +238,21 @@ export const globalSettingsQuery = `*[_type == "settings"][0]{
   address,
 
   // SEO
-  seoTitle,
-  seoDescription,
-  seoImage{
-    asset->{
-      url
+  seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    openGraphImage{
+      asset->{
+        url,
+        metadata {
+          lqip,
+          dimensions
+        }
+      },        
+      alt
     },
-    alt
+    openGraphUrl,
+    facebookAppId
   }
 }`;

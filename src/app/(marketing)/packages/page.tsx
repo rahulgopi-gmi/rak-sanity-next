@@ -13,12 +13,15 @@ import { cache } from "react";
 /** 
  * Fetch Sanity Data (cached)
 */
-const getData = cache(async (slug: string): Promise<{ page: PageDataType | null; packages: any[] }> => {
+const getData = cache(async (slug: string, template: string): Promise<{ page: PageDataType | null; packages: any[] }> => {
     try {
         const [{ data: page }, { data: packages }] = await Promise.all([
             sanityFetch({
                 query: getPageBySlug,
-                params: { slug },
+                params: { 
+                    slug,
+                    template
+                },
                 stega: false,
             }),
             sanityFetch({
@@ -39,7 +42,9 @@ const getData = cache(async (slug: string): Promise<{ page: PageDataType | null;
  * Generate metadata for the page.
 */
 export async function generateMetadata(): Promise<Metadata> {
-    const { page } = await getData('packages');
+    const slug = "packages";
+    const template = "other";
+    const { page } = await getData(slug, template);
 
     const seo = page?.seo;
     const title = seo?.metaTitle || "Innovation City";
@@ -47,30 +52,32 @@ export async function generateMetadata(): Promise<Metadata> {
     const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
     const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];
 
-    return {
+    return{
+      title,
+      description,
+      keywords,
+      robots: {
+        index: true,
+        follow: true,
+      },
+      openGraph: {
         title,
         description,
-        keywords,
-        openGraph: {
-            title,
-            description,
-            type: "website",
-            url: seo?.openGraphUrl || "https://innovationcity.com",
-            images: ogImageUrl ? [{ url: ogImageUrl }] : [],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title,
-            description,
-            images: ogImageUrl ? [ogImageUrl] : [],
-        },
-        other: {
-            author: "Innovation City",
-            robots: "index, follow",
-            "fb:app_id": seo?.facebookAppId || "",
-            "X-Content-Type-Options": "nosniff",
-            "Referrer-Policy": "strict-origin-when-cross-origin"
-        }
+        type: "website",
+        url: seo?.openGraphUrl || "https://innovationcity.com",
+        images: ogImageUrl ? [{ url: ogImageUrl }] : []        
+      },
+      twitter: {
+          card: "summary_large_image",
+          title,
+          description,
+          images: ogImageUrl ? [ogImageUrl] : [],
+      },
+      other: seo?.facebookAppId
+        ? {
+            "fb:app_id": seo.facebookAppId,
+          }
+        : undefined        
     } satisfies Metadata;
 }
 
@@ -79,9 +86,11 @@ export async function generateMetadata(): Promise<Metadata> {
 */
 export default async function Page() {
     try {
-        const { page, packages } = await getData("packages");
+        const slug = "packages";
+        const template = "other";
+        const { page, packages } = await getData(slug, template);
         if (!page) return notFound();
-        
+
         const data: PageDataType | undefined = page?.sections?.[0];
 
         return (

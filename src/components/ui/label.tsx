@@ -18,7 +18,7 @@ function Label({
 }: LabelProps) {
   const sizeStyles: Record<LabelSize, string> = {
     sm: "text-[14px] font-normal mb-3",
-    md: "text-[16px] font-bold mb-5",
+    md: "text-[16px] font-bold mb-5 max-md:text-sm max-md:leading-[100%]",
     lg: "text-[20px] font-normal mb-5",
   }
 

@@ -107,7 +107,10 @@ export default function CampaignsForm() {
     });    
 
     return(
-        <form onSubmit={formik.handleSubmit} className="flex justify-center lg:justify-end">
+        <form 
+            onSubmit={formik.handleSubmit} 
+            className="flex justify-center lg:justify-end"
+        >
             <div className="w-full max-w-[588px] mr-0 rounded-3xl form-bg p-8 shadow-xl py-14 sm:px-[38px] px-[30px]" data-aos="fade-up">
                 <div className="mb-8 w-full">
                     <Label size="sm" className="font-semibold">Your Name</Label>
@@ -206,13 +209,13 @@ export default function CampaignsForm() {
                     }                        
                 </div>
 
-                <div className="mb-8 w-full">
-                    <p className="text-[rgba(255,255,255,0.60)] font-sans text-[12px]! font-normal leading-[22.4px]! mb-6">
-                        By submitting the form, you agree to the  
+                <div className="mb-8 w-full bottom-text">
+                    <p className="font-sans text-[12px]! font-normal leading-[22.4px]! mb-6">
+                        By submitting the form, you agree to the&nbsp;
                         <Link href="https://freezone.innovationcity.com/rules-and-regulations/" target="_blank" className="text-[#5EBED3] inline-block font-montserrat text-[12px] font-normal leading-[22.4px] underline">
                             Terms and Conditions
-                        </Link>
-                        and
+                        </Link>&nbsp;
+                        and&nbsp;
                         <Link href="/privacy-policy" className="text-[#5EBED3] inline-block font-sans text-[12px] font-normal leading-[22.4px]! underline">
                             Privacy Policy
                         </Link> 

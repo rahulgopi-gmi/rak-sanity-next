@@ -3,11 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { CategoryType, PostType } from "@/features/application/types/sanity";
-import { formatDate } from "@/lib/date";
-import { urlFor } from "@/sanity/lib/image";
-import { getBodyText } from "@/sanity/lib/utils";
-import Image from "next/image";
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import BlogList from "../blog-list/BlogList";
 

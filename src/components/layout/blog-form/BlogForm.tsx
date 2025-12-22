@@ -106,7 +106,7 @@ export default function BlogForm() {
     return(
         <form onSubmit={formik.handleSubmit} className="space-y-5">
             <div className="space-y-2">                
-                <Label size="sm" htmlFor="name">Name*</Label>
+                <Label size="sm" htmlFor="name" className="font-medium">Name*</Label>
                 <Input 
                     type="text" 
                     variant={'sm'}
@@ -124,7 +124,7 @@ export default function BlogForm() {
             </div>
 
             <div className="space-y-2">               
-                <Label size="sm" htmlFor="email">Email*</Label>
+                <Label size="sm" htmlFor="email" className="font-medium">Email*</Label>
                 <Input
                     type="email"
                     variant={'sm'}
@@ -143,7 +143,7 @@ export default function BlogForm() {
             </div>
 
             <div className="space-y-2 blog-form-phone">                
-                <Label size="sm" htmlFor="mobile number">Mobile Number*</Label>
+                <Label size="sm" htmlFor="mobile number" className="font-medium">Mobile Number*</Label>
                 <PhoneInput
                     country="ae"                    
                     placeholder="Enter phone number"
@@ -182,7 +182,7 @@ export default function BlogForm() {
             </div>
 
             <div className="space-y-2">               
-                <Label size="sm" htmlFor="business activity">Business Activity*</Label>
+                <Label size="sm" htmlFor="business activity" className="font-medium">Business Activity*</Label>
                 <Input
                     type="text"
                     variant={'sm'}
@@ -201,7 +201,7 @@ export default function BlogForm() {
             </div>
 
             <div className="space-y-2">               
-                <Label size="sm" htmlFor="">How soon are you planning to start?*</Label>
+                <Label size="sm" htmlFor="" className="font-medium">How soon are you planning to start?*</Label>
                 <div className="relative w-full">
                     <Select
                         name="license_start"

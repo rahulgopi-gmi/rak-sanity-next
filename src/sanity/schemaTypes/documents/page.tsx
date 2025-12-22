@@ -1,5 +1,5 @@
 import { DocumentsIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { defineType } from "sanity";
 
 export const page = defineType({
   name: "page",
@@ -13,42 +13,55 @@ export const page = defineType({
   ],
 
   fields: [
-    defineField({
+    {
       name: "title",
       type: "string",
       title: "Page Title",
       group: "content",
       validation: (Rule) => Rule.required(),
-    }),
-
-    defineField({
+    },
+    {
       name: "slug",
       type: "slug",
       title: "Slug",
       options: { source: "title", maxLength: 96 },
       validation: (Rule) => Rule.required(),
       group: "content",
-    }),
-
-    defineField({
+    },
+    {
+      name: "template",
+      title: "Template",
+      type: "string",
+      options: {
+        list: [
+          { title: "Campaigns", value: "campaigns" },
+          { title: "Other", value: "other" },
+        ],
+        layout: "dropdown",
+      },
+      initialValue: "campaign",
+      validation: Rule => Rule.required().error("Template is required"),
+    },
+    {
       name: "sections",
       title: "Page Sections",
       type: "array",
       group: "content",
+      description:"Only one section can be added.",
       of: [
         { type: "heroSection" },
         { type: "aboutSection" },
         { type: "featureItem" },
         { type: "campaigns"}
-      ]
-    }),
-
-    defineField({
+      ],
+      validation: (Rule) => Rule.max(1).warning("Only one section can be added.")
+    },
+    {
       name: "seo",
       title: "SEO Metadata",
       type: "seoMeta",
       group: "seo",
-    }),
+    },
   ],
 
   preview: {

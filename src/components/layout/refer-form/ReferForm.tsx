@@ -142,7 +142,7 @@ export default function ReferForm() {
                     value={formik.values.first_name}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="text-white!"
+                    className="text-white! font-medium leading-4! text-base"
                 />
                 
                 {
@@ -173,7 +173,11 @@ export default function ReferForm() {
                         color: "white",
                         borderRadius: "14px",
                         border: "1px solid rgba(255,255,255,0.2)",
-                        paddingLeft: "70px"
+                        paddingLeft: "70px",
+                        fontWeight: "500",
+                        fontSize: "16px",
+                        fontFamily: "Montserrat",
+                        lineHeight: "16px"
                     }}
                     buttonStyle={{
                         background: "rgba(255,255,255,0.1)",
@@ -203,7 +207,7 @@ export default function ReferForm() {
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="text-white!"
+                    className="text-white! font-medium leading-4! text-base"
                 />
 
                 {
@@ -258,7 +262,7 @@ export default function ReferForm() {
                     value={formik.values.referrer_name}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="text-white!"
+                    className="text-white! font-medium leading-4! text-base"
                 />
                 
                 {
@@ -289,7 +293,11 @@ export default function ReferForm() {
                         color: "white",
                         borderRadius: "14px",
                         border: "1px solid rgba(255,255,255,0.2)",
-                        paddingLeft: "70px"
+                        paddingLeft: "70px",
+                        fontWeight: "500",
+                        fontSize: "16px",
+                        fontFamily: "Montserrat",
+                        lineHeight: "16px"
                     }}
                     buttonStyle={{
                         background: "rgba(255,255,255,0.1)",
@@ -318,7 +326,7 @@ export default function ReferForm() {
                     value={formik.values.referrer_email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="text-white!" 
+                    className="text-white! font-medium leading-4! text-base" 
                 />
                 
                 {
@@ -335,8 +343,11 @@ export default function ReferForm() {
             </div>
 
             <div className="flex justify-center md:justify-start mt-4 gap-4">
-                <Button type="submit" disabled={formik.isSubmitting}>Submit</Button>                
-
+                <Button 
+                    type="submit" 
+                    disabled={formik.isSubmitting}
+                    className="text-[12px]! font-bold! text-[#212121]! h-[42px] w-[130px]"
+                >Submit</Button>
                 {
                     formik.isSubmitting &&
                     (
@@ -344,11 +355,8 @@ export default function ReferForm() {
                             <Spinner />
                         </div>
                     )
-                }
-                
-            </div>
-
-            <div id="formStatus" className="success-msg w-full mt-6"></div>
+                }                
+            </div>            
         </form>
     )
 }

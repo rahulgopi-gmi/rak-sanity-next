@@ -499,8 +499,8 @@ body .phone-section .iti {
   }
 }
 
-.who-this-for-wrapper h2 span {
-  background: linear-gradient(90deg, #85D2DB 0%, #7EC1D3 72.12%, #453C92 100%);
+.who-this-for-wrapper h2 span {  
+  background: linear-gradient(90deg, #1F4E53 0%, #63C2D4 72.12%, #3D3A87 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -551,6 +551,7 @@ body .phone-section .iti {
   background-position: left bottom;
   background-repeat: no-repeat;
   margin-top: -1px;
+  position:relative;
 }
 
 .li-sub-icon {
@@ -619,16 +620,24 @@ body .phone-section .iti {
 
 .refer-page-hdr h2{
   color:#fff;
-  font-weight: 800;
+  font-weight: 700;
   font-family: var(--proxima-nova);
   letter-spacing: -0.64px;
+  line-height: 63px;
+  margin-top:2rem;
 }
 
 .refer-page-hdr h2 span{
+  font-weight: 800;
   background: linear-gradient(90deg, #5EBED3 0%, #5752A3 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 28px;
+}
+
+.refer-section{
+  margin-top:-30px;
 }
 
 .refer-section p{
@@ -866,6 +875,7 @@ body .phone-section .iti {
   font-weight: 400;
   font-size: 16px;                  
   text-align: center;
+  font-family: var(--font-montserrat);
 }
 
 .thankyou-section h4{
@@ -877,6 +887,7 @@ body .phone-section .iti {
   text-align: center;
   margin-top: 1.5rem;
   margin-bottom:1.5rem !important;
+  font-family: var(--font-montserrat);
 }
 
 .swiper-btn-blog{
@@ -1018,43 +1029,6 @@ body .phone-section .iti {
   font-family: var(--proxima-nova);
 }
 
-.campaigns-sub p{
-  color: #ffffffcc;
-  letter-spacing: 0.16px;
-  line-height: 28px !important;
-  font-weight: 400;
-  font-size: 16px;
-  font-family: var(--font-montserrat);
-}
-
-.form-bg {
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: linear-gradient(154deg, rgba(0, 0, 0, 0.00) -32.33%, rgba(87, 82, 163, 0.40) 93.87%), #000;
-}
-
-.box-bg {
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: linear-gradient(153deg, rgba(0, 0, 0, 0.00) 16.67% 16.67%, rgba(87, 82, 163, 0.40) 100%), #000;
-}
-
-.campaigns-ft-hdr h2{
-  font-family: var(--font-montserrat);
-  font-size: 56px !important;
-  line-height:56px !important;
-  color:#fff;
-  font-weight:700;
-  letter-spacing: -1.12px;
-}
-
-.campaigns-ft-hdr h2 span{
-  background: linear-gradient(to right, #5EBED3, #5752A3);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
 .who-this-for-header h2{
   color:#000;
   line-height: 47px;
@@ -1117,7 +1091,294 @@ body .phone-section .iti {
   color: rgb(112, 112, 112) !important;
 }
 
+.campaigns-ft-hdr h2 {
+  font-family: var(--font-montserrat);
+  font-size: 56px !important;
+  line-height: 56px !important;
+  font-weight: 700;
+  letter-spacing: -1.12px;
+}
+
+.campaigns-ft-hdr h2 span {
+  background: linear-gradient(to right, #5EBED3, #5752A3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.campaigns-btn-hdr h2 {  
+  font-family: var(--proxima-nova);
+  line-height: 51px;
+  font-size: 56px;
+  letter-spacing: -1.12px;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.campaign-dark{
+  width:100%;
+  background:#000;
+}
+
+.campaign-dark .campaigns-ft-hdr h2 {
+  color:#fff;
+}
+
+.campaign-dark .box-bg {
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(153deg, rgba(0, 0, 0, 0.00) 16.67% 16.67%, rgba(87, 82, 163, 0.40) 100%), #000;
+}
+
+.campaign-dark .top-title{
+  color:rgba(255, 255, 255, 0.8);
+}
+
+.campaign-dark .campaigns-sub-top h1 {
+  color: #fff;
+  letter-spacing: -1.8px;
+  font-weight: 800;
+  font-family: var(--proxima-nova);
+  margin-bottom: 0;
+  font-size: 72px;
+}
+
+.campaign-dark .keywords-left h4 {
+  color: #ffffffcc;
+}
+
+.campaign-dark .campaigns-sub p{
+  color: #ffffffcc;
+  letter-spacing: 0.16px;
+  line-height: 28px !important;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: var(--font-montserrat);
+}
+
+.campaign-dark .campaigns-notify{
+  display:none;
+}
+
+.campaign-dark .form-bg {
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: linear-gradient(154deg, rgba(0, 0, 0, 0.00) -32.33%, rgba(87, 82, 163, 0.40) 93.87%), #000;
+}
+
+.campaign-dark .form-bg .bottom-text{
+    color: rgba(255,255,255,0.60)
+}
+
+.campaign-dark .tech-area{
+  background:#000;
+  color:#fff;
+}
+
+.campaign-dark .items-1{
+  background:#0A0A0F;
+}
+
+.campaign-dark .campaign-package{
+  background: #000;
+  color:#fff;
+}
+
+.campaign-dark .campaign-package .package-compaigns-inner .rbf{
+  background:#fff3;
+  opacity: .8;
+}
+
+.campaign-dark .campaigns-btn-hdr h2 {
+  color: #fff;
+}
+
+.campaign-dark .campaigns-btm-txt{
+  color:#fffc;
+}
+
+.campaign-light{
+  width:100%;
+  background:#fff;
+}
+
+.campaign-light .campaigns-ft-hdr h2 {
+  color: #000;
+}
+
+.campaign-light .box-bg {
+  border: 1px solid rgba(16, 16, 16, 0.18);
+  border-radius: 24px;
+  background: linear-gradient(153deg, rgba(255, 255, 255, 0.00) 16.67%, rgba(111, 204, 221, 0.40) 100%), #FFF;
+}
+
+.campaign-light .items-1,
+.campaign-light .items-5,
+.campaign-light .items-6{
+  background:#fff;
+  border: 1px solid rgba(16, 16, 16, 0.18);
+}
+
+.campaign-light .items-1 p,
+.campaign-light .items-2 h3,
+.campaign-light .items-3 h3, 
+.campaign-light .items-5 p,
+.campaign-light .items-6 p{
+  color:#101010;
+}
+
+.campaign-light .top-title {
+  color: rgb(16 16 16 / 0.8);
+}
+
+.campaign-light .campaigns-sub-top h1 {
+  color: #101010;
+  letter-spacing: -1.8px;
+  font-weight: 800;
+  font-family: var(--proxima-nova);
+  margin-bottom: 2.5rem;
+  font-size: 72px;
+}
+
+.campaign-light .campaigns-sub-top h1 span {
+  background: linear-gradient(to right, #5EBED3, #5752A3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.campaign-light .campaigns-sub-top-bdr{
+  display:none;
+}
+
+.campaign-light .keywords-left h4{
+  color:#101010;
+}
+
+.campaign-light .campaigns-sub p{
+  color: #101010;
+  letter-spacing: 0.16px;
+  line-height: 28px !important;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: var(--font-montserrat);
+}
+
+.campaign-light .campaigns-notify{
+  display:block;
+}
+
+.campaign-light .form-bg {
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: linear-gradient(154deg, rgba(255, 255, 255, 0.00) -32.33%, rgba(111, 204, 221, 0.40) 93.87%), #FFF;
+}
+
+.campaign-light .form-bg label {
+  color:#101010 !important;
+}
+
+.campaign-light .form-bg input{
+  color: rgb(16 16 16 / 0.6);
+  background-color: rgba(255, 255, 255, 0.09);
+  border-color: rgb(16 16 16 / 0.2);
+}
+
+.campaign-light .form-bg input::placeholder{
+  color:rgb(16 16 16 / 0.6);
+}
+
+.campaign-light .form-bg .campaigns-form-phone .form-control{
+  border-color: rgb(16 16 16 / 0.2)!important;
+  color: rgb(16 16 16 / 0.6) !important;
+}
+
+.campaign-light .form-bg .bottom-text{
+    color: rgb(16 16 16 / 0.6);
+}
+
+.campaign-light .tech-area {
+  background: #fff;
+  color: #fff;
+}
+
+.campaign-light .campaign-package {
+  background: #fff;
+  color:#101010;
+}
+
+.campaign-light .campaign-package h2,
+.campaign-light .campaign-package p{
+  color:#101010 !important;
+}
+
+.campaign-light .campaign-package .package-compaigns-inner{
+  border:solid 1px rgba(16, 16, 16, 0.18) !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(111, 204, 221, 0.06),
+    rgba(111, 204, 221, 0.30)
+  );
+}
+
+.campaign-light .campaign-package .package-compaigns-inner .rbf{
+  background:rgba(16, 16, 16, 0.18);
+  opacity: .8;
+}
+
+.campaign-light .campaigns-btn-hdr h2{
+  color:#101010;
+}
+
+.campaign-light .campaigns-btm-txt{
+  color:#101010;
+}
+
+
+@media (max-width: 575px) {
+  .home-package-wraper:before{
+    content: "";
+    background: url('/our-package-wrapper-bg-mobile.png') no-repeat top right;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+  }
+}
+
 @media (max-width: 768px) {
+
+  .package-header-txt h2{
+    font-size:35px !important;
+    line-height:35px;
+  }
+
+  .refer-page-hdr h2{
+    line-height: 45px;
+  }
+
+  .banner-top-text{
+    font-size:20px !important;
+  }
+
+  .banner-bottom-text{
+    font-size:22px !important;
+    line-height: normal !important;
+  }
+  
+  .campaign-light .campaigns-btn-hdr h2{
+    line-height: 35px;
+    font-size: 35px;
+  }
+
+  .campaigns-sub-top h1{
+    font-size: 35px;
+    line-height: 35px;
+  }
+
   .blog-top-section h2,
   .contact-section h2,
   .about-top-section h2,

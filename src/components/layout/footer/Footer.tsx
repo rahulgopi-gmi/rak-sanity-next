@@ -46,7 +46,7 @@ export default function Footer({ settings }: HeaderProps) {
                         }                        
                     </div>
 
-                    <p className="order-2 md:order-1 font-montserrat text-sm! leading-normal block">
+                    <p className="order-2 md:order-1 font-sans font-normal text-sm! leading-[100%] block">
                         &copy; {new Date().getFullYear()} {settings?.siteName}. All Rights Reserved.
                     </p>
 

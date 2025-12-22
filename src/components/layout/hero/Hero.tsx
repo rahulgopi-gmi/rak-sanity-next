@@ -116,7 +116,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                         <div dangerouslySetInnerHTML={{ __html: getBodyText(a?.header) || "" }}></div>
                                         <div className="about-section" dangerouslySetInnerHTML={{ __html: getBodyText(a?.content) || "" }}></div>                                        
                                         <Link href={`#${a.ctaLink}`}>
-                                            <Button type="button">{a.ctaName || ""}</Button>
+                                            <Button type="button" className="text-base!">{a.ctaName || ""}</Button>
                                         </Link>
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                                     </div>
                                                 </div>
 
-                                                <span className="flex-1 font-sans text-[#FFF] text-[16px] not-italic font-light [@media(max-width:991px)]:font-normal leading-[normal] block [@media(max-width:575px)]:text-[14px]">
+                                                <span className="flex-1 font-sans text-white text-[16px] not-italic font-normal [@media(max-width:991px)]:font-normal leading-[normal] block [@media(max-width:575px)]:text-[14px]">
                                                     {k?.content || ""}
                                                 </span>
                                             </div>

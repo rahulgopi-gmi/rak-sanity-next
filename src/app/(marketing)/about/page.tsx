@@ -1,5 +1,6 @@
 import PillTag from "@/components/layout/pill-tag/PillTag";
 import { CardType, ContentType, PageDataType } from "@/features/application/types/sanity";
+import { normalizeArray } from "@/lib/helpers";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { getBodyText } from "@/sanity/lib/utils";
@@ -13,12 +14,13 @@ import { cache } from "react";
 /** 
  *  Fetch Sanity Data (cached)
 */
-const getData = cache(async (slug: string): Promise<PageDataType | null> => {
+const getData = cache(async (slug: string, template:string): Promise<PageDataType | null> => {
     try {
         const { data } = await sanityFetch({
             query: getPageBySlug,
             params: { 
-                slug: slug
+                slug,
+                template
             },
             stega: false,
         });
@@ -34,7 +36,9 @@ const getData = cache(async (slug: string): Promise<PageDataType | null> => {
  * Generate metadata for the page.
 */
 export async function generateMetadata(): Promise<Metadata> {
-    const page  = await getData('about');
+    const slug = "about";
+    const template = "other";    
+    const page  = await getData(slug, template);
     const seo = page?.seo;
 
     const title = seo?.metaTitle || "Innovation City";
@@ -42,34 +46,34 @@ export async function generateMetadata(): Promise<Metadata> {
         seo ? toPlainText(seo.metaDescription) 
         : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
     const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
-    const keywords = seo?.keywords?.map((k: string) => k) 
-    || 
-    ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
+    const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
 
     return{
+      title,
+      description,
+      keywords,
+      robots: {
+        index: true,
+        follow: true,
+      },
+      openGraph: {
         title,
         description,
-        keywords,
-        openGraph: {
-            title,
-            description,
-            type: "website",
-            url: seo?.openGraphUrl || "https://innovationcity.com",
-            images: ogImageUrl ? [{ url: ogImageUrl }] : [],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title,
-            description,
-            images: ogImageUrl ? [ogImageUrl] : [],
-        },
-        other: {
-            author: "Innovation City",
-            robots: "index, follow",
-            "fb:app_id": seo?.facebookAppId || "",            
-            "X-Content-Type-Options": "nosniff",
-            "Referrer-Policy": "strict-origin-when-cross-origin"
-        }
+        type: "website",
+        url: seo?.openGraphUrl || "https://innovationcity.com",
+        images: ogImageUrl ? [{ url: ogImageUrl }] : []        
+      },
+      twitter: {
+          card: "summary_large_image",
+          title,
+          description,
+          images: ogImageUrl ? [ogImageUrl] : [],
+      },
+      other: seo?.facebookAppId
+        ? {
+            "fb:app_id": seo.facebookAppId,
+          }
+        : undefined        
     } satisfies Metadata;
 }
 
@@ -78,18 +82,17 @@ export async function generateMetadata(): Promise<Metadata> {
 */
 export default async function Page() {
     try {
-        const data = await getData('about');
+        const slug = "about";
+        const template = "other";
+        const data = await getData(slug, template);
         if (!data) return notFound();
         
         const section: PageDataType | undefined = data?.sections?.[0];
         if (!section) return notFound();
         
-        const keywords: CardType[] = Array.isArray(section.keywords)
-            ? section.keywords
-            : [];
-
-        const desktopImage = section?.imageDesktop && urlFor(section.imageDesktop).url();
-        const mobileImage = section?.imageMobile && urlFor(section.imageMobile).url();        
+        const keywords: CardType[] = normalizeArray(section?.keywords);
+        const desktopImage = section?.imageDesktop && urlFor(section?.imageDesktop).url();
+        const mobileImage = section?.imageMobile && urlFor(section?.imageMobile).url();        
 
         return(
             <main className="w-full">                
@@ -208,7 +211,7 @@ export default async function Page() {
 
                                                 <div className="md:w-1/2 w-full max-md:mb-10">
                                                     <PillTag variant={'light'} className="mb-3 max-lg:mx-auto px-4">{c.tag || ""}</PillTag>
-                                                    <h3 className="font-semibold font-mono mb-5! text-center md:text-left text-[45px]! max-md:text-[44px]! max-md:leading-[44px]">
+                                                    <h3 className="font-semibold font-mono mb-5! text-center md:text-left text-[45px]! max-md:text-[44px]! max-md:leading-11">
                                                         {c.header || ""}
                                                     </h3>
                                                     <p className="text-base! font-sans leading-normal! text-center max-w-[348px] mx-auto md:text-left md:mr-auto md:ml-0 md:max-w-[420px]">

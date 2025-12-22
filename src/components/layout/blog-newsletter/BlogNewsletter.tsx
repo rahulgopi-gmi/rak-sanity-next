@@ -80,7 +80,7 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                             (<Error className="mt-0">{formik.errors.email}</Error>)
                         } 
 
-                        <Button type="submit" className="px-6 text-xs!" disabled={formik.isSubmitting}>
+                        <Button type="submit" className="px-6 text-sm font-medium leading-5!" disabled={formik.isSubmitting}>
                             Subscribe Now
                             {
                                 formik.isSubmitting && <Spinner className="text-black" />
@@ -108,7 +108,12 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                         (<Error className="mt-3">{formik.errors.email}</Error>)
                     } 
 
-                    <Button type="submit" size={'sm'} className="w-full mt-4" disabled={formik.isSubmitting}>
+                    <Button 
+                        type="submit" 
+                        size={'sm'} 
+                                className="w-full mt-4 text-sm! font-medium leading-5" 
+                        disabled={formik.isSubmitting}
+                    >
                         Subscribe
                         {
                             formik.isSubmitting && <Spinner className="text-black" />

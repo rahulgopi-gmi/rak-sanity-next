@@ -45,7 +45,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pr
                 p === "..." ? (
                     <div
                         key={idx}
-                        className="px-4 py-2 rounded-lg bg-[#0E1A1F] text-gray-500"
+                        className="px-4 py-2 rounded-lg bg-[#0E1A1F] text-[#5FC2D5]"
                     >
                         …
                     </div>
@@ -55,7 +55,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pr
                         onClick={() => onPageChange(p as number)}
                             className={`px-4 py-2 rounded-lg border font-sans cursor-pointer text-sm border-transparent ${currentPage === p
                                 ? "bg-[#5FC2D5] text-black"
-                                : "bg-[#0E1A1F] text-gray-300 hover:bg-[#12282F]"
+                                : "bg-[#0E1A1F] text-[#5FC2D5] hover:bg-[#12282F]"
                             }`}
                     >
                         {p}

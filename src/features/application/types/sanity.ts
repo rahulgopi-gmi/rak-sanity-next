@@ -138,7 +138,9 @@ export interface FeatureItem {
     packageCtaName?:string;
     packageCtaLink?:string;
     businessHeader?:any;
-    businessImage?: SanityImage | any;   
+    businessImage?: SanityImage | any;
+    logo?: SanityImage | any;
+    mode?:string;
     businesskeywords?: {
         icon?: SanityImage;
         header?: string;
@@ -151,6 +153,12 @@ export interface FeatureItem {
         description?: any[];
         content?: string;
     }
+    secondaryHeader?: any;
+    secondarycontent?:string;
+    secondaryCtaName?:string;
+    secondaryCtaLink?:string;
+    secondarydesktop?: SanityImage | any;
+    secondarymobile?: SanityImage | any;
     keywords?: {
         icon?: SanityImage;
         header?: string;
@@ -182,29 +190,7 @@ export interface PageDataType {
     packageContent?:any;
     bannerdesktop?: SanityImage | any;
     bannermobile?: SanityImage | any;    
-    seo?: {
-        metaTitle?: string;
-        metaDescription?: any;
-        keywords?: string[];
-        openGraphImage?: {
-            asset?: {
-                url?: string;
-                _ref?: string;
-                _type?: string;
-            };
-        };
-        openGraphUrl?: string;
-        title?: string;
-        description?: string;
-        facebookAppId?: string;
-        other: {
-            author: string;
-            robots: string;
-            "fb:app_id": string;
-            "X-Content-Type-Options": string;
-            "Referrer-Policy": string;
-        }
-    }
+    seo?: SeoMetaType;
 }
 
 export interface KeywordsType {
@@ -262,29 +248,7 @@ export interface PostType {
     author?: AuthorType;
     categories?: CategoryType | any;
     datetime: string;
-    seo?: {
-        metaTitle?: string;
-        metaDescription?: any;
-        keywords?: string[];
-        openGraphImage?: {
-            asset?: {
-                url?: string;
-                _ref?: string;
-                _type?: string;
-            };
-        };
-        openGraphUrl?: string;
-        title?: string;
-        description?: string;
-        facebookAppId?: string;
-        other: {
-            author: string;
-            robots: string;
-            "fb:app_id": string;
-            "X-Content-Type-Options": string;
-            "Referrer-Policy": string;
-        }
-    }
+    seo?: SeoMetaType;
 }
 
 export interface PageSettingsType {
@@ -295,25 +259,30 @@ export interface PageSettingsType {
         };
         alt?: string;
     };
-
     headerMenu?: HeaderMenuItem[];
-
     footerMenu?: FooterMenuItem[];
-
     socialLinks?: SocialLink[];
-
     contactEmail?: string;
     phone?: string;
     address?: string;
+    seo?: SeoMetaType;
+}
 
-    seoTitle?: string;
-    seoDescription?: string;
-    seoImage?: {
+export interface SeoMetaType {    
+    metaTitle?: string;
+    metaDescription?: any;
+    keywords?: string[];
+    openGraphImage?: {
         asset?: {
-            url: string;
+            url?: string;
+            _ref?: string;
+            _type?: string;
         };
-        alt?: string;
     };
+    openGraphUrl?: string;
+    title?: string;
+    description?: string;
+    facebookAppId?: string;       
 }
 
 export interface HeaderMenuItem {

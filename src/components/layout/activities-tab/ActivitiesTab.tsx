@@ -129,7 +129,7 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                             value={tab.header.toLowerCase()}
                             className="flex-1 h-[95px] max-md:h-full data-[state=active]:border-b-0! border-b! border-[rgba(255,255,255,0.18)]! flex flex-col text-left whitespace-normal p-4 group"
                         >
-                            <span className="uppercase font-sans">{tab.header}</span>
+                            <span className="uppercase font-sans font-semibold">{tab.header}</span>
                             <p className="invisible group-data-[state=active]:visible text-xs! leading-[normal] font-sans mt-2 font-normal text-[#D5D5D5] text-center">
                                 {tab.content}
                             </p>
@@ -156,13 +156,13 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                                             setSearchTerm(e.target.value);
                                             setCurrentPage(1);
                                         }}
-                                        className="focus:border-teal-500 h-[50px] bg-[rgba(255,255,255,0.09)] pr-12 text-white"
+                                        className="focus:border-teal-500 h-[50px] bg-[rgba(255,255,255,0.09)] pr-12 text-white text-sm!"
                                     />
                                     <SearchIcon className="text-[#A3A3A3] size-5 absolute right-4 max-md:right-8 top-6 -translate-y-1/2 pointer-events-none" />
                                 </div>
 
                                 <div className="w-fit flex justify-center">
-                                    <Button type="button" variant="link" className="cursor-pointer no-underline" onClick={handleReset}>
+                                    <Button type="button" variant="link" className="cursor-pointer no-underline font-medium text-[#5FC2D5]!" onClick={handleReset}>
                                         Reset <RotateCw />
                                     </Button>
                                 </div>
@@ -188,29 +188,29 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                                         <TableRow>
                                             <TableHead 
                                                 onClick={() => handleSort("code")}
-                                                className="cursor-pointer px-4 py-4 text-gray-300 border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[10%]">
-                                                <span className="flex items-center gap-2">
+                                                className="cursor-pointer px-4 py-4 text-white border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[10%]">
+                                                <span className="flex items-center gap-2 text-sm">
                                                     Code <SortIcon field="code" />
                                                 </span>
                                             </TableHead>
                                             <TableHead
                                                 onClick={() => handleSort("activityName")} 
-                                                className="cursor-pointer px-4 py-4 text-gray-300 border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[30%]">
-                                                    <span className="flex items-center gap-2">
-                                                    Activity Name <SortIcon field="activityName" />
+                                                className="cursor-pointer px-4 py-4 text-white border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[30%]">
+                                                    <span className="flex items-center gap-2 text-sm">
+                                                        Activity Name <SortIcon field="activityName" />
                                                     </span>    
                                             </TableHead>
                                             <TableHead 
                                                 onClick={() => handleSort("activityGroup")}
-                                                className="cursor-pointer px-4 py-4 text-gray-300 border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[30%]">
-                                                    <span className="flex items-center gap-2">
-                                                    Activity Group  <SortIcon field="activityGroup" />                                                    
+                                                className="cursor-pointer px-4 py-4 text-white border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[30%]">
+                                                    <span className="flex items-center gap-2 text-sm">
+                                                        Activity Group  <SortIcon field="activityGroup" />                                                    
                                                     </span>
                                             </TableHead>
                                             <TableHead 
                                                 onClick={() => handleSort("description")}
-                                                className="cursor-pointer px-4 py-4 text-gray-300 border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[30%]">
-                                                    <span className="flex items-center gap-2">
+                                                className="cursor-pointer px-4 py-4 text-white border-b border-r font-sans border-[#FFFFFF33] font-semibold w-[30%]">
+                                                    <span className="flex items-center gap-2 text-sm">
                                                         Description <SortIcon field="description" />
                                                     </span>
                                             </TableHead>
@@ -221,10 +221,10 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                                             paginatedActivities(tab.header.toLowerCase()).length > 0 ? (
                                             paginatedActivities(tab.header.toLowerCase()).map((activity) => (
                                                 <TableRow key={activity._id}>
-                                                    <TableCell>{activity.code}</TableCell>
-                                                    <TableCell>{activity.activityName}</TableCell>
-                                                    <TableCell>{activity.activityGroup}</TableCell>                                                  
-                                                    <TableCell>
+                                                    <TableCell className="text-sm! text-[#d5d5d5] leading-[100%] font-normal">{activity.code}</TableCell>
+                                                    <TableCell className="text-sm! text-[#d5d5d5] leading-[100%] font-normal">{activity.activityName}</TableCell>
+                                                    <TableCell className="text-sm! text-[#d5d5d5] leading-[100%] font-normal">{activity.activityGroup}</TableCell>                                                  
+                                                    <TableCell className="text-sm! text-[#d5d5d5] leading-[100%] font-normal">
                                                         <p className="line-clamp-2 desc overflow-hidden text-ellipsis leading-[normal] font-normal text-sm! font-montserrat text-[#D5D5D5]">
                                                             {activity.description}
                                                         </p>

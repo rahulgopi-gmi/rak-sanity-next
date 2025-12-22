@@ -212,6 +212,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                         borderRadius: "14px",
                                         border: "1px solid rgba(255,255,255,0.2)",
                                         paddingLeft: "70px",
+                                        fontWeight: "500",
                                         fontSize: "16px",
                                         fontFamily: "Montserrat"
                                     }}

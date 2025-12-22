@@ -119,22 +119,10 @@ export default {
 
         // ========== DEFAULT SEO ==========
         {
-            name: "seoTitle",
-            title: "Default SEO Title",
-            type: "string"
-        },
-        {
-            name: "seoDescription",
-            title: "Default SEO Description",
-            type: "text"
-        },
-        {
-            name: "seoImage",
-            title: "Default Open Graph Image",
-            type: "image",
-            options: { hotspot: true },
-            fields: [{ name: "alt", type: "string", title: "Alt Text" }]
-        }
+            name: "seo",
+            title: "SEO Metadata",
+            type: "seoMeta"            
+        }        
     ],
 
     preview: {

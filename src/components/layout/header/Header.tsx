@@ -112,7 +112,7 @@ export default function Header({ settings }: HeaderProps) {
                     const isContact = slug === "contact";
 
                     return (
-                      <li key={item.label} className="flex items-center last:ml-auto">
+                      <li key={item.label} className="flex items-center last:ml-auto ">
                         {
                           isContact ? (                          
                             <Link href={`/${slug}`}>
@@ -174,7 +174,7 @@ export default function Header({ settings }: HeaderProps) {
                     <Link
                       key={item.label}
                       href={`/${slug}`}
-                      className="md:block hover:bg-white transition text-black font-sans text-lg font-semibold uppercase px-6 py-2 rounded-lg bg-[rgb(var(--primary-color))] shadow-[0_0_14px_0_rgba(255,255,255,0.19)_inset] mt-6 w-full text-center"
+                      className="md:block hover:bg-white transition text-black font-sans text-xs font-semibold uppercase px-6 py-3 my-4 rounded-lg bg-[rgb(var(--primary-color))] shadow-[0_0_14px_0_rgba(255,255,255,0.19)_inset] mt-6 w-full text-center"
                     >
                       GET STARTED
                     </Link>
@@ -185,7 +185,7 @@ export default function Header({ settings }: HeaderProps) {
                   <Link
                     key={item.label}
                     href={`/${slug}`}
-                    className={`text-white font-sans text-lg font-semibold py-8 w-full text-left ${!isLast ? "border-b border-[#374151]" : ""
+                    className={`text-white font-sans text-sm font-semibold py-8 w-full text-left ${!isLast ? "border-b border-[#374151]" : ""
                       }`}
                   >
                     {item.label}

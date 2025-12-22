@@ -69,21 +69,21 @@ export default function BlogSwiper({ keywords }: KeywordsType | any) {
                                 </div>
 
                                 <div className="w-full px-8 xl:px-12 py-20 flex flex-col gap-y-0 lg:gap-y-4">
-                                    <h3 className="text-[16px]! leading-[normal]! font-light text-white mb-6 mt-7 lg:mt-0 lg:mb-0">
+                                    <h3 className="text-[16px]! font-sans leading-[100%]! font-light text-white mb-6 mt-7 lg:mt-0 lg:mb-0">
                                         {s?.date}
                                     </h3>
                                     
-                                    <h2 className="text-white text-[18px]! xl:text-[22px]! leading-[normal]! font-semibold capitalize max-w-[380px]  mb-6 mt-0 lg:mt-0 lg:mb-0">
+                                    <h2 className="text-white font-sans text-[18px]! xl:text-[22px]! leading-[normal]! font-semibold capitalize max-w-[380px]  mb-6 mt-0 lg:mt-0 lg:mb-0">
                                         {s?.header}
                                     </h2>
                                     
-                                    <p 
+                                    <div
                                         dangerouslySetInnerHTML={{ __html: getBodyText(s?.body) }}
                                         className="text-white text-[16px]! font-sans font-normal leading-[21px]! max-w-[500px] lg:mb-0 mb-7"
                                     >                                        
-                                    </p>
+                                    </div>
 
-                                    <h4 className="text-[12px]! leading-[normal]! font-normal font-sans text-white capitalize mb-10 lg:mb-0">
+                                    <h4 className="text-[12px]! leading-[100%]! font-normal font-sans text-white capitalize mb-10 lg:mb-0">
                                         {s?.subtitle}
                                     </h4>
                                 </div>

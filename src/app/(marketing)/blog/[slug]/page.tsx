@@ -82,29 +82,31 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
 
     return{
+      title,
+      description,
+      keywords,
+      robots: {
+        index: true,
+        follow: true,
+      },
+      openGraph: {
         title,
         description,
-        keywords,
-        openGraph: {
-            title,
-            description,
-            type: "website",
-            url: seo?.openGraphUrl || "https://innovationcity.com",
-            images: ogImageUrl ? [{ url: ogImageUrl }] : [],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title,
-            description,
-            images: ogImageUrl ? [ogImageUrl] : [],
-        },
-        other: {
-            author: "Innovation City",
-            robots: "index, follow",
-            "fb:app_id": seo?.facebookAppId || "",            
-            "X-Content-Type-Options": "nosniff",
-            "Referrer-Policy": "strict-origin-when-cross-origin"
-        }
+        type: "website",
+        url: seo?.openGraphUrl || "https://innovationcity.com",
+        images: ogImageUrl ? [{ url: ogImageUrl }] : []        
+      },
+      twitter: {
+          card: "summary_large_image",
+          title,
+          description,
+          images: ogImageUrl ? [ogImageUrl] : [],
+      },
+      other: seo?.facebookAppId
+        ? {
+            "fb:app_id": seo.facebookAppId,
+          }
+        : undefined        
     } satisfies Metadata;
 }
 
@@ -114,7 +116,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     try {
         const { page, categories, related } = await getData(slug);
         if (!page) return notFound();       
-
         const sideList = getBodyJSON(page?.body);
 
         return (
@@ -257,7 +258,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 </section>
             </main>
         )
-
     } 
     catch (error) {
         console.error("Page render failed:", error);

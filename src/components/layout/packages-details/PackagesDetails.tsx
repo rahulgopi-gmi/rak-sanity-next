@@ -18,15 +18,14 @@ export default function PackagesDetails(
             ? [packages]
             : [];
 
-    const sortedPackageItems = [...packageItems].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-    
+    const sortedPackageItems = [...packageItems].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));    
 
     return (
         <Fragment>
             {
                 view ?
                 (
-                    <div className="rounded-3xl border border-white/20 bg-linear-to-b from-[rgba(87,82,163,0.06)] to-[rgba(87,82,163,0.30)] overflow-x-auto" data-aos="fade-up">
+                    <div className="rounded-3xl package-compaigns-inner overflow-x-auto" data-aos="fade-up">
                         <div className="flex w-full">
                                 {
                                     sortedPackageItems.map((p: PackageType, index: number) => (
@@ -49,7 +48,7 @@ export default function PackagesDetails(
                                                 {p.currency} {p.price}
                                             </p>
 
-                                            <div className="h-px bg-white/20 opacity-80 mt-4"></div>
+                                            <div className="h-px rbf mt-4"></div>
 
                                             <div className="space-y-3 pt-2 w-full">
                                                 {
@@ -60,9 +59,11 @@ export default function PackagesDetails(
                                                                 <Image fill alt="tic icon" src="/tick-icon.svg" />
                                                             </div>
                                                             
-                                                            <p className="text-[#ffffffcc] font-sans text-[14px]! leading-[21px]! font-normal tracking-[0.14px]!">{f}</p>
+                                                            <div className="w-full">
+                                                                <p className="text-[#ffffffcc] font-sans text-[14px]! leading-[21px]! font-normal tracking-[0.14px]!">{f}</p>
+                                                            </div>
                                                         </div>
-                                                        <div className="h-px bg-white/20 opacity-80 mt-4"></div>
+                                                            <div className="h-px rbf mt-4"></div>
                                                     </div>
                                                     ))
                                                 }                                                                                            

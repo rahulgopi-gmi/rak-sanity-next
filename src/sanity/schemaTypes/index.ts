@@ -39,6 +39,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     customActivities,
     premiumActivities,
     campaigns,
-    settings    
+    settings,
   ],
 }

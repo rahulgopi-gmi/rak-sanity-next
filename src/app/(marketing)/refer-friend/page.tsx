@@ -9,14 +9,16 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { getBodyText } from "@/sanity/lib/utils";
 import { cache } from "react";
+import { normalizeArray } from "@/lib/helpers";
 
 /** Fetch Sanity Data with cache */
-const getData = cache(async (slug: string): Promise<PageDataType | null> => {
+const getData = cache(async (slug: string, template:string): Promise<PageDataType | null> => {
     try {
         const { data } = await sanityFetch({
             query: getPageBySlug,
             params: { 
-                slug: slug
+                slug,
+                template
             },
             stega: false,
         });
@@ -32,7 +34,9 @@ const getData = cache(async (slug: string): Promise<PageDataType | null> => {
  * Generate metadata for the page.
 */
 export async function generateMetadata(): Promise<Metadata> {
-    const data  = await getData('refer-friend');
+    const slug = "refer-friend";
+    const template = "other";
+    const data  = await getData(slug, template);
     const seo = data?.seo;
 
     const title = seo?.metaTitle || "Innovation City";
@@ -40,34 +44,34 @@ export async function generateMetadata(): Promise<Metadata> {
         seo ? toPlainText(seo.metaDescription) 
         : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
     const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
-    const keywords = seo?.keywords?.map((k: string) => k) 
-    || 
-    ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
+    const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
 
     return{
+      title,
+      description,
+      keywords,
+      robots: {
+        index: true,
+        follow: true,
+      },
+      openGraph: {
         title,
         description,
-        keywords,
-        openGraph: {
-            title,
-            description,
-            type: "website",
-            url: seo?.openGraphUrl || "https://innovationcity.com",
-            images: ogImageUrl ? [{ url: ogImageUrl }] : [],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title,
-            description,
-            images: ogImageUrl ? [ogImageUrl] : [],
-        },
-        other: {
-            author: "Innovation City",
-            robots: "index, follow",
-            "fb:app_id": seo?.facebookAppId || "",            
-            "X-Content-Type-Options": "nosniff",
-            "Referrer-Policy": "strict-origin-when-cross-origin"
-        }
+        type: "website",
+        url: seo?.openGraphUrl || "https://innovationcity.com",
+        images: ogImageUrl ? [{ url: ogImageUrl }] : []        
+      },
+      twitter: {
+          card: "summary_large_image",
+          title,
+          description,
+          images: ogImageUrl ? [ogImageUrl] : [],
+      },
+      other: seo?.facebookAppId
+        ? {
+            "fb:app_id": seo.facebookAppId,
+          }
+        : undefined        
     } satisfies Metadata;
 }
 
@@ -76,21 +80,22 @@ export async function generateMetadata(): Promise<Metadata> {
 */
 export default async function Page() {
     try{
-        const data = await getData('refer-friend');
+        const slug = "refer-friend";
+        const template = "other";
+        const data = await getData(slug, template);
         if (!data) return notFound();
+
         const section: PageDataType | undefined = data?.sections?.[0];
-        const keywords: CardType[] = Array.isArray(section?.keywords)
-            ? section?.keywords
-            : section?.keywords
-                ? [section?.keywords]
-                : [];
+        if (!section) return notFound();
+        
+        const keywords: CardType[] = normalizeArray(section?.keywords);                
 
         return (
             <main className="relative w-full">
-                <section className="h-[520px] relative">                    
+                <section className="relative h-[520px] max-md:h-[430px]">
                     {
                         section?.bannerdesktop && (
-                            <div className="hidden md:block w-full">
+                            <div className="hidden md:block w-full h-[520px] relative">
                                 <Image fill alt={section?.bannerdesktop.alt} src={urlFor(section?.bannerdesktop).url()} />
                             </div>
                         )
@@ -98,13 +103,13 @@ export default async function Page() {
                 
                     {
                         section?.bannermobile && (
-                            <div className="w-full md:hidden">
-                                <Image fill alt={section?.bannerdesktop.alt} src={urlFor(section?.bannermobile).url()} />
+                            <div className="w-full h-[430px] md:hidden relative">
+                                <Image fill alt={section?.bannermobile.alt} src={urlFor(section?.bannermobile).url()} />
                             </div>
                         )        
                     }
 
-                    <div className="w-full absolute">
+                    <div className="w-full absolute top-0">
                         <div className="container">
                             <div className="w-full pt-[210px] lg:pt-[340px] pb-[100px] lg:pb-[50px]">
                                 <div className="max-w-[580px] md:w-full refer-page-hdr">
