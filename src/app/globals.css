@@ -881,6 +881,10 @@ body .phone-section .iti {
   font-family: var(--proxima-nova);
 }
 
+.privacy-policy-wrapper a:hover{
+  color: #94d6e4;
+}
+
 .thankyou-section h1{
   color:#fff;
   line-height: normal;
@@ -928,6 +932,10 @@ body .phone-section .iti {
   border:solid 1px rgba(95, 194, 213, 0.27);
   background: linear-gradient(145deg, rgba(95, 194, 213, 0.18) 18.06%, rgba(95, 194, 213, 0.09) 85.97%);
   color:#5fc2d5;
+}
+
+.swiper-btn-blog:hover{
+  background: linear-gradient(0deg, rgba(95, 194, 213, 0.18) 18.06%, rgba(95, 194, 213, 0.09) 85.97%);
 }
 
 .blog-content-view p{

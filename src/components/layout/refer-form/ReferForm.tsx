@@ -337,7 +337,7 @@ export default function ReferForm() {
 
             <div className="w-full mb-8">
                 <p className="text-[#FFFFFF99] text-[12px]! font-sans font-normal leading-[22.4px]!">
-                    By submitting the form, you agree to the <Link href="https://freezone.innovationcity.com/rules-and-regulations/" target="_blank" className="text-[#5EBED3]">Terms and Conditions</Link> and <Link href="privacy-policy.html" className="text-[#5EBED3]">Privacy Policy</Link> of INC. You consent to INC collecting
+                    By submitting the form, you agree to the <Link href="https://freezone.innovationcity.com/rules-and-regulations/" target="_blank" className="text-primary hover:text-primary/80">Terms and Conditions</Link> and <Link href="privacy-policy.html" className="text-primary hover:text-primary/80">Privacy Policy</Link> of INC. You consent to INC collecting
                     your name, email address and phone number and contacting you either by the email address or phone number supplied.
                 </p>
             </div>

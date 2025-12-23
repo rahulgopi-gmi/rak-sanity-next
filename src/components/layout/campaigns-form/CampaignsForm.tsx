@@ -15,7 +15,11 @@ import toast from "react-hot-toast";
 import { Error } from "@/components/ui/error";
 import { Spinner } from "@/components/ui/spinner";
 
-export default function CampaignsForm() {
+type CampaignsFormTYPE = {
+    mode?: string;
+}
+
+export default function CampaignsForm({ mode } : CampaignsFormTYPE){
     const [value, setValue] = useState<any>();
 
     const searchParams = useSearchParams();
@@ -212,11 +216,11 @@ export default function CampaignsForm() {
                 <div className="mb-8 w-full bottom-text">
                     <p className="font-sans text-[12px]! font-normal leading-[22.4px]! mb-6">
                         By submitting the form, you agree to the&nbsp;
-                        <Link href="https://freezone.innovationcity.com/rules-and-regulations/" target="_blank" className="text-[#5EBED3] inline-block font-montserrat text-[12px] font-normal leading-[22.4px] underline">
+                        <Link href="https://freezone.innovationcity.com/rules-and-regulations/" target="_blank" className={`${mode === "dark" ? "hover:text-primary/80" : "hover:text-[#32a0b9]"} text-primary  inline-block font-montserrat text-[12px] font-normal leading-[22.4px] underline`}>
                             Terms and Conditions
                         </Link>&nbsp;
                         and&nbsp;
-                        <Link href="/privacy-policy" className="text-[#5EBED3] inline-block font-sans text-[12px] font-normal leading-[22.4px]! underline">
+                        <Link href="/privacy-policy" className={` ${mode === "dark" ? "hover:text-primary/80" : "hover:text-[#32a0b9]"} text-primary inline-block font-sans text-[12px] font-normal leading-[22.4px]! underline`}>
                             Privacy Policy
                         </Link> 
                         of INC. You consent to INC collecting your name, email address, phone number

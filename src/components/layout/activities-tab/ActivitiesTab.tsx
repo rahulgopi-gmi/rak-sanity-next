@@ -225,12 +225,12 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                                                     <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[100%] font-normal">{activity.activityName}</TableCell>
                                                     <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[100%] font-normal">{activity.activityGroup}</TableCell>                                                  
                                                     <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[100%] font-normal">
-                                                        <p className="line-clamp-2 desc overflow-hidden text-ellipsis leading-[normal] font-normal text-sm! font-montserrat text-[#D5D5D5]">
+                                                        <p className="line-clamp-2 desc overflow-hidden text-ellipsis leading-[normal] font-normal text-sm! font-sans text-[#D5D5D5]">
                                                             {activity.description}
                                                         </p>
                                                         <p 
                                                             onClick={() => setSelectedActivity(activity)}
-                                                            className="cursor-pointer show-more-btn text-xs! mt-2 font-montserrat font-medium text-[#5FC2D5]">
+                                                            className="cursor-pointer show-more-btn text-xs! mt-2 font-sans font-medium text-[#5FC2D5] hover:text-[#5FC2D5]/70">
                                                                 Show More
                                                         </p>
                                                     </TableCell>

@@ -14,11 +14,12 @@ export default function BlogList({ posts }: BlogItemsProps){
         <Link key={posts?._id} href={`blog/${posts?.slug}`}>
             <div className="blog-card  h-full bg-[#0F0F0F] border border-[#1F1F1F] rounded-3xl overflow-hidden shadow-lg">
                 <div className="relative w-full">
-                    <div className="w-full h-[250px] relative">
+                    <div className="w-full h-[250px] relative group overflow-hidden">
                         <Image
                             fill
                             alt={posts?.mainImage?.alt || posts?.title}
                             src={urlFor(posts?.mainImage).url()}
+                            className="transition-transform duration-500 ease-out group-hover:scale-110"
                         />
                     </div>
 

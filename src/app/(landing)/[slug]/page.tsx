@@ -212,7 +212,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                         </div>
 
                         <div className="w-full">
-                            <CampaignsForm />
+                            <CampaignsForm mode={section?.mode}/>
                         </div>
                     </div>
                 </section>

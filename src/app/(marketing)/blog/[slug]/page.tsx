@@ -120,7 +120,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
         return (
             <main className="bg-black w-full">
-                <section className="relative w-full bg-[url('/aboutbgmob.jpg')] md:bg-[url('/aboutbgdesk.jpg')] md:bg-cover bg-no-repeat with-overlay pt-[211px] pb-[380px]">
+                <section className="relative w-full bg-[url('/aboutbgmob.jpg')] md:bg-[url('/aboutbgdesk.jpg')] bg-cover bg-no-repeat with-overlay pt-[211px] pb-[380px]">
                     <div className="container">
                          <div className="text-white" data-aos="fade-up">
                             <div className="flex items-center gap-3">
@@ -213,7 +213,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                         categories.map((list, index) =>(
                                             <span
                                                 key={`categories-list-${index}`}
-                                                className="px-6 py-2 rounded-full border border-[rgba(255,255,255,0.20)] bg-[rgba(255,255,255,0.05)] text-white font-sans text-[12px] font-normal leading-[18px]">
+                                                className="px-6 py-2 rounded-full border border-[rgba(255,255,255,0.20)] bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.09)] text-white font-sans text-[12px] font-normal leading-[18px]">
                                                 {list.title}
                                             </span>
                                         ))

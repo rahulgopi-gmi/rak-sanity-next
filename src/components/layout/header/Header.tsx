@@ -185,6 +185,7 @@ export default function Header({ settings }: HeaderProps) {
                   <Link
                     key={item.label}
                     href={`/${slug}`}
+                    onClick={handleMenuClose}
                     className={`text-white font-sans text-sm font-semibold py-8 w-full text-left ${!isLast ? "border-b border-[#374151]" : ""
                       }`}
                   >
