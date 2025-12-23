@@ -55,8 +55,7 @@ export default function Footer({ settings }: HeaderProps) {
                             footerMenu.map((f,i)=>(
                                 <Fragment key={f?.label || i}>
                                     <Link 
-                                        href={f?.url || "#"} 
-                                        target="_blank"
+                                        href={f?.url || "#"}
                                         className="hover:opacity-50 cursor-pointer no-underline text-[rgba(255,255,255,0.53)] font-montserrat text-[14px] font-normal leading-normal hover:text-[rgba(255,255,255,0.8)]"
                                     >
                                         {f?.label}

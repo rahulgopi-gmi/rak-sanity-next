@@ -112,7 +112,7 @@ export default function BlogItems(
                             <Button
                                 type="button"
                                 onClick={handleLoadMore}
-                                className="blog-load-more font-normal border border-[#5FC2D5] bg-[rgba(95,194,213,0.11)] text-[#5FC2D5] rounded-xl hover:text-white"
+                                className="blog-load-more font-arial font-normal border border-[#5FC2D5] bg-[rgba(95,194,213,0.11)] text-[#5FC2D5] leading-6 tracking-[0] rounded-xl hover:text-white"
                             >
                                 Load More
                             </Button>

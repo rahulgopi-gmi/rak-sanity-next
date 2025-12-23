@@ -124,7 +124,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                 </h5>
 
                                 <Link href="tel:+97172222325"
-                                    className="text-black text-[21px] not-italic font-medium leading-[normal] underline relative hover:text-[#5752A3]">
+                                    className="text-black text-[21px] not-italic font-semibold leading-[100%] underline relative hover:text-[#5752A3]">
                                     +971 7 2222325
                                 </Link>
                             </div>
@@ -143,7 +143,8 @@ export default function ContactForm({ formonly = true }: Props) {
                                     id="first_name"
                                     value={formik.values.first_name}
                                     onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}                                    
+                                    onBlur={formik.handleBlur}
+                                    className="placeholder:text-[#484545]/60!"
                                 />
                                 
                                 {
@@ -162,6 +163,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     value={formik.values.last_name}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
+                                    className="placeholder:text-[#484545]/60!"
                                 />
 
                                 {
@@ -179,6 +181,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     value={formik.values.email}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
+                                    className="placeholder:text-[#484545]/60!"
                                 />
 
                                 {
@@ -191,6 +194,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                 <PhoneInput
                                     country="ae"
                                     value={value}
+                                    inputClass="phone-input"
                                     inputProps={{
                                         placeholder: "Enter Phone Number",
                                         name: "phone"
@@ -212,7 +216,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                         borderRadius: "14px",
                                         border: "1px solid rgba(255,255,255,0.2)",
                                         paddingLeft: "70px",
-                                        fontWeight: "500",
+                                        fontWeight: "400",
                                         fontSize: "16px",
                                         fontFamily: "Montserrat"
                                     }}
@@ -288,6 +292,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     value={formik.values.message}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
+                                    className="placeholder:text-[#484545]/60!"
                                 ></Textarea>
                                
                                 {

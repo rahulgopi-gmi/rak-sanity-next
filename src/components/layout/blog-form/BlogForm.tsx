@@ -248,7 +248,7 @@ export default function BlogForm() {
             </div> */}
 
             <div className="flex justify-center md:justify-start mt-8 gap-4">
-                <Button type="submit" className="w-full" disabled={formik.isSubmitting}>
+                <Button type="submit" className="w-full font-medium! font-sans! text-sm! leading-5! tracking-[0]" disabled={formik.isSubmitting}>
                     Submit
                     {
                         formik.isSubmitting &&

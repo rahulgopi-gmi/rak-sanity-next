@@ -8,8 +8,10 @@
   --color-foreground: var(--foreground);
   --color-primary: rgba(var(--primary-color), 1);
 
-  --font-sans: var(--font-montserrat);
+  --font-sans: var(--font-montserrat), sans-serif;
   --font-mono: var(--proxima-nova);
+  --font-inter: var(--font-inter), sans-serif;
+  --font-arial: var(--arial);
 
   --text-xs: var(--font-size-xs);
 
@@ -50,6 +52,7 @@
 :root {
   --primary-color: 94, 190, 211;
   --proxima-nova: 'proxima-nova', 'san-series';
+  --arial: Arial, Helvetica, sans-serif;
 
   --font-size-xs: 12px;
   
@@ -444,6 +447,16 @@ body .phone-section .iti {
   background: url('/second-fold-wrapper-bg.png') no-repeat bottom right;
 }
 
+.blog-swiper-text p{
+  color:#fff;
+  font-size:16px !important;
+  font-family: var(--font-montserrat);
+  font-weight:400;
+  line-height: 21px !important;
+  max-width: 500px;
+  margin-bottom:20px;
+}
+
 @media(max-width:575px) {
   .second-fold-wrapper:before {
     background: url('/second-fold-wrapper-bg-mobile.png') no-repeat bottom right;
@@ -465,6 +478,18 @@ body .phone-section .iti {
 }
 
 @media(max-width:991px) {
+  .blog-swiper-text p {
+    font-weight:400;
+    font-size:16px !important;
+    line-height:21px !important;
+    letter-spacing:0;
+  }
+
+  .activities-top-section p{
+    font-size:16px;
+    line-height:100%;
+  }
+
   .section-space-top {
     padding-top: 90px;
   }
@@ -673,7 +698,8 @@ body .phone-section .iti {
 }
 
 .about-sub-hdr h3 span{
-  background: linear-gradient(90deg, #7EC1D3 0%, #78B4CC 27.4%, #453C92 100%);
+  /* background: linear-gradient(90deg, #7EC1D3 0%, #78B4CC 27.4%, #453C92 100%); */
+  background: linear-gradient(90deg, #7EC1D3 0%, #78B4CC 20%, #453C92 50%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -820,6 +846,7 @@ body .phone-section .iti {
   line-height: 1.5;
   font-size: 0.875rem;
   color: #fff;
+  font-family: var(--proxima-nova);
 }
 
 .privacy-policy-wrapper ol{
@@ -828,11 +855,13 @@ body .phone-section .iti {
   line-height: 1.25rem;
   padding-left: 1.5rem;
   margin-bottom: 1rem;
+  font-family: var(--proxima-nova);
 }
 
 .privacy-policy-wrapper ol li{
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  font-family: var(--proxima-nova);
 }
 
 .privacy-policy-wrapper ul{
@@ -843,11 +872,13 @@ body .phone-section .iti {
 .privacy-policy-wrapper ul li{
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  font-family: var(--proxima-nova);
 }
 
 .privacy-policy-wrapper a{
   text-decoration: underline;
   color:#60bfd3;
+  font-family: var(--proxima-nova);
 }
 
 .thankyou-section h1{
@@ -1064,13 +1095,37 @@ body .phone-section .iti {
 }
 
 .package-btm-txt p{
+  font-family: var(--font-montserrat);
   color:#ffffff87;
-  line-height: normal;
+  line-height: 100%;
   font-style: normal;
   font-weight: 400;
   font-size: 12px !important;
   margin-top: 30px;
   text-align:center;
+  letter-spacing: 0;
+}
+
+.contact-wrapper h2{
+  font-family: var(--proxima-nova);
+  font-size:60px;
+  line-height:60px;
+  letter-spacing:0;
+  color:#000;
+  font-weight:800;
+  text-transform:uppercase;
+}
+
+.contact-wrapper .phone-input::placeholder {
+  color: rgba(72, 69, 69, 0.6)!important;
+}
+
+.phone-input::-webkit-input-placeholder {
+  color: rgba(72, 69, 69, 0.6);
+}
+
+.phone-input::-moz-placeholder {
+  color: rgba(72, 69, 69, 0.6);
 }
 
 .refer-friend-items p{

@@ -79,11 +79,11 @@ export default function BlogSwiper({ keywords }: KeywordsType | any) {
                                     
                                     <div
                                         dangerouslySetInnerHTML={{ __html: getBodyText(s?.body) }}
-                                        className="text-white text-[16px]! font-sans font-normal leading-[21px]! max-w-[500px] lg:mb-0 mb-7"
+                                        className="blog-swiper-text"
                                     >                                        
                                     </div>
 
-                                    <h4 className="text-[12px]! leading-[100%]! font-normal font-sans text-white capitalize mb-10 lg:mb-0">
+                                    <h4 className="text-[12px]! leading-[100%]! font-normal font-sans text-white capitalize mb-0">
                                         {s?.subtitle}
                                     </h4>
                                 </div>

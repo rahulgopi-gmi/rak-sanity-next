@@ -139,7 +139,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                 }                                                                
                             </div>
 
-                            <h1 className="mt-6 text-white font-semibold text-[32px]! md:text-[45px]! leading-8! md:leading-[47px]! font-mono">
+                            <h1 className="mt-6 text-white font-semibold text-[35px]! leading-8! max-md:leading-[35px]! font-mono">
                                {page?.title}
                             </h1>
 

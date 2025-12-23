@@ -67,7 +67,7 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                         <Input
                             type="email"
                             placeholder="Enter your email address"
-                            className="flex-1 border-0 h-auto outline-none! pl-0 focus:outline-none! focus:shadow-none! focus-visible:shadow-none! bg-transparent text-white/50 placeholder-white/50 font-sans text-[14px] font-normal leading-none"
+                            className="flex-1 border-0 h-auto outline-none! pl-0 focus:outline-none! focus:shadow-none! focus-visible:shadow-none! bg-transparent text-white/50 placeholder-white/50 font-sans text-[14px]! focus-visible:ring-0! font-normal leading-none"
                             name="email"
                             id="email"
                             value={formik.values.email}
@@ -95,7 +95,7 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                     <Input
                         type="email"
                         placeholder="Your email"
-                        className="h-[50px] text-white! px-3! rounded-[8px] border-[rgba(255,255,255,0.20)] bg-[rgba(255,255,255,0.05)] focus:border-[#2ad3ff]"
+                        className="h-[50px] text-white! px-3! text-sm! rounded-xl border-[rgba(255,255,255,0.20)] bg-[rgba(255,255,255,0.05)] focus:border-[#2ad3ff]"
                         name="email"
                         id="email"
                         value={formik.values.email}
@@ -111,7 +111,7 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                     <Button 
                         type="submit" 
                         size={'sm'} 
-                                className="w-full mt-4 text-sm! font-medium leading-5" 
+                        className="w-full mt-4 text-sm! font-medium! leading-5!" 
                         disabled={formik.isSubmitting}
                     >
                         Subscribe

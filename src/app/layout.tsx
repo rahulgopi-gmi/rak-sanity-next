@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Montserrat, Inter } from "next/font/google";
 import "./globals.css";
 import { PageSettingsType } from "@/features/application/types/sanity";
 import { sanityFetch } from "@/sanity/lib/live";
@@ -9,6 +9,11 @@ import { toPlainText } from "next-sanity";
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"]
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
 });
 
 /** 
@@ -76,7 +81,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://use.typekit.net/nhg7tow.css" />
       </head>
       <body
-        className={`${montserrat.variable} antialiased`}
+        className={`${montserrat.variable} ${inter.variable} antialiased`}
       >
         {children}
       </body>

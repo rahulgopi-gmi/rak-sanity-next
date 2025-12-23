@@ -26,7 +26,7 @@
       <SelectPrimitive.Value
         data-slot="select-value"
         className={cn(
-          "text-red-500 data-[placeholder]:text-[#ffffff99]!", // <- placeholder color here          
+          "text-red-500 data-[placeholder]:text-[#484545]/60!", // <- placeholder color here          
         )}
         {...props}
       />
