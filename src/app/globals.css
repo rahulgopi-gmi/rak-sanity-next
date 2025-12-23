@@ -726,9 +726,12 @@ body .phone-section .iti {
   text-transform: uppercase;
 }
 
-.contact-top-section-wd,
-.activities-top-section-wd{
+.contact-top-section-wd{
   max-width: 721px;
+}
+
+.activities-top-section-wd{
+  max-width: 700px;
 }
 
 .activities-top-section p{
@@ -1247,6 +1250,19 @@ body .phone-section .iti {
   color:#fff;
 }
 
+.campaign-dark .campaign-package .package-compaigns-inner{  
+  background: linear-gradient(to bottom, rgba(87,82,163,0.06), rgba(87,82,163,0.30));
+  border: 1px solid rgb(255 255 255 / 0.2) !important;
+}
+
+.campaign-dark .campaign-package .package-compaigns-inner .col-min-w{
+  border-right: 1px solid rgb(255 255 255 / 0.2) !important;
+}
+
+.campaign-dark .campaign-package .package-compaigns-inner .col-min-w:last-child{
+  border:none !important;
+}
+
 .campaign-dark .campaign-package .package-compaigns-inner .rbf{
   background:#fff3;
   opacity: .8;
@@ -1383,6 +1399,14 @@ body .phone-section .iti {
     rgba(111, 204, 221, 0.06),
     rgba(111, 204, 221, 0.30)
   );
+}
+
+.campaign-light .campaign-package .package-compaigns-inner .col-min-w{
+  border-right: 1px solid rgba(16, 16, 16, 0.18) !important;
+}
+
+.campaign-light .campaign-package .package-compaigns-inner .col-min-w:last-child{
+  border:none !important;
 }
 
 .campaign-light .campaign-package .package-compaigns-inner .rbf{

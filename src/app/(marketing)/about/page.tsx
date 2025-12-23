@@ -125,7 +125,7 @@ export default async function Page() {
                                                     fill 
                                                     alt={section.imageDesktop?.alt ?? ""}
                                                     src={desktopImage}
-                                                    className="rounded-[10px]" 
+                                                    className="rounded-[10px] object-cover" 
                                                 />
                                             </div>
                                         )
@@ -138,7 +138,7 @@ export default async function Page() {
                                                     fill 
                                                     alt={section.imageMobile?.alt ?? ""}
                                                     src={mobileImage}
-                                                    className="rounded-[10px]" 
+                                                    className="rounded-[10px] object-cover" 
                                                 />
                                             </div>
                                         )
@@ -161,11 +161,16 @@ export default async function Page() {
                             <div className="split-wrap flex flex-col-reverse md:flex-row max-md:mb-0 max-lg:mb-10 w-full">
                                 <div className="w-full lg:w-7/12 md:w-full">
                                     <div className="w-full h-[410px] max-md:h-[235px] relative">
-                                        <Image
-                                            src={section?.sectionImage && urlFor(section.sectionImage).url()}
-                                            alt={section?.sectionImage?.alt ?? ""}
-                                            fill
-                                        />
+                                        {
+                                            section?.sectionImage && (
+                                                <Image
+                                                    src={urlFor(section.sectionImage).url()}
+                                                    alt={section?.sectionImage?.alt ?? ""}
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            )
+                                        }                                        
                                     </div>
                                 </div>
 

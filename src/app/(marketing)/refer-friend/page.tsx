@@ -96,7 +96,13 @@ export default async function Page() {
                     {
                         section?.bannerdesktop && (
                             <div className="hidden md:block w-full h-[520px] relative">
-                                <Image fill alt={section?.bannerdesktop.alt} src={urlFor(section?.bannerdesktop).url()} />
+                                <Image 
+                                    fill 
+                                    alt={section?.bannerdesktop.alt} 
+                                    src={urlFor(section?.bannerdesktop).url()}
+                                    quality={100}
+                                    className="object-cover"
+                                />
                             </div>
                         )
                     }

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Button } from "../../ui/button";
 import { PageSettingsType } from "@/features/application/types/sanity";
 import { urlFor } from "@/sanity/lib/image";
+import { usePathname } from "next/navigation";
 
 interface HeaderProps {
   settings : PageSettingsType 
@@ -16,6 +17,7 @@ export default function Header({ settings }: HeaderProps) {
   const headerInnerRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();  
 
   const menu = settings?.headerMenu || [];
   const logo = settings?.logo;
@@ -110,6 +112,7 @@ export default function Header({ settings }: HeaderProps) {
                   menu.map((item) => {
                     const slug = item.slug?.current || "";
                     const isContact = slug === "contact";
+                    const isActive = pathname === `/${slug}`;
 
                     return (
                       <li key={item.label} className="flex items-center last:ml-auto ">
@@ -123,7 +126,7 @@ export default function Header({ settings }: HeaderProps) {
                           (                          
                             <Link
                               href={`/${slug}`}
-                              className="text-white hover:text-primary transition-all ease-in  font-sans text-md md:max-lg:text-sm! font-semibold"
+                                className={`${isActive ? 'text-primary' : 'text-white hover:text-primary'} transition-all ease-in  font-sans text-md md:max-lg:text-sm! font-semibold`}
                             >
                               {item.label}
                             </Link>

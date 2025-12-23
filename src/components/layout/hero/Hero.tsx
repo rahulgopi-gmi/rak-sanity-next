@@ -102,7 +102,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                     key={`about-type-${index}`}
                                     className="flex flex-wrap -mx-2 items-center [@media(max-width:991px)]:flex-col-reverse"
                                 >
-                                    <div className="w-full lg:w-5/12 px-2 h-[300px] max-lg:h-[200px] relative" data-aos="fade-up" data-aos-duration="2000">
+                                    <div className="w-full lg:w-5/12 px-2 h-[322px] max-lg:h-[200px] relative" data-aos="fade-up" data-aos-duration="2000">
                                         <Image
                                             src={urlFor(a.image).url()}
                                             alt={a.image?.alt || ""}
@@ -174,8 +174,9 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                     const img = (
                                         <Image
                                             fill
-                                            alt={t?.image?.alt || ""}
+                                            alt={t?.image?.alt}
                                             src={urlFor(t?.image).url()}
+                                            className="object-cover"
                                         />
                                     );
 
@@ -224,7 +225,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                                             {t?.content}
                                                         </p>
 
-                                                        <div className="w-20 h-20 relative [@media(max-width:1200px)]:mb-[25px] [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
+                                                        <div className="md:w-[120px] w-[85px] h-[85px] relative [@media(max-width:1200px)]:mb-[25px] [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
                                                            {img}
                                                         </div>
                                                     </div>
@@ -277,7 +278,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                                         {img}
                                                     </div>
 
-                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-normal mb-0 relative">
+                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-normal mb-0 relative md:max-w-[80%] md:mr-auto">
                                                         {t?.content}
                                                     </p>
                                                 </div>
@@ -299,11 +300,11 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                                         {t?.header}
                                                     </h3>
 
-                                                    <div className="w-20 h-20 relative mb-[42px] ml-auto [@media(max-width:1200px)]:mb-[25px] [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
+                                                    <div className="w-[87px] h-20 relative mb-[42px] ml-auto [@media(max-width:1200px)]:mb-[25px] [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
                                                         {img}
                                                     </div>
 
-                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-normal mb-0 relative">
+                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-normal mb-0 relative md:max-w-[80%] md:ml-auto">
                                                         {t.content}
                                                     </p>
                                                 </div>

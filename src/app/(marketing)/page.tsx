@@ -153,7 +153,9 @@ export default async function Page() {
                             )
                         }
                     </div>
+
                     <PackagesDetails packages={packages} />
+                    
                     {
                         section.packageContent && (
                             <div className="container mx-auto">

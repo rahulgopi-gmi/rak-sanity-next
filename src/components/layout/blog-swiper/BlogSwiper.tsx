@@ -64,15 +64,15 @@ export default function BlogSwiper({ keywords }: KeywordsType | any) {
                     keywords.map((s: KeywordsType,i:number)=> (
                         <SwiperSlide className="slide-custom">
                             <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
-                                <div className="w-full h-full relative overflow-hidden group rounded-2xl">
+                                <div className="w-full md:h-full h-[350px] relative overflow-hidden group rounded-2xl">
                                     <Image 
                                         fill alt={s?.icon.alt} 
                                         src={urlFor(s?.icon).url()}  
-                                        className="rounded-2xl shadow-lg transition-transform duration-500 ease-out group-hover:scale-110" 
+                                        className="rounded-2xl shadow-lg transition-transform duration-500 ease-out group-hover:scale-110 object-cover" 
                                     />
                                 </div>
 
-                                <div className="w-full px-8 xl:px-12 py-20 flex flex-col gap-y-0 lg:gap-y-4">
+                                <div className="w-full px-8 xl:px-12 max-md:pt-4 max-md:pb-10 py-20 flex flex-col gap-y-0 lg:gap-y-4">
                                     <h3 className="text-[16px]! font-sans leading-[100%]! font-light text-white mb-6 mt-7 lg:mt-0 lg:mb-0">
                                         {s?.date}
                                     </h3>
