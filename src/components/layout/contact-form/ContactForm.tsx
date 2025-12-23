@@ -58,8 +58,7 @@ export default function ContactForm({ formonly = true }: Props) {
         .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
             .test("valid", "Phone Number is invalid", value => isValidPhoneNumber(value || "")),
         message: Yup.string()
-            .max(1000, "Message cannot exceed 1000 characters")    
-            .required("Message is required"),
+            .max(1000, "Message cannot exceed 1000 characters"),
         enquiry_type: Yup.string().required("Enquiry Type is required")
     });
 
@@ -240,7 +239,7 @@ export default function ContactForm({ formonly = true }: Props) {
 
                             <div className="w-full select-wrapper-main">
                                 <Select
-                                    name="enquiry_type"
+                                    name="enquiry_type"                                    
                                     onValueChange={(value)=>{                                      
                                         formik.setFieldValue("enquiry_type", value);
                                     }}                                    

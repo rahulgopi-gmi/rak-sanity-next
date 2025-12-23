@@ -136,7 +136,7 @@ export default function ReferForm() {
                 <Label>Your Name</Label> 
                 <Input 
                     type="text" 
-                    placeholder="Your Name" 
+                    placeholder="Your Name*" 
                     name="first_name"
                     id="first_name"
                     value={formik.values.first_name}
@@ -155,7 +155,7 @@ export default function ReferForm() {
                 <Label>Your Phone Number</Label>
                 <PhoneInput
                     country="ae"                    
-                    placeholder="Enter phone number"
+                    placeholder="Enter Phone Number*"
                     value={value}
                     onChange={(phone) => {
                         setValue(phone);
@@ -201,7 +201,7 @@ export default function ReferForm() {
                 <Label>Your Email Address</Label> 
                 <Input 
                     type="email" 
-                    placeholder="Your Email Address" 
+                    placeholder="Your Email Address*" 
                     name="email"
                     id="email"
                     value={formik.values.email}
@@ -256,7 +256,7 @@ export default function ReferForm() {
                 <Label>Referral Name</Label> 
                 <Input 
                     type="text" 
-                    placeholder="Referral Name" 
+                    placeholder="Referral Name*" 
                     name="referrer_name"                     
                     id="referrer_name"
                     value={formik.values.referrer_name}
@@ -275,7 +275,7 @@ export default function ReferForm() {
                 <Label>Referral Phone Number</Label>  
                 <PhoneInput
                     country="ae"                    
-                    placeholder="Enter phone number"
+                    placeholder="Enter Phone Number*"
                     value={value}
                     onChange={(phone) => {
                         setValue(phone);
@@ -321,7 +321,7 @@ export default function ReferForm() {
                 <Label>Referral Email Address</Label> 
                 <Input 
                     type="email" 
-                    placeholder="Referral Email Address" 
+                    placeholder="Referral Email Address*" 
                     name="referrer_email"
                     value={formik.values.referrer_email}
                     onChange={formik.handleChange}

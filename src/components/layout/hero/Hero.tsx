@@ -199,7 +199,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                                         {img}
                                                     </div>
 
-                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-normal! mb-0 relative">
+                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-[100%]! mb-0 relative">
                                                         {t?.content || ""}
                                                     </p>
                                                 </div>
@@ -221,7 +221,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                                     </h3>
 
                                                     <div className="flex items-end max-w-[500px] [@media(max-width:1200px)]:max-w-full [@media(max-width:1200px)]:flex-wrap [@media(max-width:1200px)]:flex-col-reverse [@media(max-width:1200px)]:justify-center [@media(max-width:1200px)]:text-center">
-                                                        <p className="text-black font-sans text-base! not-italic font-normal leading-normal mb-0 relative">
+                                                        <p className="text-black font-sans text-base! not-italic font-normal leading-[100%] mb-0 relative">
                                                             {t?.content}
                                                         </p>
 
@@ -252,7 +252,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                                         {img}
                                                     </div>
 
-                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-normal mb-0 relative">Data
+                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-[100%] mb-0 relative">Data
                                                         {t?.content}
                                                     </p>
                                                 </div>
@@ -278,7 +278,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                                         {img}
                                                     </div>
 
-                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-normal mb-0 relative md:max-w-[80%] md:mr-auto">
+                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-[100%] mb-0 relative md:max-w-[80%] md:mr-auto">
                                                         {t?.content}
                                                     </p>
                                                 </div>
@@ -304,7 +304,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                                         {img}
                                                     </div>
 
-                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-normal mb-0 relative md:max-w-[80%] md:ml-auto">
+                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-[100%] mb-0 relative md:max-w-[80%] md:ml-auto">
                                                         {t.content}
                                                     </p>
                                                 </div>

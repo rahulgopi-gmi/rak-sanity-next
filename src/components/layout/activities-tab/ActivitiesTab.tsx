@@ -162,8 +162,13 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                                 </div>
 
                                 <div className="w-fit flex justify-center">
-                                    <Button type="button" variant="link" className="cursor-pointer no-underline font-medium text-[#5FC2D5]!" onClick={handleReset}>
-                                        Reset <RotateCw />
+                                    <Button 
+                                        type="button" 
+                                        variant="link" 
+                                        className="cursor-pointer no-underline font-medium text-[#5FC2D5]!" 
+                                        onClick={handleReset}
+                                    >
+                                        Reset <RotateCw className="w-[30%]! h-[40%]!" />
                                     </Button>
                                 </div>
                             </div>    

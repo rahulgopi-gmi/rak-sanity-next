@@ -93,7 +93,7 @@ export default function Header({ settings }: HeaderProps) {
             <div className="flex items-center space-x-12 relative w-full">
               <Link
                 href="/"
-                className="main-logo mr-0 relative h-10 w-32 lg:w-[300px] lg:h-14"
+                className="main-logo mr-0 relative h-10 w-32 lg:w-[240px] lg:h-14"
               >
                 {
                   logo?.asset && (
