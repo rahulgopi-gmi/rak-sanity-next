@@ -148,14 +148,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             </div>
 
                             <div className="xl:max-w-full lg:max-w-[165px] sm:max-w-[110px] max-w-[181px] ">
-                                <div className={`w-[166px] ${section?.mode === "dark" ? "lg:w-[266px]" : "lg:w-[220px]"} h-[94px] relative`}>
+                                <div className={`w-full relative`}>
                                     {
                                         section?.icon && (
-                                            <Image
-                                                fill
+                                            <Image                                                
                                                 alt={section?.icon?.alt}
                                                 src={urlFor(section?.icon).url()}
-                                                className="lg:object-cover object-contain"
+                                                className="object-cover"
+                                                width={240}
+                                                height={120}
+                                                sizes="(max-width: 768px) 100vw, 50vw"                                                
                                             />
                                         )
                                     }                                    
@@ -200,9 +202,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             }
                             
                             <div className="campaigns-notify bg-[#0000000A] border-l-[3px] border-[#6FCCDD] rounded-r-xl p-6 max-w-[444px] !mb-5">
-                                <p className="font-sans font-normal text-[16px] leading-[28px] tracking-[1%] text-[#101010]">
+                                <p className="font-sans font-normal text-[16px]! leading-[28px]! tracking-[1%] text-[#101010]">
                                     If you’re interested in working at Innovation City,
-                                    please
+                                    please&nbsp;
                                     <Link href="https://www.linkedin.com/company/innovationcityinc/jobs" className="font-sans font-semibold text-[16px] leading-[28px] tracking-[1%] underline decoration-black decoration-[1px]">
                                         apply here.
                                     </Link>
@@ -265,12 +267,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             <div className="grid grid-cols-2 gap-6">
                                 {
                                     techkeywords[1] && (
-                                        <div className="items-2 box-bg px-8 rt-padding lg:py-10 py-[34px]">
-                                            <h3 className="max-w-[100px] font-mono font-bold xl:text-[28px]! text-[20px]! leading-8! tracking-[-0.56px] rt-box">
+                                        <div className="items-2 box-bg px-8 max-md:px-4 rt-padding lg:py-10 py-[34px]">
+                                            <h3 className="max-w-[100px] max-md:max-w-full max-md:text-center font-mono font-bold xl:text-[28px]! text-[20px]! leading-8! tracking-[-0.56px] rt-box">
                                                 {techkeywords[1]?.header}
                                             </h3>
 
-                                            <div className="xl:mt-[60px] md:mt-10 mt-[99px] w-[100px] h-[75px] relative">
+                                            <div className="xl:mt-[60px] max-md:mx-auto md:mt-10 mt-[20px] w-[100px] h-[75px] relative">
                                                 <Image
                                                     fill
                                                     alt={techkeywords[1]?.icon?.alt || ""}
@@ -283,12 +285,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
                                 {
                                     techkeywords[2] && (
-                                        <div className="items-3 box-bg px-8 rt-padding py-10">
-                                            <h3 className="font-mono font-bold xl:text-[28px]! text-[20px]! leading-8! tracking-[-0.56px] rt-box">
+                                        <div className="items-3 box-bg px-8 max-md:px-4 rt-padding py-10">
+                                            <h3 className="font-mono font-bold max-md:text-center xl:text-[28px]! text-[20px]! leading-8! tracking-[-0.56px] rt-box">
                                                 {techkeywords[2]?.header}
                                             </h3>
 
-                                            <div className="xl:mt-[60px] md:mt-10 mt-[99px] w-[100px] h-[75px] relative">
+                                            <div className="xl:mt-[60px] max-md:mx-auto md:mt-10 mt-[20px] w-[100px] h-[75px] relative">
                                                 <Image
                                                     fill
                                                     alt={techkeywords[2]?.icon?.alt || ""}
@@ -460,25 +462,29 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                     <div className="text-white  md:pt-[120px] md:pb-[120px] pt-[90px] pb-[90px] relative z-10" data-aos="fade-up">
                         <div className="container">
                             <div className="relative w-full">
-                                <div className="w-full h-[365px] hidden md:block">                                    
+                                <div className="w-full hidden md:block">                                    
                                     <Image
-                                        fill
+                                        width={1576}
+                                        height={365}
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                        className="w-full h-auto"
                                         alt={section?.secondarydesktop?.alt || ""}
-                                        src={urlFor(section?.secondarydesktop).url()}
-                                        className="object-contain"
+                                        src={urlFor(section?.secondarydesktop).url()}                                        
                                     />
                                 </div>
 
-                                <div className="w-full h-[455px] block md:hidden">
+                                <div className="w-full block md:hidden">
                                     <Image
-                                        fill
+                                        width={1576}
+                                        height={365}
+                                        sizes="(max-width: 768px) 100vw, 50vw"
                                         alt={section?.secondarymobile?.alt || ""}
                                         src={urlFor(section?.secondarymobile).url()}
                                         className="object-contain"
                                     />
                                 </div>                                                                
 
-                                <div className="absolute z-10 launch-heading-top xl:top-[92px] lg:left-[56px] sm:left-[20px] left-auto top-[63px] sm:px-[0px] px-[45px] sm:top-[30px] sm:text-left text-center launch-pd">
+                                <div className="absolute z-10 launch-heading-top 2xl:top-[190px] xl:top-[92px] lg:left-[56px] sm:left-[20px] left-auto top-[63px] sm:px-[0px] px-[45px] sm:top-[30px] sm:text-left text-center launch-pd">
                                     <div className=" sm:block flex flex-col justify-center items-center m-auto">
                                         {
                                             section?.secondaryHeader && (
