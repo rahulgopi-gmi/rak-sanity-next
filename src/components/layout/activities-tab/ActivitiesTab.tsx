@@ -1,6 +1,12 @@
 "use client";
 
-import { ArrowDown, ArrowUp, RotateCw, SearchIcon } from "lucide-react";
+import { 
+    ArrowDown,
+    ArrowUp,
+    RotateCw,
+    SearchIcon,
+    ChevronsUpDown
+} from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 import { Button } from "../../ui/button";
 import { useState } from "react";
@@ -113,10 +119,10 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
 
     /** --------------- SORT ICON COMPONENT --------------- */
     const SortIcon = ({ field }: { field: keyof ActivitiesMainType }) => {
-        if (sortField !== field) return <span className="opacity-40">↕</span>;
-        if (sortDirection === "asc") return <ArrowUp size={14} />;
-        if (sortDirection === "desc") return <ArrowDown size={14} />;
-        return <span className="opacity-40">↕</span>;
+        if (sortField !== field) return <span className="opacity-40"><ChevronsUpDown size={18} /></span>;
+        if (sortDirection === "asc") return <ChevronsUpDown size={18} />;
+        if (sortDirection === "desc") return <ChevronsUpDown size={18} />;
+        return <span className="opacity-40"><ChevronsUpDown size={18} /></span>;
     };
 
     return (

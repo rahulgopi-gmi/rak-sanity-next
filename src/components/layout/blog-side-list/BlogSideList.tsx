@@ -20,7 +20,7 @@ export default function BlogSideList({ list }: { list : ListProps[] }) {
     }
 
     const getLinkClasses = (id: string) =>
-        `block px-4 py-2 rounded-lg text-[14px] font-sans font-normal leading-[21px] cursor-pointer ${activeId === id ? "bg-primary hover:bg-primary/70 text-black" : "text-[rgba(255,255,255,0.70)] hover:bg-primary hover:text-black"
+        `block px-4 py-2 rounded-[4px] text-[14px] font-sans font-normal leading-[21px] cursor-pointer ${activeId === id ? "bg-primary hover:bg-primary/70 text-black" : "text-[rgba(255,255,255,0.70)] hover:bg-primary hover:text-black"
         }`;
 
     return(
