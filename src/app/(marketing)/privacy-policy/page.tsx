@@ -45,6 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       keywords,
+      referrer: "strict-origin-when-cross-origin",
       robots: {
         index: true,
         follow: true,

@@ -1438,6 +1438,10 @@ body .phone-section .iti {
 
 @media (max-width: 768px) {
 
+  .about-section p{
+    line-height:100% !important;
+  }
+
   .package-header-txt h2{
     font-size:35px !important;
     line-height:35px;
@@ -1472,7 +1476,7 @@ body .phone-section .iti {
   .package-top-section h2,
   .activities-top-section h2{
     font-size:45px;
-    line-height:45px;
+    line-height:47px;
   }
 
   .about-sub-hdr h3{

@@ -63,6 +63,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         title,
         description,
         keywords,
+        referrer: "strict-origin-when-cross-origin",
         robots: {
             index: true,
             follow: true,

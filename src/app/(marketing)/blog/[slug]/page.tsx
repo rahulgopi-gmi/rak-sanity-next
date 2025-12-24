@@ -85,6 +85,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title,
       description,
       keywords,
+      referrer: "strict-origin-when-cross-origin",
       robots: {
         index: true,
         follow: true,
@@ -236,7 +237,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
                 <section className="w-full py-16">
                     <div className="container mx-auto px-4">
-                        <h2 className="text-white sm:text-left text-center font-sans text-[26px]! font-normal leading-[27px] uppercase mb-10">
+                        <h2 className="text-white sm:text-left text-center font-sans text-[26px]! font-normal leading-[27px]! uppercase mb-10">
                             RELATED BLOG
                         </h2>
 

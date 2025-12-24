@@ -57,6 +57,7 @@ export async function generateMetadata(): Promise<Metadata> {
         title,
         description,
         keywords,
+        referrer: "strict-origin-when-cross-origin",        
         robots: {
             index: true,
             follow: true,
@@ -155,7 +156,7 @@ export default async function Page() {
                     </div>
 
                     <PackagesDetails packages={packages} />
-                    
+
                     {
                         section.packageContent && (
                             <div className="container mx-auto">
