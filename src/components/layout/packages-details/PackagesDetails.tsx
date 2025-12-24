@@ -48,7 +48,7 @@ export default function PackagesDetails(
                                                 {p.currency} {p.price}
                                             </p>
 
-                                            <div className="h-px rbf mt-4"></div>
+                                            <div className="h-px rbf mt-4 last:hidden"></div>
 
                                             <div className="space-y-3 pt-2 w-full">
                                                 {
@@ -63,7 +63,12 @@ export default function PackagesDetails(
                                                                 <p className="text-[#ffffffcc] font-sans text-[14px]! leading-[21px]! font-normal tracking-[0.14px]!">{f}</p>
                                                             </div>
                                                         </div>
-                                                            <div className="h-px rbf mt-4"></div>
+
+                                                        {
+                                                            i !== p.features.length - 1 && (
+                                                                <div className="h-px rbf mt-4"></div>
+                                                            )
+                                                        }
                                                     </div>
                                                     ))
                                                 }                                                                                            

@@ -101,9 +101,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         if (!section) return notFound();
 
         const keywords: KeywordsType[] = normalizeArray(section?.keywords);
-        const techkeywords: KeywordsType[] = normalizeArray(section.techkeywords);
-
-        console.log(section, 'section');
+        const techkeywords: KeywordsType[] = normalizeArray(section.techkeywords);        
 
         return(
             <main className={`${section?.mode === "dark"? "campaign-dark" : "campaign-light"  }`}>
@@ -229,7 +227,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
                             {
                                 section?.techCtaName && (
-                                    <Link href={`#${section?.techCtaLink}`}>
+                                    <Link href={`#${section?.techCtaLink}`} className="sm:mt-0 mt-[24px]">
                                         <Button type="button" size={'sm'} className="uppercase">{section?.techCtaName}</Button>
                                     </Link>
                                 )
@@ -240,9 +238,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             {
                                 techkeywords[0] && (
                                     <div className="items-1 rounded-3xl relative">
-                                        <div className="w-full lg:h-[580px] sm:min-h-[404px] min-h-max relative">
+                                        <div className="w-full relative">
                                             <Image
-                                                fill
+                                                width={1200}
+                                                height={580}
+                                                sizes="(max-width: 768px) 100vw, 50vw"
+                                                className="w-full h-auto"
                                                 alt={techkeywords[0]?.icon?.alt || ""}
                                                 src={urlFor(techkeywords[0].icon).url()}
                                             />
@@ -301,7 +302,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                 {
                                     techkeywords[3] && (
                                         <div className="col-span-2 bg-[#0A0A0F] rounded-3xl relative">
-                                            <div className="w-full h-[250px]">
+                                            <div className="w-full h-[250px] max-sm:h-[175px]">
                                                 <Image
                                                     fill
                                                     alt={techkeywords[3]?.icon?.alt || ""}
@@ -327,7 +328,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             {
                                 techkeywords[4] && (
                                     <div className="items-5 rounded-3xl relative">
-                                        <div className="w-full h-[250px]">
+                                        <div className="w-full h-[250px] max-sm:h-[175px]">
                                             <Image
                                                 fill
                                                 alt={techkeywords[4]?.icon?.alt || ""}
@@ -351,7 +352,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             {
                                 techkeywords[5] && (
                                     <div className="items-6 rounded-3xl relative">
-                                        <div className="w-full h-[250px]">
+                                        <div className="w-full h-[250px] max-sm:h-[175px]">
                                             <Image
                                                 fill
                                                 alt={techkeywords[5]?.icon?.alt || ""}
@@ -383,7 +384,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             {
                                 section?.packageCtaName && (
                                     <Link href={`#${section?.packageCtaLink}`}>
-                                        <Button type="button" size={'sm'} className="uppercase">{section?.packageCtaName}</Button>
+                                        <Button type="button" size={'sm'} className="uppercase sm:mt-0 mt-[24px]">{section?.packageCtaName}</Button>
                                     </Link>
                                 )
                             }
@@ -430,24 +431,25 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                 <div className="lg:w-1/2 w-full">
                                     {
                                         section?.businessHeader && (
-                                            <div className="campaigns-ft-hdr" dangerouslySetInnerHTML={{ __html: getBodyText(section?.businessHeader) }}></div>
+                                            <div className="campaigns-ft-hdr sm:max-w-full max-w-[320px] xl:mb-[64px] lg:mb-[34px] sm:mb-[64px] mb-[23px]" dangerouslySetInnerHTML={{ __html: getBodyText(section?.businessHeader) }}></div>
                                         )
                                     }                                    
 
-                                    <div className="xl:space-y-5 lg:space-y-6 space-y-9 lg:max-w-[420px] max-w-full">
+                                    <div className="xl:space-y-5 lg:space-y-6 space-y-9 lg:max-w-[384px] max-w-full">
                                         <CampaignsAccordion data={section?.businesskeywords} />
                                     </div>
                                 </div>
 
-                                <div className="lg:w-1/2 h-[550px] relative lg:block hidden mr-[calc(-50vw+50%+(var(--scroll-bar)/2))]! xl:max-w-full max-w-[55%] border border-white/20 rounded-[24px] lg:rounded-tr-[0px] rounded-tr-[24px]  lg:rounded-br-[0px] rounded-br-[24px] overflow-hidden">
+                                <div className="relative h-full mx-auto lg:w-3/5 lg:block hidden !mr-[calc(-50vw+50%+(var(--scroll-bar)/2))] xl:max-w-[100%] max-w-[55%] rounded-[24px] lg:rounded-tr-[0px] rounded-tr-[24px]  lg:rounded-br-[0px] rounded-br-[24px] overflow-hidden">
                                     {
                                         section?.businessImage && (
-                                            <Image
-                                                fill
-                                                alt={section?.businessImage?.alt || ""}
-                                                src={urlFor(section?.businessImage).url()}
-                                                className="object-cover"
-                                            />
+                                            <div className="w-full h-[560px]">
+                                                <Image
+                                                    fill
+                                                    alt={section?.businessImage?.alt || ""}
+                                                    src={urlFor(section?.businessImage).url()}                                                     
+                                                />
+                                            </div>    
                                         )
                                     }                                    
                                 </div>
@@ -467,12 +469,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                     />
                                 </div>
 
-                                <div className="w-full h-[509px] block md:hidden">
+                                <div className="w-full h-[455px] block md:hidden">
                                     <Image
                                         fill
                                         alt={section?.secondarymobile?.alt || ""}
                                         src={urlFor(section?.secondarymobile).url()}
-                                        className="object-cover"
+                                        className="object-contain"
                                     />
                                 </div>                                                                
 
@@ -484,7 +486,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                             )
                                         }
 
-                                        <p className="campaigns-btm-txt font-sans text-[16px]! font-normal leading-[28px] mb-6 sm:text-left text-center">
+                                        <p className="campaigns-btm-txt font-sans text-[16px]! font-normal leading-[28px]! mb-6 sm:text-left text-center">
                                             {section?.secondarycontent}
                                         </p>
 

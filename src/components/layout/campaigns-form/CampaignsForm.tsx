@@ -228,7 +228,7 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                     </p>
                 </div>
             
-                <div className="flex justify-center items-center gap-5 md:justify-start mt-4">
+                <div className="flex justify-center max-md:justify-start items-center gap-5 md:justify-start mt-4">
                     <Button type="submit" disabled={formik.isSubmitting}>Submit</Button>        
                     {
                         formik.isSubmitting &&
