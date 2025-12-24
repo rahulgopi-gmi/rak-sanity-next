@@ -106,10 +106,15 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         return(
             <main className={`${section?.mode === "dark"? "campaign-dark" : "campaign-light"  }`}>
                 <section className="relative text-white">
-                    <div className="w-full h-[556px] relative hidden md:block">
+                    <div className="w-full h-[556px] 2xl:h-[700px] relative hidden md:block">
                         {
                             section?.bannerdesktop && (
-                                <Image fill alt={section?.bannerdesktop?.alt} src={urlFor(section?.bannerdesktop).url()} className="object-cover" />
+                                <Image 
+                                    fill 
+                                    alt={section?.bannerdesktop?.alt} 
+                                    src={urlFor(section?.bannerdesktop).url()} 
+                                    className="object-cover" 
+                                />
                             )
                         }                        
                     </div>
@@ -212,7 +217,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             </div>
                         </div>
 
-                        <div className="w-full">
+                        <div className="w-full" id="contact">
                             <CampaignsForm mode={section?.mode}/>
                         </div>
                     </div>
