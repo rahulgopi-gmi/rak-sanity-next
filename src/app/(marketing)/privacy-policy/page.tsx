@@ -102,7 +102,7 @@ export default async function Page() {
                         )
                     }
 
-                    <div className="banner-overlay">
+                    <div className="banner-overlay privacy-policy-banner-overlay md:h-[350px]!">
                         <div className="container">
                             <div className="privacy-policy-banner-heading py-58 pt-16 text-center" data-aos="fade-up">
                                 {

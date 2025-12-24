@@ -819,6 +819,10 @@ body .phone-section .iti {
   align-items: center;
 }
 
+.privacy-policy-banner-overlay{
+  top:125px;
+}
+
 .privacy-policy-banner-heading h1{
   font-family: var(--proxima-nova);
   color:#fff;
@@ -1490,6 +1494,10 @@ body .phone-section .iti {
 }
 
 @media (max-width: 1024px) {
+  .privacy-policy-banner-overlay{
+    top:0px;
+  }
+  
   .about-top-section p{
     font-size:16px !important;
   }
