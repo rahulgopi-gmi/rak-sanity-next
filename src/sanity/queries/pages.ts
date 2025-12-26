@@ -38,6 +38,7 @@ export const getPackages = `
     label,
     currency,
     price,
+    prices,
     billingCycle,
     ctaText,
     ctaLink,

@@ -26,8 +26,8 @@ export default {
             options: {
                 list: [
                     { title: "AED (د.إ)", value: "AED" },
-                    { title: "USD ($)", value: "$" },
-                    { title: "GBP (£)", value: "£" },
+                    { title: "USD ($)", value: "USD $" },
+                    { title: "GBP (£)", value: "GBP £" },
                 ],
             }
         },

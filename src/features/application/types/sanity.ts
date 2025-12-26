@@ -82,6 +82,7 @@ export type PackageType ={
     sectionTitle?: string;
     features: string[];
     content?:string;
+    prices?:any[];
 }
 
 export type SectionType = {

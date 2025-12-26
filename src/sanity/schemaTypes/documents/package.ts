@@ -35,24 +35,36 @@ export const packages = defineType({
         },
 
         {
-            name: "currency",
-            title: "Currency",
-            type: "string",
-            options: {
-                list: [
-                    { title: "AED (د.إ)", value: "AED" },
-                    { title: "USD ($)", value: "$" },
-                    { title: "GBP (£)", value: "£" },
-                ],
-            },
-            validation: (Rule) => Rule.required(),
-        },
-
-        {
-            name: "price",
-            title: "Price",
-            type: "number",
-            validation: (Rule) => Rule.required(),
+            name: "prices",
+            title: "Prices by Location",
+            type: "array",
+            validation: (Rule) => Rule.min(1),
+            of: [
+                {
+                    type: "object",
+                    fields: [
+                        {
+                            name: "currency",
+                            title: "Currency",
+                            type: "string",
+                            options: {
+                                list: [
+                                    { title: "AED (د.إ)", value: "AED" },
+                                    { title: "USD ($)", value: "USD" },
+                                    { title: "GBP (£)", value: "GBP" },
+                                ],
+                            },
+                            validation: (Rule) => Rule.required(),
+                        },
+                        {
+                            name: "price",
+                            title: "Price",
+                            type: "number",
+                            validation: (Rule) => Rule.required(),
+                        },
+                    ],
+                },
+            ],
         },
 
         {

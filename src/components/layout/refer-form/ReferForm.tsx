@@ -49,9 +49,9 @@ export default function ReferForm() {
         .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
                     .test("valid", "Phone Number is invalid", value => isValidPhoneNumber(value || "")),
         referrer_name: Yup.string()
-            .max(50, "First Name cannot exceed 50 characters")
+            .max(50, "Referral Name cannot exceed 50 characters")
             .matches(/^[\p{L} ]+$/u, "Referral Name can only contain letters and spaces")
-            .required("Last Name is required"),
+            .required("Referral Name is required"),
         referrer_phone: Yup.string().required("Referral Phone Number is required")
         .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
                     .test("valid", "Referral Phone Number is invalid", value => isValidPhoneNumber(value || "")),

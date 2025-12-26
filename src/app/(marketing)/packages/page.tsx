@@ -13,7 +13,7 @@ import { cache } from "react";
 /** 
  * Fetch Sanity Data (cached)
 */
-const getData = cache(async (slug: string, template: string): Promise<{ page: PageDataType | null; packages: any[] }> => {
+const getData = async (slug: string, template: string): Promise<{ page: PageDataType | null; packages: any[] }> => {
     try {
         const [{ data: page }, { data: packages }] = await Promise.all([
             sanityFetch({
@@ -36,7 +36,7 @@ const getData = cache(async (slug: string, template: string): Promise<{ page: Pa
         console.error(`Sanity Fetch Error ${slug}: `, error);
         return { page: null, packages: [] };
     }
-});
+};
 
 /**
  * Generate metadata for the page.
@@ -93,6 +93,7 @@ export default async function Page() {
         if (!page) return notFound();
 
         const data: PageDataType | undefined = page?.sections?.[0];
+        const currency = 'AED';
 
         return (
             <main className="w-full">
@@ -116,7 +117,10 @@ export default async function Page() {
                     {
                         packages.length > 0 && (
                             <div className="w-full mt-12">
-                                <PackagesDetails packages={packages} />
+                                <PackagesDetails 
+                                    packages={packages}
+                                    currency={currency}
+                                />
                             </div>
                         )
                     }

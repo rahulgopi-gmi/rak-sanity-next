@@ -97,7 +97,8 @@ export default async function Page() {
         if (!section) return notFound();
 
         const banners: HomeBannerType[] = normalizeArray(section?.banner);
-                        
+        const currency = 'AED';
+        
         return(
             <main className="w-full">
                 {
@@ -155,7 +156,10 @@ export default async function Page() {
                         }
                     </div>
 
-                    <PackagesDetails packages={packages} />
+                    <PackagesDetails 
+                        packages={packages}
+                        currency={currency}
+                    />
 
                     {
                         section.packageContent && (
