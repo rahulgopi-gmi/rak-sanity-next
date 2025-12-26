@@ -141,6 +141,7 @@ export interface FeatureItem {
     businessImage?: SanityImage | any;
     logo?: SanityImage | any;
     mode?:string;
+    currency?:string;
     businesskeywords?: {
         icon?: SanityImage;
         header?: string;
@@ -165,7 +166,6 @@ export interface FeatureItem {
         description?: any[]; 
         content?: string;
     }[];
-
     forms?: any[]; // referAFriendForm (object)
 }
 
