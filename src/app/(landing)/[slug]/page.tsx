@@ -100,6 +100,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         const section = page.sections?.[0];
         if (!section) return notFound();
 
+        console.log(section.currency, 'section');
+
         const keywords: KeywordsType[] = normalizeArray(section?.keywords);
         const techkeywords: KeywordsType[] = normalizeArray(section.techkeywords);        
 
@@ -402,6 +404,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             <PackagesDetails 
                                 packages={packages} 
                                 view={true}
+                                currency={section.currency}
                             />
                         </div>
                     </div>

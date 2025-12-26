@@ -18,7 +18,19 @@ export default {
                 layout: "dropdown",
             },
             initialValue: "dark",            
-        },     
+        },
+        {
+            name: "currency",
+            title: "Currency",
+            type: "string",
+            options: {
+                list: [
+                    { title: "AED (د.إ)", value: "AED" },
+                    { title: "USD ($)", value: "$" },
+                    { title: "GBP (£)", value: "£" },
+                ],
+            }
+        },
         {
             name: "bannerdesktop",
             title: "Banner Desktop",

@@ -11,7 +11,9 @@ import Image from 'next/image';
 import { formatPrice } from '@/lib/helpers';
 
 export default function PackagesDetails(
-    { packages, view = false }: { packages: any, view? :boolean }) {    
+    { packages, view = false, currency }: 
+    { packages: any, view? :boolean, currency: string }
+) {    
 
     const packageItems: PackageType[] = Array.isArray(packages)
         ? packages
@@ -46,7 +48,7 @@ export default function PackagesDetails(
                                             </p>
 
                                             <p className="text-white font-mono xl:text-[36px]! md:text-[30px]! text-[36px]!  xl:leading-10 md:leading-9 leading-10 font-bold mb-8">
-                                                {p.currency} {formatPrice(p.price)}
+                                                {currency ? currency : p.currency} {formatPrice(p.price)}
                                             </p>
 
                                             <div className="h-px rbf mt-4 last:hidden"></div>

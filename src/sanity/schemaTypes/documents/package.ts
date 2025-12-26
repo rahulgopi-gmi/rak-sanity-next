@@ -40,9 +40,9 @@ export const packages = defineType({
             type: "string",
             options: {
                 list: [
-                    { title: "AED", value: "AED" },
-                    { title: "USD", value: "USD" },
-                    { title: "EUR", value: "EUR" },
+                    { title: "AED (د.إ)", value: "AED" },
+                    { title: "USD ($)", value: "$" },
+                    { title: "GBP (£)", value: "£" },
                 ],
             },
             validation: (Rule) => Rule.required(),
