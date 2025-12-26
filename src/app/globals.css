@@ -1135,6 +1135,18 @@ body .phone-section .iti {
   text-transform:uppercase;
 }
 
+.contact-wrapper .phone-input-cs::placeholder {
+  color: rgba(255, 255, 255, 0.6)!important;
+}
+
+.phone-input-cs::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.phone-input-cs::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .contact-wrapper .phone-input::placeholder {
   color: rgba(72, 69, 69, 0.6)!important;
 }
@@ -1429,7 +1441,6 @@ body .phone-section .iti {
 .campaign-light .campaigns-btm-txt{
   color:#101010;
 }
-
 
 @media (max-width: 575px) {
   .home-package-wraper:before{

@@ -143,7 +143,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     value={formik.values.first_name}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                    className="placeholder:text-[#484545]/60!"
+                                    className={`${formonly ? 'placeholder:text-[#484545]/60!' : 'text-[rgba(255,255,255,0.60)]!'}`}
                                     autoComplete="off"
                                 />
                                 
@@ -163,7 +163,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     value={formik.values.last_name}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                    className="placeholder:text-[#484545]/60!"
+                                    className={`${formonly ? 'placeholder:text-[#484545]/60!' : 'text-[rgba(255,255,255,0.60)]!'}`}
                                     autoComplete="off"
                                 />
 
@@ -182,7 +182,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     value={formik.values.email}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                    className="placeholder:text-[#484545]/60!"
+                                    className={`${formonly ? 'placeholder:text-[#484545]/60!' : 'text-[rgba(255,255,255,0.60)]!'}`}
                                     autoComplete="off"
                                 />
 
@@ -195,8 +195,9 @@ export default function ContactForm({ formonly = true }: Props) {
                             <div className="w-full phone-section">
                                 <PhoneInput
                                     country="ae"
+                                    disableCountryCode={true}
                                     value={value}
-                                    inputClass="phone-input"
+                                    inputClass={formonly ? "phone-input" : "phone-input-cs"}
                                     inputProps={{
                                         placeholder: "Enter Phone Number",
                                         name: "phone"
@@ -294,7 +295,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     value={formik.values.message}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                    className="placeholder:text-[#484545]/60!"
+                                    className={`${formonly ? 'placeholder:text-[#484545]/60!' : 'text-[rgba(255,255,255,0.60)]!'}`}
                                     autoComplete="off"
                                 ></Textarea>
                                

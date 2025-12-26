@@ -170,7 +170,8 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                         buttonStyle={{
                             background: "rgba(255,255,255,0.1)",
                             border: "1px solid rgba(255,255,255,0.2)",
-                            borderRadius: "14px 0 0 14px"
+                            borderRadius: "14px 0 0 14px",
+                            width: "60px"
                         }}
                         dropdownStyle={{
                             background: "#111",

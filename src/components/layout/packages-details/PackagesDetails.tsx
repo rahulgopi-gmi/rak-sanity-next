@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { PackageType } from '@/features/application/types/sanity';
 import { Fragment } from 'react/jsx-runtime';
 import Image from 'next/image';
+import { formatPrice } from '@/lib/helpers';
 
 export default function PackagesDetails(
     { packages, view = false }: { packages: any, view? :boolean }) {    
@@ -45,7 +46,7 @@ export default function PackagesDetails(
                                             </p>
 
                                             <p className="text-white font-mono xl:text-[36px]! md:text-[30px]! text-[36px]!  xl:leading-10 md:leading-9 leading-10 font-bold mb-8">
-                                                {p.currency} {p.price}
+                                                {p.currency} {formatPrice(p.price)}
                                             </p>
 
                                             <div className="h-px rbf mt-4 last:hidden"></div>
@@ -115,7 +116,7 @@ export default function PackagesDetails(
                                                     </span>
 
                                                     <h3 className="text-white text-[35px]! font-semibold mt-px mb-[17px] font-sans">
-                                                        {p.currency} {p.price}
+                                                        {p.currency} {formatPrice(p.price)}
                                                     </h3>
 
                                                     <Link

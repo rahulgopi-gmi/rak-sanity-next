@@ -317,7 +317,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                                 />
                                             </div>
                                             <div className="absolute bottom-0 lg:px-[32px] lg:py-[40px]  px-[24px] py-[30px]">
-                                                <p className="mt-4 max-w-[180px] text-white font-mono font-bold xl:text-[28px]! xl:leading-[32px]! text-[20px]! leading-[24px]! tracking-[-0.56px]!">
+                                                <p className="mt-4 max-w-[175px] text-white font-mono font-bold xl:text-[28px]! xl:leading-[32px]! text-[20px]! leading-[24px]! tracking-[-0.56px]!">
                                                     {techkeywords[3]?.header}
                                                 </p>
 
@@ -348,7 +348,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                                 {techkeywords[4]?.header}
                                             </p>
 
-                                            <p className=" mt-0 text-white [leading-trim:both] [text-edge:cap] font-mono lg:text-[28px]! text-[20px]! font-bold lg:leading-[32px]! leading-[22px]! tracking-[-0.56px]! text-right">
+                                            <p className=" mt-0 md:max-w-[210px] text-white [leading-trim:both] [text-edge:cap] font-mono lg:text-[28px]! text-[20px]! font-bold lg:leading-[32px]! leading-[22px]! tracking-[-0.56px]! text-right">
                                                 {techkeywords[4]?.title}
                                             </p>
                                         </div>

@@ -45,16 +45,16 @@ export default function ReferForm() {
             .matches(/^[\p{L} ]+$/u, "First Name can only contain letters and spaces")
             .required("First Name is required"),
         email: Yup.string().email("Invalid email").required("Email is required"),
-        phone: Yup.string().required("Phone is required")
+        phone: Yup.string().required("Phone Number is required")
         .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
-                    .test("valid", "Phone number is invalid", value => isValidPhoneNumber(value || "")),
+                    .test("valid", "Phone Number is invalid", value => isValidPhoneNumber(value || "")),
         referrer_name: Yup.string()
             .max(50, "First Name cannot exceed 50 characters")
             .matches(/^[\p{L} ]+$/u, "Referral Name can only contain letters and spaces")
             .required("Last Name is required"),
-        referrer_phone: Yup.string().required("Referral Phone is required")
+        referrer_phone: Yup.string().required("Referral Phone Number is required")
         .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
-                    .test("valid", "Phone number is invalid", value => isValidPhoneNumber(value || "")),
+                    .test("valid", "Referral Phone Number is invalid", value => isValidPhoneNumber(value || "")),
         referrer_email: Yup.string().email("Invalid email").required("Referral Email is required"),
         referrer_has_company_registered: Yup.boolean()
             .required("Company Registered is required")
@@ -154,7 +154,8 @@ export default function ReferForm() {
             <div className="w-full mb-7 refer-phone">
                 <Label>Your Phone Number</Label>
                 <PhoneInput
-                    country="ae"                    
+                    country="ae"
+                    disableCountryCode={true}                  
                     placeholder="Enter Phone Number*"
                     value={value}
                     onChange={(phone) => {
@@ -183,7 +184,7 @@ export default function ReferForm() {
                         background: "rgba(255,255,255,0.1)",
                         border: "1px solid rgba(255,255,255,0.2)",
                         borderRadius: "14px 0 0 14px",
-                        width: "50px"
+                        width: "60px"
                     }}
                     dropdownStyle={{
                         background: "#111",
@@ -274,7 +275,8 @@ export default function ReferForm() {
             <div className="w-full mb-7 refer-phone">
                 <Label>Referral Phone Number</Label>  
                 <PhoneInput
-                    country="ae"                    
+                    country="ae"
+                    disableCountryCode={true}
                     placeholder="Enter Phone Number*"
                     value={value}
                     onChange={(phone) => {
@@ -303,7 +305,7 @@ export default function ReferForm() {
                         background: "rgba(255,255,255,0.1)",
                         border: "1px solid rgba(255,255,255,0.2)",
                         borderRadius: "14px 0 0 14px",
-                        width: "50px"
+                        width: "60px"
                     }}
                     dropdownStyle={{
                         background: "#111",
