@@ -21,6 +21,7 @@ type CampaignsFormTYPE = {
 
 export default function CampaignsForm({ mode } : CampaignsFormTYPE){
     const [value, setValue] = useState<any>();
+    const [dialCode, setDialCode] = useState("971"); 
 
     const searchParams = useSearchParams();
     const router = useRouter();        
@@ -47,9 +48,9 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
             .matches(/^[\p{L} ]+$/u, "First Name can only contain letters and spaces")
             .required("First Name is required"),
         email: Yup.string().email("Invalid email").required("Email is required"),
-        phone: Yup.string().required("Phone is required")
+        phone: Yup.string().required("Phone Number is required")
         .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
-            .test("valid", "Phone number is invalid", value => isValidPhoneNumber(value || "")),
+            .test("valid", "Phone Number is invalid", value => isValidPhoneNumber(value || "")),
         business_activity: Yup.string()
             .required("Business Activity is required")
             .max(50, "Business Activity cannot exceed 50 characters")
@@ -138,10 +139,14 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                 <div className="mb-8 w-full campaigns-form-phone">
                     <Label size="sm" className="font-semibold">Your Phone Number</Label>
                     <PhoneInput
-                        country="ae"                    
-                        placeholder="Enter phone number"
+                        country="ae"
+                        disableCountryCode={true}
+                        placeholder="Enter Phone Number"
                         value={value}
-                        onChange={(phone) => {
+                        onChange={(phone, country) => {                            
+                            // if (country?.dialCode !== dialCode) {
+                            //     setDialCode(country.dialCode);
+                            // }
                             setValue(phone);
                             formik.setFieldValue("phone", phone);
                         }}
@@ -157,7 +162,10 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                             color: "white",
                             borderRadius: "14px",
                             border: "1px solid rgba(255,255,255,0.2)",
-                            paddingLeft: "70px"
+                            paddingLeft: "70px",
+                            fontWeight: "400",
+                            fontSize: "16px",
+                            fontFamily: "Montserrat"
                         }}
                         buttonStyle={{
                             background: "rgba(255,255,255,0.1)",

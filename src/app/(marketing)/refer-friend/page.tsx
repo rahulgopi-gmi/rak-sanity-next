@@ -143,7 +143,7 @@ export default async function Page() {
                                     }                                    
                                 </div>
     
-                                <div className="w-full pt-12">
+                                <div className="w-full pt-6">
                                     <ul className="flex flex-col gap-9" data-aos="fade-up">
                                         {
                                             keywords.map((i: any, index: number) => (
@@ -151,7 +151,7 @@ export default async function Page() {
                                                     {
                                                         i.icon && (
                                                             <span className="li-sub-icon flex items-center justify-center">
-                                                                <span className="inline-block w-5 h-5 relative">
+                                                                <span className="inline-block w-6 h-6 relative">
                                                                     <Image fill alt={i.icon.alt} src={urlFor(i.icon).url()} />
                                                                 </span>
                                                             </span>

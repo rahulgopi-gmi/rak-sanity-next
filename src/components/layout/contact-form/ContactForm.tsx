@@ -144,6 +144,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     className="placeholder:text-[#484545]/60!"
+                                    autoComplete="off"
                                 />
                                 
                                 {
@@ -163,6 +164,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     className="placeholder:text-[#484545]/60!"
+                                    autoComplete="off"
                                 />
 
                                 {
@@ -181,6 +183,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     className="placeholder:text-[#484545]/60!"
+                                    autoComplete="off"
                                 />
 
                                 {
@@ -223,7 +226,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                         background: "rgba(255,255,255,0.1)",
                                         border: "1px solid rgba(255,255,255,0.2)",
                                         borderRadius: "14px 0 0 14px",
-                                        width: "50px"
+                                        width: "60px"
                                     }}
                                     dropdownStyle={{
                                         background: "#111",
@@ -292,6 +295,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     className="placeholder:text-[#484545]/60!"
+                                    autoComplete="off"
                                 ></Textarea>
                                
                                 {
@@ -300,8 +304,14 @@ export default function ContactForm({ formonly = true }: Props) {
                                 } 
                             </div>                            
 
-                            <div className="w-full flex items-center gap-8">
-                                <Button type="submit" disabled={formik.isSubmitting} className="uppercase text-base">Send Message</Button>
+                            <div className={`w-full flex items-center gap-8 ${!formonly ? 'max-md:justify-center' : ''}`}>
+                                <Button 
+                                    type="submit" 
+                                    disabled={formik.isSubmitting} 
+                                    className={`uppercase text-base ${!formonly ? 'max-md:text-[12px]! max-md:h-[42px]!' : ''}`}
+                                >
+                                    {formonly ? 'Send Message' : 'Submit'}
+                                </Button>
                                 {
                                     formik.isSubmitting &&
                                     (

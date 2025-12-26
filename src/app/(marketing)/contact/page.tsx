@@ -94,7 +94,7 @@ export default async function Page() {
 
         return (
             <main className="w-full">
-                <section className="relative w-full bg-[url('/bg-grd-banner.jpg')] max-md:bg-[url('/bg-grd-banner-mob.png')] max-md:bg-contain bg-cover bg-no-repeat">
+                <section className="relative w-full bg-[url('/bg-grd-banner.jpg')] max-md:bg-[url('/bg-grd-banner-mob.png')] bg-cover bg-no-repeat">
                     <div className="flex flex-col items-center justify-center text-center pt-[211px]">
                         <div className="container contact-section">
                             {

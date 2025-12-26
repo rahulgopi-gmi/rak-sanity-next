@@ -102,7 +102,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                     key={`about-type-${index}`}
                                     className="flex flex-wrap -mx-2 items-center [@media(max-width:991px)]:flex-col-reverse"
                                 >
-                                    <div className="w-full lg:w-5/12 px-2 h-[322px] max-lg:h-[200px] relative" data-aos="fade-up" data-aos-duration="2000">
+                                    <div className="w-full lg:w-5/12 px-2 h-[322px] max-lg:h-[250px] relative" data-aos="fade-up" data-aos-duration="2000">
                                         <Image
                                             src={urlFor(a.image).url()}
                                             alt={a.image?.alt || ""}

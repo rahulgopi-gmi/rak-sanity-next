@@ -1054,6 +1054,10 @@ body .phone-section .iti {
   background: transparent;
 }
 
+.react-tel-input .selected-flag .arrow{
+  left: 35px !important;
+}
+
 .contact-form .react-tel-input .selected-flag .arrow{
   border-top: 4px solid #fff!important;
 }
@@ -1448,6 +1452,7 @@ body .phone-section .iti {
     line-height: 50px !important;
   }
 
+  .contact-wrapper h2,
   .campaigns-ft-hdr h2,
   .campaigns-btn-hdr h2{
     font-size: 40px !important;

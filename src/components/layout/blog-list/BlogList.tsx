@@ -12,7 +12,7 @@ interface BlogItemsProps {
 export default function BlogList({ posts }: BlogItemsProps){
     return(        
         <Link key={posts?._id} href={`blog/${posts?.slug}`}>
-            <div className="blog-card  h-full bg-[#0F0F0F] border border-[#1F1F1F] rounded-3xl overflow-hidden shadow-lg">
+            <div className="blog-card  h-full bg-[#0F0F0F] border border-[#1F1F1F] rounded-[10px] overflow-hidden shadow-lg">
                 <div className="relative w-full">
                     <div className="w-full h-[250px] relative group overflow-hidden">
                         <Image
