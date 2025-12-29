@@ -5,6 +5,7 @@ import Footer from "@/components/layout/footer/Footer";
 import { Toaster } from "react-hot-toast";
 import { PageSettingsType } from "@/features/application/types/sanity";
 import { Fragment } from "react/jsx-runtime";
+import AOSProvider from "../AOSProvider";
 
 export default function MarketingLayoutClient({
   settings,
@@ -16,7 +17,9 @@ export default function MarketingLayoutClient({
   return (
     <Fragment>
       <Header settings={settings} />
-      {children}
+      <AOSProvider>
+        {children}
+      </AOSProvider>
       <Toaster
         position="bottom-right"
         toastOptions={{

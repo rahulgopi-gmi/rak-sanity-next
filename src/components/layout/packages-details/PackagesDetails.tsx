@@ -24,7 +24,7 @@ export default function PackagesDetails(
                 view ?
                 (
                     <div className="rounded-3xl package-compaigns-inner overflow-x-auto" data-aos="fade-up">
-                        <div className="flex w-full">
+                        <div className="flex w-full"  data-aos="fade-up" data-aos-delay="200">
                                 {
                                     sortedPackageItems.map((p: PackageType, index: number) => {   
                                         if (!currency) return null;
@@ -94,7 +94,7 @@ export default function PackagesDetails(
                 :
                 (
                     <div className="package-sec text-center relative">
-                        <div className="container mx-auto">
+                        <div className="container mx-auto" data-aos="fade-up" data-aos-delay="200">
                             <div className='w-full'>
                                 <Swiper
                                     modules={[Autoplay, Pagination]}

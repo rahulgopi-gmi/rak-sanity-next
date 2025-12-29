@@ -106,7 +106,7 @@ export default function ContactForm({ formonly = true }: Props) {
 
     return (
         <div id="contact" className="contact-wrapper">
-            <div className={formonly ? "container mx-auto" : ""}>
+            <div className={formonly ? "container mx-auto" : ""}  data-aos="fade-up" data-aos-delay="200">
                 <div className="row flex -mx-2 max-lg:flex-col">
                     {
                         formonly &&

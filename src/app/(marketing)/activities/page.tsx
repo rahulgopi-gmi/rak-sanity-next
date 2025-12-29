@@ -106,7 +106,7 @@ export default async function Page() {
         return (
             <main className="w-full">
                 <section className="relative w-full bg-black bg-[url('/bg-grd-banner.jpg')] max-md:bg-cover max-md:bg-[url('/bg-grd-banner-mob.png')] bg-contain bg-no-repeat with-overlay">
-                    <div className="container max-auto">
+                    <div className="container max-auto" data-aos="fade-up" data-aos-delay="200">
                         <div className="activities-top-section activities-top-section-wd mx-auto flex flex-col items-center justify-center text-center pt-[150px] max-md:pt-[135] pb-[30px]">
                             {
                                 section.title && (

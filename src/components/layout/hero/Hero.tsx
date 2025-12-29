@@ -95,7 +95,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
         <div className="w-full">                
             <section className="second-fold-wrapper-outer">
                 <div id="about" className="second-fold-wrapper section-space-top section-space-sub-bottom m-0 relative max-lg:text-center">
-                    <div className="container mx-auto relative z-10">
+                    <div className="container mx-auto relative z-10" data-aos="fade-up" data-aos-delay="200">
                         {
                             aboutItems.map((a: HomeAboutType, index: number) => (
                                 <div

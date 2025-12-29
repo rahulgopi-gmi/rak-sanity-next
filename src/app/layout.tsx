@@ -83,8 +83,8 @@ export default function RootLayout({
       </head>
       <body
         className={`${montserrat.variable} ${inter.variable} antialiased`}
-      >
-        {children}
+      >        
+        {children}        
       </body>
     </html>
   );

@@ -123,7 +123,7 @@ export default async function Page() {
                             }
 
                             <div className="w-full h-full absolute top-0 left-0 flex flex-wrap items-end pb-[100px]">
-                                <div className="container mx-auto">
+                                <div className="container mx-auto" data-aos="fade-up" data-aos-delay="200">
                                     <div className="mt-20 mx-auto mb-0 text-center uppercase aos-init aos-animate" data-aos="fade-up">
                                         {
                                             b.header && (                                            

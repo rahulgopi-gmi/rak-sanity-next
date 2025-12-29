@@ -96,7 +96,7 @@ export default async function Page() {
             <main className="w-full">
                 <section className="relative w-full bg-[url('/bg-grd-banner.jpg')] max-md:bg-[url('/bg-grd-banner-mob.png')] bg-cover bg-no-repeat">
                     <div className="flex flex-col items-center justify-center text-center pt-[150px] max-md:pt-[135]">
-                        <div className="container contact-section">
+                        <div className="container contact-section"  data-aos="fade-up" data-aos-delay="200">
                             {
                                 section.title && (
                                     <PillTag className="mx-auto mb-[30px] max-md:mb-5!">

@@ -99,11 +99,18 @@ export default function BlogSwiper({ keywords }: KeywordsType | any) {
 
             <div className="w-full flex items-center gap-4 mt-6 justify-center">
                 <Button type="button" ref={prevRef} className="swiper-button-prev swiper-btn-blog">
-                    <ArrowLeft/>
+                    <svg width="19" height="13" viewBox="0 0 19 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.6426 6.5L0.499721 6.5" stroke="#5FC2D5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.5 0.5L0.5 6.5L6.5 12.5" stroke="#5FC2D5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
                 </Button>
 
-                <Button type="button" ref={nextRef} className="swiper-button-next swiper-btn-blog">
-                    <ArrowRight />
+                <Button type="button" ref={nextRef} className="swiper-button-next swiper-btn-blog">                   
+                    <svg width="19" height="13" viewBox="0 0 19 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.5 6.5L17.6429 6.5" stroke="#5FC2D5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M11.6426 0.5L17.6426 6.5L11.6426 12.5" stroke="#5FC2D5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
                 </Button>
             </div>
             
