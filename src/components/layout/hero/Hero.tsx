@@ -102,7 +102,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                     key={`about-type-${index}`}
                                     className="flex flex-wrap -mx-2 items-center [@media(max-width:991px)]:flex-col-reverse"
                                 >
-                                    <div className="w-full lg:w-5/12 px-2 h-[322px] max-lg:h-[250px] relative" data-aos="fade-up" data-aos-duration="2000">
+                                    <div className="w-full lg:w-1/2 px-2 h-[322px] max-lg:h-[250px] relative" data-aos="fade-up" data-aos-duration="2000">
                                         <Image
                                             src={urlFor(a.image).url()}
                                             alt={a.image?.alt || ""}
@@ -111,8 +111,8 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                         />
                                     </div>
 
-                                    <div className="lg:w-7/12 px-2" data-aos="fade-up" data-aos-duration="2000">
-                                        <PillTag className="mb-10 max-lg:mx-auto">{a?.title || ""}</PillTag>
+                                    <div className="lg:w-1/2 px-2" data-aos="fade-up" data-aos-duration="2000">
+                                        <PillTag className="mb-7! max-lg:mx-auto">{a?.title || ""}</PillTag>
                                         <div dangerouslySetInnerHTML={{ __html: getBodyText(a?.header) || "" }}></div>
                                         <div className="about-section" dangerouslySetInnerHTML={{ __html: getBodyText(a?.content) || "" }}></div>                                        
                                         <Link href={`#${a.ctaLink}`}>
@@ -123,8 +123,8 @@ export default function Hero({ data }: { data: SectionType | any }) {
                             ))
                         }
 
-                        <div className="special-benfit-wrapper mt-[75px]">
-                            <PillTag className="mb-[30px] max-lg:mx-auto">{data?.keywordstitle || ""}</PillTag>
+                        <div className="special-benfit-wrapper mt-[40px]">
+                            <PillTag className="mb-[25px]! max-lg:mx-auto">{data?.keywordstitle || ""}</PillTag>
 
                             <div className="row flex flex-wrap -mx-2">
                                 {
@@ -220,10 +220,10 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                                         {t?.header}
                                                     </h3>
 
-                                                    <div className="flex items-end max-w-[500px] [@media(max-width:1200px)]:max-w-full [@media(max-width:1200px)]:flex-wrap [@media(max-width:1200px)]:flex-col-reverse [@media(max-width:1200px)]:justify-center [@media(max-width:1200px)]:text-center">
+                                                    <div className="flex items-end max-w-[500px] [@media(max-width:1200px)]:max-w-full [@media(max-width:1200px)]:flex-wrap [@media(max-width:1200px)]:flex-col-reverse [@media(max-width:1200px)]:justify-center [@media(max-width:1200px)]:text-center">                                                        
                                                         <p className="text-black font-sans text-base! not-italic font-normal leading-[100%] mb-0 relative">
                                                             {t?.content}
-                                                        </p>
+                                                        </p>                                                        
 
                                                         <div className="md:w-[120px] w-[85px] h-[85px] relative [@media(max-width:1200px)]:mb-[25px] [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
                                                            {img}
