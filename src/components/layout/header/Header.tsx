@@ -24,58 +24,67 @@ export default function Header({ settings }: HeaderProps) {
   const socials = settings?.socialLinks || [];
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const headerContent = headerContentRef.current;
-      const headerInner = headerInnerRef.current;
-      if (!headerContent || !headerInner) return;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const headerContent = headerContentRef.current;
+          const headerInner = headerInnerRef.current;
+          if (!headerContent || !headerInner) return;
 
-      const isMobile = window.innerWidth <= 768;
+          const scrollY = window.scrollY || window.pageYOffset;
+          const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-      if (isMobile) {
-        if (window.scrollY > 50) {
-          headerContent.style.width = "100%";
-          headerInner.style.paddingLeft = "1rem";
-          headerInner.style.paddingRight = "1rem";
+          if (isMobile) {
+            if (scrollY > 50) {
+              headerContent.style.width = "100%";
+              headerInner.style.paddingLeft = "1rem";
+              headerInner.style.paddingRight = "1rem";
 
-          headerContent.classList.remove(
-            "rounded-bl-lg",
-            "rounded-br-lg",
-            "mx-auto"
-          );
-          headerContent.classList.add("border-rd-13");
-        } else {
-          headerInner.style.paddingLeft = "0";
-          headerInner.style.paddingRight = "0";
-          headerContent.classList.remove("border-rd-13");
-        }
-      } else {
-        if (window.scrollY > 50) {
-          headerContent.style.width = "95%";
-          headerInner.style.paddingLeft = "2rem";
-          headerInner.style.paddingRight = "2rem";
+              headerContent.classList.remove(
+                "rounded-bl-lg",
+                "rounded-br-lg",
+                "mx-auto"
+              );
+              headerContent.classList.add("border-rd-13");
+            } else {
+              headerInner.style.paddingLeft = "0";
+              headerInner.style.paddingRight = "0";
+              headerContent.classList.remove("border-rd-13");
+            }
+          } else {
+            if (scrollY > 50) {
+              headerContent.style.width = "94%";
+              headerInner.style.paddingLeft = "3rem";
+              headerInner.style.paddingRight = "3rem";
 
-          headerContent.classList.add(
-            "rounded-bl-lg",
-            "rounded-br-lg",
-            "mx-auto"
-          );
-        } else {
-          headerContent.style.width = "100%";
-          headerInner.style.paddingLeft = "0";
-          headerInner.style.paddingRight = "0";
+              headerContent.classList.add(
+                "rounded-bl-lg",
+                "rounded-br-lg",
+                "mx-auto"
+              );
+            } else {
+              headerContent.style.width = "100%";
+              headerInner.style.paddingLeft = "0";
+              headerInner.style.paddingRight = "0";
+            }
+          }
 
-          headerContent.classList.add(
-            "rounded-bl-lg",
-            "rounded-br-lg",
-            "mx-auto"
-          );
-        }
+          ticking = false;
+        });
+
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
+
 
   const handleHamberger = () => {
     setIsOpen(true);

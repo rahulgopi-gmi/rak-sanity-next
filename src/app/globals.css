@@ -137,6 +137,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 @utility container {
@@ -722,7 +724,7 @@ body .phone-section .iti {
   font-weight:800;
   font-family: var(--proxima-nova);
   text-align: center;  
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   text-transform: uppercase;
 }
 

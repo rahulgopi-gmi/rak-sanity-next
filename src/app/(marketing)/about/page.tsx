@@ -97,15 +97,15 @@ export default async function Page() {
 
         return(
             <main className="w-full">                
-                <section className="about-sec relative bg-black max-md:bg-[url('/aboutbgmob.jpg')] bg-[url('/aboutbgdesk.jpg')]  bg-no-repeat bg-cover pt-[218px] pb-[7px] text-center overflow-hidden max-md:pb-[25px]">
+                <section className="about-sec relative bg-black max-md:bg-[url('/aboutbgmob.jpg')] bg-[url('/aboutbgdesk.jpg')]  bg-no-repeat bg-cover pt-[150px] pb-[7px] text-center overflow-hidden max-md:pb-[25px]">
                     <div className="container mx-auto about-top-section">                        
-                        <PillTag className="mx-auto mb-[30px] max-md:mb-5">
+                        <PillTag className="mx-auto mb-[30px]! max-md:mb-5">
                             {section.title ?? ""}
                         </PillTag>  
 
                         {
                             section.header && (                      
-                                <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>
+                                <div className="xl:px-20" dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>
                             )
                         }
 
@@ -216,7 +216,7 @@ export default async function Page() {
                                                 </div>
 
                                                 <div className="md:w-1/2 w-full max-md:mb-10">
-                                                    <PillTag variant={'light'} className="mb-3 max-lg:mx-auto px-4">{c.tag || ""}</PillTag>
+                                                    <PillTag variant={'light'} className="mb-3 max-md:mx-auto px-4">{c.tag || ""}</PillTag>
                                                     <h3 className="font-semibold font-mono mb-5! text-center md:text-left text-[45px]! max-md:text-[44px]! max-md:leading-11">
                                                         {c.header || ""}
                                                     </h3>

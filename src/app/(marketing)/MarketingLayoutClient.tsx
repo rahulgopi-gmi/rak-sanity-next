@@ -4,6 +4,7 @@ import Header from "@/components/layout/header/Header";
 import Footer from "@/components/layout/footer/Footer";
 import { Toaster } from "react-hot-toast";
 import { PageSettingsType } from "@/features/application/types/sanity";
+import { Fragment } from "react/jsx-runtime";
 
 export default function MarketingLayoutClient({
   settings,
@@ -13,7 +14,7 @@ export default function MarketingLayoutClient({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <Fragment>
       <Header settings={settings} />
       {children}
       <Toaster
@@ -26,6 +27,6 @@ export default function MarketingLayoutClient({
         }}
       />
       <Footer settings={settings} />
-    </>
+    </Fragment>
   );
 }
