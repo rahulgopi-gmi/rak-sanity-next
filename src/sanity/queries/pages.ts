@@ -36,8 +36,6 @@ export const getPackages = `
     title,
     content,
     label,
-    currency,
-    price,
     prices,
     billingCycle,
     ctaText,

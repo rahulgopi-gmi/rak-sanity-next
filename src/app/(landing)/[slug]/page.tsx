@@ -101,7 +101,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         if (!section) return notFound();
 
         const keywords: KeywordsType[] = normalizeArray(section?.keywords);
-        const techkeywords: KeywordsType[] = normalizeArray(section.techkeywords);        
+        const techkeywords: KeywordsType[] = normalizeArray(section.techkeywords);
+        
+        console.log(section, 'section');
 
         return(
             <main className={`${section?.mode === "dark"? "campaign-dark" : "campaign-light"  }`}>

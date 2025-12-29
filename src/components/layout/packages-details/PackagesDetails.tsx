@@ -23,7 +23,7 @@ export default function PackagesDetails(
 
     const sortedPackageItems = [...packageItems].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
-    console.log(sortedPackageItems, 'sortedPackageItems')
+    console.log(sortedPackageItems, 'sortedPackageItems');
 
     return (
         <Fragment>
@@ -58,7 +58,12 @@ export default function PackagesDetails(
                                                 <p className="text-white font-mono xl:text-[36px]! md:text-[30px]! text-[36px]!  xl:leading-10 md:leading-9 leading-10 font-bold mb-8">                                                   
                                                     {!currencySymbol ? 'AED' : currencySymbol}
                                                     &nbsp;
-                                                    {formatPrice(selectedPrice?.price)}
+                                                    {
+                                                        selectedPrice &&
+                                                        (
+                                                            formatPrice(selectedPrice?.price)
+                                                        )
+                                                    }                                                  
                                                 </p>
 
                                                 <div className="h-px rbf mt-4 last:hidden"></div>
