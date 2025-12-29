@@ -103,7 +103,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         const keywords: KeywordsType[] = normalizeArray(section?.keywords);
         const techkeywords: KeywordsType[] = normalizeArray(section.techkeywords);
         
-        console.log(section, 'section');
+        console.log(section, 'sectionssss');
+        console.log(section.currency, 'section.currency');
 
         return(
             <main className={`${section?.mode === "dark"? "campaign-dark" : "campaign-light"  }`}>
@@ -404,7 +405,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             <PackagesDetails 
                                 packages={packages} 
                                 view={true}
-                                currency={section.currency}
+                                currency={section?.currency}
                             />
                         </div>
                     </div>
