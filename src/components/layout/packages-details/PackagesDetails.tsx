@@ -34,7 +34,8 @@ export default function PackagesDetails(
                         <div className="flex w-full">
                                 {
                                     sortedPackageItems.map((p: PackageType, index: number) => {   
-                                        if (!currency) return null;                                        
+                                        if (!currency) return null;
+                                        debugger
                                         const [currencyName, currencySymbol] = currency.split(" ");
                                         const selectedPrice = p?.prices?.find(
                                             (item) => item.currency === currencyName);
