@@ -97,7 +97,7 @@ export default async function Page() {
 
         return (
             <main className="w-full">
-                <section className="package-sec relative bg-[url('/packagebg.jpg')] max-md:bg-[url('/packagebgmob.jpg')] bg-no-repeat bg-cover pt-[218px] pb-[120px] text-center overflow-hidden max-md:pt-[200] max-md:pb-[90]">
+                <section className="package-sec relative bg-[url('/packagebg.jpg')] max-md:bg-[url('/packagebgmob.jpg')] bg-no-repeat bg-cover pt-[150px] pb-[120px] text-center overflow-hidden max-md:pt-[130] max-md:pb-[80]">
                     <div className="container mx-auto package-top-section">
                         {
                             data?.title && (
@@ -109,14 +109,14 @@ export default async function Page() {
 
                         {
                             data?.header && (
-                                <div dangerouslySetInnerHTML={{ __html: getBodyText(data?.header) }}></div>
+                                <div className="xl:px-44" dangerouslySetInnerHTML={{ __html: getBodyText(data?.header) }}></div>
                             )
                         }
                     </div>
 
                     {
                         packages.length > 0 && (
-                            <div className="w-full mt-12">
+                            <div className="w-full mt-8 max-md:mt-8">
                                 <PackagesDetails 
                                     packages={packages}
                                     currency={currency}
@@ -127,7 +127,7 @@ export default async function Page() {
 
                     {
                         data?.body && (
-                            <div className="package-btn-text">
+                            <div className="package-btn-text container">
                                 <div dangerouslySetInnerHTML={{ __html: getBodyText(data?.body) }}></div>
                             </div>
                         )

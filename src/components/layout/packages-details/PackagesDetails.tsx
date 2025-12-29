@@ -8,23 +8,15 @@ import Link from 'next/link';
 import { PackageType } from '@/features/application/types/sanity';
 import { Fragment } from 'react/jsx-runtime';
 import Image from 'next/image';
-import { formatPrice } from '@/lib/helpers';
+import { formatPrice, normalizeArray } from '@/lib/helpers';
 
 export default function PackagesDetails(
     { packages, view = false, currency, data }: 
     { packages?: PackageType[], view? :boolean, currency?: string, data?:any }
 ) {        
 
-    const packageItems: PackageType[] = Array.isArray(packages)
-        ? packages
-        : packages
-            ? [packages]
-            : [];
-
+    const packageItems: PackageType[] = normalizeArray(packages);
     const sortedPackageItems = [...packageItems].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-
-    console.log(sortedPackageItems, 'sortedPackageItems');
-    console.log(data, 'data');
 
     return (
         <Fragment>
@@ -120,6 +112,7 @@ export default function PackagesDetails(
                                         768: { slidesPerView: 2 },
                                         1024: { slidesPerView: 3 },
                                         1200: { slidesPerView: 4 },
+                                        1400: { slidesPerView: 4, spaceBetween: 15 },
                                     }}
                                     className="mySwiper max-w-full mx-auto"
                                 >

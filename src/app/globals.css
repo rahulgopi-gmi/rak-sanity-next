@@ -1459,6 +1459,15 @@ body .phone-section .iti {
 
 @media (max-width: 768px) {
 
+  .package-sec .swiper-pagination{
+    margin-top: 30px;
+  }
+
+  .package-btn-text p {
+    margin-bottom: 20px;
+    margin-top:0px;
+  }
+
   .campaign-dark .campaigns-sub-top h1,
   .campaign-light .campaigns-sub-top h1{
     font-size: 60px !important;
