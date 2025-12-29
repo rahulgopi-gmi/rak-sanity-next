@@ -136,7 +136,7 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                             className="flex-1 h-[95px] max-md:h-full data-[state=active]:border-b-0! border-b! border-[rgba(255,255,255,0.18)]! flex flex-col text-left whitespace-normal p-4 group"
                         >
                             <span className="uppercase font-sans font-semibold max-md:leading-[100%] max-md:text-sm!">{tab.header}</span>
-                            <p className="invisible group-data-[state=active]:visible text-xs! leading-[normal] font-sans mt-0 font-normal text-[#D5D5D5] text-center">
+                            <p className="hidden group-data-[state=active]:block text-xs! leading-[normal] font-sans mt-0 font-normal text-[#D5D5D5] text-center">
                                 {tab.content}
                             </p>
                         </TabsTrigger>
@@ -151,7 +151,7 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                         value={tab.header.toLowerCase()}
                         className="w-full"
                     >
-                        <div className="border flex-col items-center pt-10 pb-5 border-[rgba(255,255,255,0.18)] border-t-0 border-b-0 w-full flex justify-center">
+                        <div className="border flex-col items-center pt-7 pb-5 border-[rgba(255,255,255,0.18)] border-t-0 border-b-0 w-full flex justify-center">
                             <div className="w-full flex justify-center gap-10 max-md:gap-0">
                                 <div className="w-[49.65vw] max-md:w-full max-md:px-4 relative">
                                     <Input

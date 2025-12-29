@@ -105,9 +105,9 @@ export default async function Page() {
 
         return (
             <main className="w-full">
-                <section className="relative w-full bg-[url('/bg-grd-banner.jpg')] max-md:bg-[url('/bg-grd-banner-mob.png')] bg-cover bg-no-repeat with-overlay">
+                <section className="relative w-full bg-black bg-[url('/bg-grd-banner.jpg')] max-md:bg-cover max-md:bg-[url('/bg-grd-banner-mob.png')] bg-contain bg-no-repeat with-overlay">
                     <div className="container max-auto">
-                        <div className="activities-top-section activities-top-section-wd mx-auto flex flex-col items-center justify-center text-center pt-[211px] pb-[30px]">
+                        <div className="activities-top-section activities-top-section-wd mx-auto flex flex-col items-center justify-center text-center pt-[150px] max-md:pt-[135] pb-[30px]">
                             {
                                 section.title && (
                                     <PillTag className="mx-auto mb-[30px] max-md:mb-5">
@@ -130,7 +130,7 @@ export default async function Page() {
                         </div>
                     </div>
 
-                    <div className="container mx-auto pt-12 pb-44" data-aos="fade-up">
+                    <div className="container mx-auto pt-4 pb-44" data-aos="fade-up">
                         <div className="w-full">
                             <ActivitiesTab 
                                 keywords={keywords}
