@@ -24,6 +24,7 @@ export default function PackagesDetails(
     const sortedPackageItems = [...packageItems].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
     console.log(sortedPackageItems, 'sortedPackageItems');
+    console.log(currency, 'currency');
 
     return (
         <Fragment>
