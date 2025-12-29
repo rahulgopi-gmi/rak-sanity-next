@@ -12,7 +12,7 @@ import { formatPrice } from '@/lib/helpers';
 
 export default function PackagesDetails(
     { packages, view = false, currency, data }: 
-    { packages?: PackageType[], view? :boolean, currency?: string, data?:any[] }
+    { packages?: PackageType[], view? :boolean, currency?: string, data?:any }
 ) {        
 
     const packageItems: PackageType[] = Array.isArray(packages)
