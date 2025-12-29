@@ -133,7 +133,7 @@ export default function ReferForm() {
             className="w-full"
         >
             <div className="w-full mb-7">
-                <Label>Your Name</Label> 
+                <Label htmlFor="first_name">Your Name</Label> 
                 <Input 
                     type="text" 
                     placeholder="Your Name*" 
@@ -152,7 +152,7 @@ export default function ReferForm() {
             </div>
 
             <div className="w-full mb-7 refer-phone">
-                <Label>Your Phone Number</Label>
+                <Label htmlFor="phone">Your Phone Number</Label>
                 <PhoneInput
                     country="ae"
                     disableCountryCode={true}                  
@@ -199,7 +199,7 @@ export default function ReferForm() {
             </div>
 
             <div className="w-full mb-7">
-                <Label>Your Email Address</Label> 
+                <Label htmlFor="email">Your Email Address</Label> 
                 <Input 
                     type="email" 
                     placeholder="Your Email Address*" 
@@ -219,7 +219,7 @@ export default function ReferForm() {
             </div>
 
             <div className="w-full mb-7 mt-6">
-                <Label>Do you have a company registered in Innovation City?</Label>                
+                <Label htmlFor="referrer_has_company_registered">Do you have a company registered in Innovation City?</Label>                
                 <div className="w-full flex flex-row items-center gap-6">
                     <RadioGroup 
                         value={formik.values.referrer_has_company_registered ? "yes" : "no"}
@@ -254,7 +254,7 @@ export default function ReferForm() {
             </div>
 
             <div className="w-full mb-7">
-                <Label>Referral Name</Label> 
+                <Label htmlFor="referrer_name">Referral Name</Label> 
                 <Input 
                     type="text" 
                     placeholder="Referral Name*" 
@@ -273,9 +273,9 @@ export default function ReferForm() {
             </div>
 
             <div className="w-full mb-7 refer-phone">
-                <Label>Referral Phone Number</Label>  
+                <Label htmlFor="referrer_phone">Referral Phone Number</Label>  
                 <PhoneInput
-                    country="ae"
+                    country="ae"                    
                     disableCountryCode={true}
                     placeholder="Enter Phone Number*"
                     value={value}
@@ -320,11 +320,12 @@ export default function ReferForm() {
             </div>
 
             <div className="w-full mb-9">
-                <Label>Referral Email Address</Label> 
+                <Label htmlFor="referrer_email">Referral Email Address</Label> 
                 <Input 
                     type="email" 
                     placeholder="Referral Email Address*" 
                     name="referrer_email"
+                    id="referrer_email"
                     value={formik.values.referrer_email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -339,7 +340,7 @@ export default function ReferForm() {
 
             <div className="w-full mb-8">
                 <p className="text-[#FFFFFF99] text-[12px]! font-sans font-normal leading-[22.4px]!">
-                    By submitting the form, you agree to the <Link href="https://freezone.innovationcity.com/rules-and-regulations/" target="_blank" className="text-primary hover:text-primary/80">Terms and Conditions</Link> and <Link href="privacy-policy.html" className="text-primary hover:text-primary/80">Privacy Policy</Link> of INC. You consent to INC collecting
+                    By submitting the form, you agree to the <Link href="https://freezone.innovationcity.com/rules-and-regulations/" target="_blank" className="text-primary hover:text-primary/80">Terms and Conditions</Link> and <Link href="/privacy-policy" className="text-primary hover:text-primary/80">Privacy Policy</Link> of INC. You consent to INC collecting
                     your name, email address and phone number and contacting you either by the email address or phone number supplied.
                 </p>
             </div>
@@ -348,7 +349,7 @@ export default function ReferForm() {
                 <Button 
                     type="submit" 
                     disabled={formik.isSubmitting}
-                    className="text-[12px]! font-bold! text-[#212121]! h-[42px] w-[130px]"
+                    className="text-[12px]! font-bold! text-[#212121]! h-[42px] w-[130px] max-md:w-full"
                 >Submit</Button>
                 {
                     formik.isSubmitting &&
