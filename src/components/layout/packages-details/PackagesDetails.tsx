@@ -11,8 +11,8 @@ import Image from 'next/image';
 import { formatPrice } from '@/lib/helpers';
 
 export default function PackagesDetails(
-    { packages, view = false, currency }: 
-    { packages?: PackageType[], view? :boolean, currency?: string }
+    { packages, view = false, currency, data }: 
+    { packages?: PackageType[], view? :boolean, currency?: string, data:any }
 ) {        
 
     const packageItems: PackageType[] = Array.isArray(packages)
@@ -24,7 +24,7 @@ export default function PackagesDetails(
     const sortedPackageItems = [...packageItems].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
     console.log(sortedPackageItems, 'sortedPackageItems');
-    console.log(currency, 'currency');
+    console.log(data, 'data');
 
     return (
         <Fragment>
