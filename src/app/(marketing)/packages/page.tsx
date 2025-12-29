@@ -98,7 +98,7 @@ export default async function Page() {
         return (
             <main className="w-full">
                 <section className="package-sec relative bg-[url('/packagebg.jpg')] max-md:bg-[url('/packagebgmob.jpg')] bg-no-repeat bg-cover pt-[150px] pb-[120px] text-center overflow-hidden max-md:pt-[130] max-md:pb-[80]">
-                    <div className="container mx-auto package-top-section">
+                    <div className="container mx-auto package-top-section" data-aos="fade-up" data-aos-delay="200">
                         {
                             data?.title && (
                                 <PillTag className="mx-auto mb-[30px] max-md:mb-5">

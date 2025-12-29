@@ -98,7 +98,7 @@ export default async function Page() {
         return(
             <main className="w-full">                
                 <section className="about-sec relative bg-black max-md:bg-[url('/aboutbgmob.jpg')] bg-[url('/aboutbgdesk.jpg')]  bg-no-repeat bg-cover pt-[150px] pb-[7px] text-center overflow-hidden max-md:pt-[130px] max-md:pb-[25px]">
-                    <div className="container mx-auto about-top-section">                        
+                    <div className="container mx-auto about-top-section" data-aos="fade-up" data-aos-delay="200">                        
                         <PillTag className="mx-auto mb-[30px]! max-md:mb-5">
                             {section.title ?? ""}
                         </PillTag>  
