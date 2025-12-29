@@ -302,7 +302,7 @@ p {
   width: 12px !important;
   height: 12px !important;
   background: transparent;
-  border: 2px solid #67C4CD;
+  border: 1.5px solid #67C4CD;
   border-radius: 50% !important;
   opacity: 1 !important;
   margin: 0 10px !important;
@@ -524,6 +524,10 @@ body .phone-section .iti {
     flex: 0 0 auto;
     width: 25%;
   }
+}
+
+.about-top-section h2 br {
+  display: none;
 }
 
 .who-this-for-wrapper h2 span {  
@@ -1461,6 +1465,10 @@ body .phone-section .iti {
 
 @media (max-width: 768px) {
 
+  .privacy-policy-banner-overlay{
+    top:0px;
+  }  
+
   .package-sec .swiper-pagination{
     margin-top: 30px;
   }
@@ -1517,6 +1525,10 @@ body .phone-section .iti {
     line-height: 35px;
   }
 
+  .about-top-section h2 br{
+    display:block;
+  }
+
   .blog-top-section h2,
   .contact-section h2,
   .about-top-section h2,
@@ -1524,6 +1536,7 @@ body .phone-section .iti {
   .activities-top-section h2{
     font-size:45px;
     line-height:47px;
+    margin-bottom: 15px;
   }
 
   .about-sub-hdr h3{
@@ -1536,10 +1549,7 @@ body .phone-section .iti {
   }
 }
 
-@media (max-width: 1024px) {
-  .privacy-policy-banner-overlay{
-    top:0px;
-  }  
+@media (max-width: 1024px) { 
 
   .about-top-section p{
     font-size:16px !important;

@@ -491,8 +491,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                     />
                                 </div>                                                                
 
-                                <div className="absolute z-10 launch-heading-top 2xl:top-[190px] xl:top-[92px] lg:left-[56px] sm:left-[20px] left-auto top-[63px] sm:px-[0px] px-[45px] sm:top-[30px] sm:text-left text-center launch-pd">
-                                    <div className=" sm:block flex flex-col justify-center items-center m-auto">
+                                <div className="absolute z-10 launch-heading-top 2xl:top-[190px] xl:top-[92px] lg:left-[56px] sm:left-[20px] left-auto top-[63px] sm:px-[0px] px-[20px] sm:top-[30px] sm:text-left text-center launch-pd">
+                                    <div className="sm:block flex flex-col justify-center items-center m-auto">
                                         {
                                             section?.secondaryHeader && (
                                                 <div className="campaigns-btn-hdr" dangerouslySetInnerHTML={{ __html: getBodyText(section?.secondaryHeader) }}></div>

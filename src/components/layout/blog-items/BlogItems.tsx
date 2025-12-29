@@ -58,7 +58,7 @@ export default function BlogItems(
         <div className="w-full">             
             {
                 categories.length > 0 && (
-                    <div className="categories-section flex overflow-auto gap-3 xl:gap-4 whitespace-nowrap lg:whitespace-normal lg:flex-wrap mb-10" data-aos="fade-up">
+                    <div className="categories-section flex overflow-auto gap-3 xl:gap-4 whitespace-nowrap lg:whitespace-normal lg:flex-wrap mb-6" data-aos="fade-up">
                         <Button 
                             type="button"
                             onClick={() => handleCategorySelect("all")}
@@ -88,7 +88,7 @@ export default function BlogItems(
                 )
             }                           
                                     
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" data-aos="fade-up">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up">
                 {
                     filteredPosts.slice(0, visibleCount).map((post: PostType, index: number) => (
                         <BlogList
@@ -108,7 +108,7 @@ export default function BlogItems(
                     :                    
                     visibleCount < posts.length && 
                     (
-                        <div className="w-full flex justify-center pt-20" data-aos="fade-up">
+                        <div className="w-full flex justify-center pt-14" data-aos="fade-up">
                             <Button
                                 type="button"
                                 onClick={handleLoadMore}

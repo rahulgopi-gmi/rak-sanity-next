@@ -121,7 +121,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
         return (
             <main className="bg-black w-full">
-                <section className="relative w-full bg-[url('/aboutbgmob.jpg')] md:bg-[url('/aboutbgdesk.jpg')] bg-cover bg-no-repeat with-overlay pt-[211px] pb-[380px]">
+                <section className="relative w-full bg-[url('/aboutbgmob.jpg')] md:bg-[url('/aboutbgdesk.jpg')] bg-contain bg-no-repeat with-overlay pt-[211px] pb-[380px]">
                     <div className="container">
                          <div className="text-white" data-aos="fade-up">
                             <div className="flex items-center gap-3">
@@ -162,7 +162,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                     </div>
                 </section>
 
-                <section className="text-white pt-0 mt-[-345px] md:mt-[-340px] pb-[30px] md:pb-[104px] relative z-10" data-aos="fade-up">
+                <section className="text-white pt-0 mt-[-345px] md:mt-[-340px] pb-[30px] md:pb-[60px] relative z-10" data-aos="fade-up">
                     <div className="container grid grid-cols-1 lg:grid-cols-[250px_1fr_350px] gap-6">
                         <div className="space-y-10">
                             <div className="rounded-[10px] border-[1.701px] border-[rgba(255,255,255,0.10)] bg-[rgba(255,255,255,0.03)] p-6">
@@ -235,9 +235,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                     </div>
                 </section>
 
-                <section className="w-full py-16">
+                <section className="w-full pt-16 pb-24">
                     <div className="container mx-auto px-4">
-                        <h2 className="text-white sm:text-left text-center font-sans text-[26px]! font-normal leading-[27px]! uppercase mb-10">
+                        <h2 className="text-white sm:text-left text-center font-sans text-[26px]! font-normal leading-[27px]! uppercase mb-8">
                             RELATED BLOG
                         </h2>
 

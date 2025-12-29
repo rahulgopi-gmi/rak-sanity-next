@@ -121,12 +121,12 @@ export default async function Page() {
 
         return(
             <main className="bg-black">
-                <section className="relative w-full bg-[url('/aboutbgmob.jpg')] md:bg-[url('/bg-grd-banner.jpg')] bg-contain md:bg-cover bg-no-repeat with-overlay">
+                <section className="relative w-full bg-[url('/aboutbgmob.jpg')] md:bg-[url('/bg-grd-banner.jpg')] bg-contain bg-no-repeat with-overlay">
                     <div className="container">
-                        <div className="flex flex-col items-center justify-center text-center pt-[211px]" data-aos="fade-up">
+                        <div className="flex flex-col items-center justify-center text-center pt-[150px] max-md:pt-[135]" data-aos="fade-up">
                             {
                                 section?.title && (
-                                    <PillTag className="mb-10">{section?.title}</PillTag>
+                                    <PillTag className="mb-8!">{section?.title}</PillTag>
                                 )
                             }                            
 
@@ -151,16 +151,16 @@ export default async function Page() {
                         </div>
                     </div>
 
-                    <div className="relative pt-[50px] pb-[461px] w-full px-[30px]" data-aos="fade-up">
+                    <div className="relative pt-[30px] pb-[461px] w-full px-[30px] max-md:px-[16px]" data-aos="fade-up">
                         <BlogSwiper
                             keywords={keywords}
                         />
                     </div>
                 </section>
 
-                <section className="w-full mt-[-380px] z-1 relative">
+                <section className="w-full mt-[-410px] z-1 relative">
                     <div className="container">
-                        <div className="w-full pb-20">                            
+                        <div className="w-full pb-14">                            
                             <BlogItems 
                                 posts={posts}
                                 categories={categories}
@@ -169,7 +169,7 @@ export default async function Page() {
                     </div>                  
                 </section>
 
-                <section className="pb-[115px] bg-black relative [px-20px]">
+                <section className="pb-[90px] bg-black relative [px-20px]">
                     <div className="w-full">
                         <Image fill alt="" src="/form-box-blue-shadow.png" />
                     </div>

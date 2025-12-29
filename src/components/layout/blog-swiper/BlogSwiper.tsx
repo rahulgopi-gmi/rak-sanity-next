@@ -54,7 +54,7 @@ export default function BlogSwiper({ keywords }: KeywordsType | any) {
                 breakpoints={{
                     768: { slidesPerView: 1 },
                     1024: { slidesPerView: 1 },
-                    1200: { slidesPerView: 1 },
+                    1200: { slidesPerView: 1, spaceBetween:0 },
                 }}
                 onSwiper={setSwiperInstance}
                 className="mySwiper max-w-full mx-auto"
@@ -72,7 +72,7 @@ export default function BlogSwiper({ keywords }: KeywordsType | any) {
                                     />
                                 </div>
 
-                                <div className="w-full px-8 xl:px-12 max-md:pt-4 max-md:pb-10 py-20 flex flex-col gap-y-0 lg:gap-y-4">
+                                <div className="w-full px-8 xl:px-12 max-md:pt-4 max-md:pb-10 py-20 flex flex-col gap-y-0 lg:gap-y-3">
                                     <h3 className="text-[16px]! font-sans leading-[100%]! font-light text-white mb-6 mt-7 lg:mt-0 lg:mb-0">
                                         {s?.date}
                                     </h3>

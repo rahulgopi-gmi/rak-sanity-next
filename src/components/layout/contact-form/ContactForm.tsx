@@ -123,7 +123,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                 </h5>
 
                                 <Link href="tel:+97172222325"
-                                    className="text-black text-[21px] not-italic font-semibold leading-[100%] underline relative hover:text-[#5752A3]">
+                                    className="text-black text-[21px] not-italic font-semibold leading-[100%] underline relative hover:text-[#5752A3] font-sans">
                                     +971 7 2222325
                                 </Link>
                             </div>

@@ -28,7 +28,6 @@ export default function PackagesDetails(
                                 {
                                     sortedPackageItems.map((p: PackageType, index: number) => {   
                                         if (!currency) return null;
-                                        debugger
                                         const [currencyName, currencySymbol] = currency.split(" ");
                                         const selectedPrice = p?.prices?.find(
                                             (item) => item.currency === currencyName);
@@ -124,7 +123,7 @@ export default function PackagesDetails(
 
                                                 return(
                                                     <SwiperSlide key={p._id}>
-                                                        <div className="rounded-[20px] border border-[rgba(255,255,255,0.14)] bg-[linear-gradient(129deg,rgba(255,255,255,0.19)_8.15%,rgba(255,255,255,0.04)_93.89%)] backdrop-blur-[21.5px] min-h-[560px] sm:min-h-[660px] p-[23px] text-left max-w-[287px] mx-auto sm:max-w-none sm:mx-0">
+                                                        <div className="rounded-[20px] border border-[rgba(255,255,255,0.14)] bg-[linear-gradient(129deg,rgba(255,255,255,0.19)_8.15%,rgba(255,255,255,0.04)_93.89%)] backdrop-blur-[21.5px] min-h-[560px] sm:min-h-[610px] p-[23px] text-left max-w-[287px] mx-auto sm:max-w-none sm:mx-0">
                                                             <h4 className="text-white text-[16px]! font-sans font-normal uppercase mb-[25px]">
                                                                 {p.title}
                                                             </h4>
