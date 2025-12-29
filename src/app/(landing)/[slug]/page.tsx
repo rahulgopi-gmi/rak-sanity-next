@@ -94,7 +94,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         const { slug } = await params;
         const template = "campaigns";
 
-        const {page, packages} = await getData(slug, template);
+        const {page, packages} = await getData(slug, template);        
         if (!page) return notFound();
 
         const section = page.sections?.[0];
@@ -104,7 +104,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         const techkeywords: KeywordsType[] = normalizeArray(section.techkeywords);
         
         console.log(section, 'sectionssss');
-        console.log(section.currency, 'section.currency');
 
         return(
             <main className={`${section?.mode === "dark"? "campaign-dark" : "campaign-light"  }`}>
