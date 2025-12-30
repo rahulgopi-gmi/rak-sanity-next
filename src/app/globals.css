@@ -853,7 +853,7 @@ body .phone-section .iti {
 
 .privacy-policy-wrapper h4{
   margin-bottom: 1rem;
-  font-family: var(--proxima-nova);
+  font-family: var(--font-montserrat);
   color:#fff;
 }
 
@@ -862,7 +862,7 @@ body .phone-section .iti {
   line-height: 1.5;
   font-size: 0.875rem;
   color: #fff;
-  font-family: var(--proxima-nova);
+  font-family: var(--font-montserrat);
 }
 
 .privacy-policy-wrapper ol{
@@ -871,13 +871,13 @@ body .phone-section .iti {
   line-height: 1.25rem;
   padding-left: 1.5rem;
   margin-bottom: 1rem;
-  font-family: var(--proxima-nova);
+  font-family: var(--font-montserrat);
 }
 
 .privacy-policy-wrapper ol li{
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  font-family: var(--proxima-nova);
+  font-family: var(--font-montserrat);
 }
 
 .privacy-policy-wrapper ul{
@@ -888,13 +888,13 @@ body .phone-section .iti {
 .privacy-policy-wrapper ul li{
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  font-family: var(--proxima-nova);
+  font-family: var(--font-montserrat);
 }
 
 .privacy-policy-wrapper a{
   text-decoration: underline;
   color:#60bfd3;
-  font-family: var(--proxima-nova);
+  font-family: var(--font-montserrat);
 }
 
 .privacy-policy-wrapper a:hover{
