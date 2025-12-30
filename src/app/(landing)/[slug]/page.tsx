@@ -1,6 +1,6 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { KeywordsType, PageDataType } from "@/features/application/types/sanity";
-import { Fragment, cache } from "react";
+import { Fragment } from "react";
 import { getPageBySlug, getPackages } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
@@ -18,29 +18,32 @@ import PackagesDetails from "@/components/layout/packages-details/PackagesDetail
 /** 
  *  Fetch Sanity Data
 */
-async function getData(slug: string, template: string): Promise<{ page: PageDataType | null; packages: any[] }> {
-    try {
-        const [{ data: page }, { data: packages }] = await Promise.all([
-            sanityFetch({
-                query: getPageBySlug,
-                params: {
-                    slug,
-                    template
-                },
-                stega: false,
-            }),
-            sanityFetch({
-                query: getPackages,
-                stega: false,
-            }),
-        ]);
+async function getData(
+  slug: string,
+  template: string
+): Promise<{ page: PageDataType | null; packages: any[] }> {
+  try {    
+    const [{ data: page }, { data: packages }] = await Promise.all([
+      sanityFetch({
+        query: getPageBySlug,
+        params: { slug, template },
+        stega: false,
+        requestTag: slug,
+      }),
+      sanityFetch({
+        query: getPackages,
+        stega: false,
+          requestTag: slug,
+      }),
+    ])
 
-        return { page: page ?? null, packages: packages ?? [] };
-    } catch (error) {
-        console.error(`Sanity Fetch Error ${slug} : `, error);
-        return { page: null, packages: [] };
-    }
+    return { page: page ?? null, packages: packages ?? [] }
+  } catch (error) {
+    console.error(`Sanity Fetch Error ${slug} : `, error)
+    return { page: null, packages: [] }
+  }
 }
+
 
 /**
  * Generate metadata for the page.
@@ -399,7 +402,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                         </div>
                            
                         <div className="w-full">
-                            
+
                             <PackagesDetails 
                                 packages={packages} 
                                 view={true}
