@@ -20,7 +20,7 @@ export default function BlogNewsLetter(props : { view : boolean}) {
     }
 
     const validationSchema = Yup.object({            
-        email: Yup.string().email("Invalid email").required("Email is required")            
+        email: Yup.string().email("Please enter a valid email address").required("Email address is required")            
     });
 
     const formik = useFormik({
@@ -68,7 +68,7 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                             <Input
                                 type="email"
                                 placeholder="Enter your email address"
-                                className="flex-1 border-0 h-auto outline-none! pl-0 py-0! focus:outline-none! focus:shadow-none! focus-visible:shadow-none! bg-transparent text-white/50 placeholder-white/50 font-sans text-[14px]! focus-visible:ring-0! font-normal leading-none"
+                                className="flex-1 border-0 h-auto outline-none! pl-1 py-0! focus:outline-none! focus:shadow-none! focus-visible:shadow-none! bg-transparent text-white/50 placeholder-white/50 font-sans text-[14px]! focus-visible:ring-0! font-normal leading-none"
                                 name="email"
                                 id="email"
                                 value={formik.values.email}

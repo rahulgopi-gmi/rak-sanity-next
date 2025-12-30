@@ -13,7 +13,7 @@ interface BlogItemsProps {
     loadMoreCount?: number;
 }
 
-let count = 6;
+let count = 9;
 
 export default function BlogItems(
     { posts, categories = [], initialCount = count, loadMoreCount = count }: BlogItemsProps) {          
