@@ -399,12 +399,14 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                         </div>
                            
                         <div className="w-full">
+                            
                             <PackagesDetails 
                                 packages={packages} 
                                 view={true}
                                 currency={section?.currency}
                                 data={section}
                             />
+
                         </div>
                     </div>
                 </section>
