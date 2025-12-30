@@ -217,7 +217,7 @@ export default async function Page() {
 
                                                 <div className="md:w-1/2 w-full max-md:mb-10">
                                                     <PillTag variant={'light'} className="mb-3 max-md:mx-auto px-4">{c.tag || ""}</PillTag>
-                                                    <h3 className="font-semibold font-mono mb-5! text-center md:text-left text-[45px]! max-md:text-[44px]! max-md:leading-11">
+                                                    <h3 className="font-semibold font-mono mb-5! text-center md:text-left text-[45px]! max-md:text-[44px]! max-md:leading-[44px]">
                                                         {c.header || ""}
                                                     </h3>
                                                     <p className="text-base! font-sans leading-normal! text-center max-w-[348px] mx-auto md:text-left md:mr-auto md:ml-0 md:max-w-[420px]">
