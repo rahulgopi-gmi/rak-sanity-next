@@ -1513,6 +1513,8 @@ body .phone-section .iti {
   .banner-bottom-text{
     font-size:22px !important;
     line-height: normal !important;
+    width: 60%;
+    margin: auto;
   }
   
   .campaign-light .campaigns-btn-hdr h2{
@@ -1547,9 +1549,17 @@ body .phone-section .iti {
   .imgcon-inner-wrapper {
     margin-left: calc(-50vw + 50% + (0px / 2));
   }
+
+  .who-this-for-wrapper::before{
+    background:none;
+  }
 }
 
 @media (max-width: 1024px) { 
+
+  .about-section p{
+    max-width:100%;
+  }
 
   .about-top-section p{
     font-size:16px !important;

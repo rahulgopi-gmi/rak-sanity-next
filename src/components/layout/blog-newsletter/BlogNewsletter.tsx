@@ -60,7 +60,7 @@ export default function BlogNewsLetter(props : { view : boolean}) {
             (
                 <form onSubmit={formik.handleSubmit}>
                     <div className="mt-8 flex items-center [@media(min-width:300px)_and_(max-width:400px)]:flex-col gap-4 w-full border border-[rgba(95,194,213,0.30)] rounded-2xl bg-black/40 pl-4 pr-2  py-[18px] sm:py-2">
-                                <div className="flex w-full items-center gap-4">
+                        <div className="flex w-full items-center gap-4">
                             <span className="text-white/40 text-xl">
                                 <Mail />
                             </span>
@@ -68,7 +68,7 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                             <Input
                                 type="email"
                                 placeholder="Enter your email address"
-                                className="flex-1 border-0 h-auto outline-none! pl-0 focus:outline-none! focus:shadow-none! focus-visible:shadow-none! bg-transparent text-white/50 placeholder-white/50 font-sans text-[14px]! focus-visible:ring-0! font-normal leading-none"
+                                className="flex-1 border-0 h-auto outline-none! pl-0 py-0! focus:outline-none! focus:shadow-none! focus-visible:shadow-none! bg-transparent text-white/50 placeholder-white/50 font-sans text-[14px]! focus-visible:ring-0! font-normal leading-none"
                                 name="email"
                                 id="email"
                                 value={formik.values.email}
@@ -78,11 +78,11 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                             />
                         </div>
 
-                                <Button type="submit" className="px-6 text-sm font-medium leading-5! [@media(min-width:300px)_and_(max-width:400px)]:w-full!" disabled={formik.isSubmitting}>
-                            Subscribe Now
-                            {
-                                formik.isSubmitting && <Spinner className="text-black" />
-                            }                            
+                            <Button type="submit" className="px-6 capitalize rounded-[12px]! h-[40px]! text-sm font-medium leading-5! [@media(min-width:300px)_and_(max-width:400px)]:w-full!" disabled={formik.isSubmitting}>
+                                Subscribe Now
+                                {
+                                    formik.isSubmitting && <Spinner className="text-black" />
+                                }                            
                         </Button>
                     </div>
                     {
