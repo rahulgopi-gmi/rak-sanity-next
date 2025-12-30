@@ -656,6 +656,7 @@ body .phone-section .iti {
   letter-spacing: -0.64px;
   line-height: 63px;
   margin-top:2rem;
+  font-size:64px;
 }
 
 .refer-page-hdr h2 span{
@@ -1537,13 +1538,13 @@ body .phone-section .iti {
   .package-top-section h2,
   .activities-top-section h2{
     font-size:45px;
-    line-height:47px;
+    line-height:45px;
     margin-bottom: 15px;
   }
 
   .about-sub-hdr h3{
-    font-size:45px;
-    line-height:47px;
+    font-size:44px!important;
+    line-height:44px!important;
   }
 
   .imgcon-inner-wrapper {

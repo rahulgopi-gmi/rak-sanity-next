@@ -15,7 +15,7 @@ export default function Footer({ settings }: HeaderProps) {
 
     return(
         <footer
-            className="bg-[#1F1F1F] text-center py-8 md:py-6 text-[rgba(255,255,255,0.53)] font-montserrat text-md font-normal leading-normal">
+            className="bg-[#1F1F1F] text-center py-8 md:py-6 text-[rgba(255,255,255,0.53)] font-sans text-md font-normal leading-normal">
             <div className="container">
                 <div className="flex flex-col gap-y-4 lg:flex-row lg:gap-x-4 justify-center md:justify-between items-center lg:items-start">
                     <div className="inline-flex gap-6 order-1 md:order-2">
@@ -56,7 +56,7 @@ export default function Footer({ settings }: HeaderProps) {
                                 <Fragment key={f?.label || i}>
                                     <Link 
                                         href={f?.url || "#"}
-                                        className="hover:opacity-50 cursor-pointer no-underline text-[rgba(255,255,255,0.53)] font-montserrat text-[14px] font-normal leading-normal hover:text-[rgba(255,255,255,0.8)]"
+                                        className="hover:opacity-50 cursor-pointer no-underline text-[rgba(255,255,255,0.53)] font-sans text-[14px] font-normal leading-normal hover:text-[rgba(255,255,255,0.8)]"
                                     >
                                         {f?.label}
                                     </Link>

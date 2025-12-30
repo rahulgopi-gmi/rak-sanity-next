@@ -121,8 +121,8 @@ export default async function Page() {
                                         {
                                             keywords.map((i: any, index: number) => (
                                                 <li key={`keyword-${index}`} className="flex items-start">
-                                                    <span className="mr-4 flex items-center justify-center bg-[rgba(95,194,213,0.18)] rounded-tl-[18px] rounded-tr-[18px] rounded-bl-[18px] rounded-br-none p-4">
-                                                        <span className="inline-block w-5 h-5 max-md:w-6 max-md:h-6 relative">
+                                                    <span className="mr-4 flex items-center justify-center bg-[rgba(95,194,213,0.18)] max-md:w-[63px] max-md:h-[63px] rounded-tl-[18px] rounded-tr-[18px] rounded-bl-[18px] rounded-br-none p-4">
+                                                        <span className="inline-block w-5 h-5 max-md:w-[32px]! max-md:h-[32px]! relative">
                                                             {
                                                                 i.icon && (
                                                                     <Image fill alt={i.icon.alt} src={urlFor(i.icon).url()} />

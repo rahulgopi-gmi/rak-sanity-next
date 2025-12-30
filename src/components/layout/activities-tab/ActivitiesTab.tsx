@@ -182,7 +182,7 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                             <div className="w-full mt-3">
                                 {
                                     tab.price && (
-                                        <p className="text-center text-[12px]! font-sans font-normal pb-4">
+                                        <p className="text-center text-[12px]! font-sans font-normal pb-2">
                                             <span className="text-[#FFFFFF87]">{tab.header} Activity starting at </span>
                                             <span className="text-white">{tab.price}.</span>
                                         </p>
@@ -232,10 +232,10 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                                             paginatedActivities(tab.header.toLowerCase()).length > 0 ? (
                                             paginatedActivities(tab.header.toLowerCase()).map((activity) => (
                                                 <TableRow key={activity._id}>
-                                                    <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[100%] font-normal">{activity.code}</TableCell>
-                                                    <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[100%] font-normal">{activity.activityName}</TableCell>
-                                                    <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[100%] font-normal">{activity.activityGroup}</TableCell>                                                  
-                                                    <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[100%] font-normal">
+                                                    <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[normal] font-normal">{activity.code}</TableCell>
+                                                    <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[normal] font-normal">{activity.activityName}</TableCell>
+                                                    <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[normal] font-normal">{activity.activityGroup}</TableCell>                                                  
+                                                    <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[normal] font-normal">
                                                         <p className="line-clamp-2 desc overflow-hidden text-ellipsis leading-[normal] font-normal text-sm! font-sans text-[#D5D5D5]">
                                                             {activity.description}
                                                         </p>

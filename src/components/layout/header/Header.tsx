@@ -180,13 +180,14 @@ export default function Header({ settings }: HeaderProps) {
                 const slug = item.slug?.current || "";
                 const isContact = slug === "contact";
                 const isLast = index === menu.length - 1;
+                const isActive = pathname === `/${slug}`;
 
                 if (isContact) {
                   return (
                     <Link
                       key={item.label}
                       href={`/${slug}`}
-                      className="md:block hover:bg-white transition text-black font-sans text-xs font-semibold uppercase px-6 py-3 my-4 rounded-lg bg-[rgb(var(--primary-color))] shadow-[0_0_14px_0_rgba(255,255,255,0.19)_inset] mt-6 w-full text-center"
+                      className="md:block text-[16px]! mt-[110px] hover:bg-white transition text-black font-sans text-xs font-semibold uppercase px-6 py-3 my-4 rounded-lg bg-[rgb(var(--primary-color))] shadow-[0_0_14px_0_rgba(255,255,255,0.19)_inset] mt-6 w-full text-center"
                     >
                       GET STARTED
                     </Link>
@@ -198,7 +199,7 @@ export default function Header({ settings }: HeaderProps) {
                     key={item.label}
                     href={`/${slug}`}
                     onClick={handleMenuClose}
-                    className={`text-white font-sans text-sm font-semibold py-8 w-full text-left ${!isLast ? "border-b border-[#374151]" : ""
+                    className={`${isActive ? 'text-primary' : 'text-white' } font-sans text-sm font-semibold py-8 w-full text-left ${!isLast ? "border-b border-[#374151]" : ""
                       }`}
                   >
                     {item.label}
