@@ -10,6 +10,7 @@ import { urlFor } from '@/sanity/lib/image';
 import { getBodyText } from '@/sanity/lib/utils';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { formatDate } from '@/lib/date';
 
 export default function BlogSwiper({ keywords }: KeywordsType | any) {
     const prevRef = useRef(null);
@@ -70,11 +71,16 @@ export default function BlogSwiper({ keywords }: KeywordsType | any) {
                                         src={urlFor(s?.icon).url()}  
                                         className="rounded-2xl shadow-lg transition-transform duration-500 ease-out group-hover:scale-110 object-cover" 
                                     />
+                                    <div className="absolute top-2 left-2">
+                                        <span className="px-4 py-1 rounded-full bg-[rgba(27,26,26,0.7)] border border-[#333] text-white font-inter text-[14px] font-normal leading-normal">
+                                            Business Days
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <div className="w-full px-8 xl:px-12 max-md:pt-4 max-md:pb-10 py-20 flex flex-col gap-y-0 lg:gap-y-3">
                                     <h3 className="text-[16px]! font-sans leading-[100%]! font-light text-white mb-6 mt-7 lg:mt-0 lg:mb-0">
-                                        {s?.date}
+                                        {formatDate(s?.date)}
                                     </h3>
                                     
                                     <h2 className="text-white font-sans text-[18px]! xl:text-[22px]! leading-[normal]! font-semibold capitalize max-w-[380px]  mb-6 mt-0 lg:mt-0 lg:mb-0">
