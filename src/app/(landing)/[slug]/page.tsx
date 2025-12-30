@@ -153,7 +153,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             </div>
 
                             <div className="xl:max-w-full lg:max-w-[165px] sm:max-w-[110px] max-w-[181px] ">
-                                <div className={`w-full relative`}>
+                                <div className="w-full relative max-md:mt-4">
                                     {
                                         section?.icon && (
                                             <Image                                                
@@ -397,7 +397,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             }
                            
                         </div>
-
+                            <span className="hidden">{section?.currency}</span>
                         <div className="w-full">
                             <PackagesDetails 
                                 packages={packages} 
@@ -444,7 +444,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                         )
                                     }                                    
 
-                                    <div className="xl:space-y-5 lg:space-y-6 space-y-9 lg:max-w-[384px] max-w-full">
+                                    <div className="xl:space-y-5 lg:space-y-6 space-y-9 lg:max-w-[384px] max-w-full">                                      
                                         <CampaignsAccordion data={section?.businesskeywords} />
                                     </div>
                                 </div>
@@ -469,26 +469,34 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                     <div className="text-white  md:pt-[120px] md:pb-[120px] pt-[90px] pb-[90px] relative z-10" data-aos="fade-up">
                         <div className="container">
                             <div className="relative w-full">
-                                <div className="w-full hidden md:block">                                    
-                                    <Image
-                                        width={1576}
-                                        height={365}
-                                        sizes="(max-width: 768px) 100vw, 50vw"
-                                        className="w-full h-auto"
-                                        alt={section?.secondarydesktop?.alt || ""}
-                                        src={urlFor(section?.secondarydesktop).url()}                                        
-                                    />
+                                <div className="w-full hidden md:block">   
+                                {
+                                    section?.secondarydesktop && (
+                                        <Image
+                                            width={1576}
+                                            height={365}
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                            className="w-full h-auto"
+                                            alt={section?.secondarydesktop?.alt || ""}
+                                            src={urlFor(section?.secondarydesktop).url()}                                        
+                                        />
+                                    )
+                                }                                                                     
                                 </div>
 
                                 <div className="w-full block md:hidden">
-                                    <Image
-                                        width={1576}
-                                        height={365}
-                                        sizes="(max-width: 768px) 100vw, 50vw"
-                                        alt={section?.secondarymobile?.alt || ""}
-                                        src={urlFor(section?.secondarymobile).url()}
-                                        className="object-contain"
-                                    />
+                                    {
+                                        section?.secondarymobile && (
+                                             <Image
+                                                width={1576}
+                                                height={365}
+                                                sizes="(max-width: 768px) 100vw, 50vw"
+                                                alt={section?.secondarymobile?.alt || ""}
+                                                src={urlFor(section?.secondarymobile).url()}
+                                                className="object-contain"
+                                            />   
+                                        )
+                                    }                                    
                                 </div>                                                                
 
                                 <div className="absolute z-10 launch-heading-top 2xl:top-[190px] xl:top-[92px] lg:left-[56px] sm:left-[20px] left-auto top-[63px] sm:px-[0px] px-[20px] sm:top-[30px] sm:text-left text-center launch-pd">
