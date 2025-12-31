@@ -1549,13 +1549,18 @@ body .phone-section .iti {
     display:block;
   }
 
-  .blog-top-section h2,
   .contact-section h2,
   .about-top-section h2,
   .package-top-section h2,
   .activities-top-section h2{
     font-size:45px;
     line-height:45px;
+    margin-bottom: 15px;
+  }
+
+  .blog-top-section h2{
+    font-size:45px !important;
+    line-height:47px !important;
     margin-bottom: 15px;
   }
 

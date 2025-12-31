@@ -29,7 +29,7 @@ export default function BlogList({ posts }: BlogItemsProps){
                                 posts?.categories.map((cat: CategoryType) => (
                                     <span
                                         key={cat._id}
-                                        className="px-4 py-1 rounded-full bg-[rgba(27,26,26,0.7)] border border-[#333] text-white font-inter text-[14px] font-normal leading-normal">
+                                        className="px-4 py-1 rounded-full bg-[rgba(27,26,26,0.7)] border border-[#333] text-white font-sans text-[14px] font-normal leading-normal">
                                         {cat.title}
                                     </span>
                                 ))

@@ -199,7 +199,7 @@ export default function ContactForm({ formonly = true }: Props) {
                                     value={value}
                                     inputClass={formonly ? "phone-input" : "phone-input-cs"}
                                     inputProps={{
-                                        placeholder: "Enter Phone Number",
+                                        placeholder: "Enter Phone Number*",
                                         name: "phone"
                                     }}
                                     onChange={(phone) => {

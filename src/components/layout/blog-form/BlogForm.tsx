@@ -43,9 +43,9 @@ export default function BlogForm() {
             .required("First Name is required"),
         email: Yup.string().email("Invalid email").required("Email is required"),
         phone: Yup.string()
-            .required("Phone is required")
+            .required("Phone Number is required")
             .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
-            .test("valid", "Phone number is invalid", value => isValidPhoneNumber(value || "")),
+            .test("valid", "Phone Number is invalid", value => isValidPhoneNumber(value || "")),
         business_activity: Yup.string().required("Business Activity is required"),
         license_start: Yup.string().required("Planning Start is required")
     });
@@ -146,8 +146,9 @@ export default function BlogForm() {
                 <Label size="sm" htmlFor="mobile number" className="font-medium">Mobile Number*</Label>
                 <PhoneInput
                     country="ae"                    
-                    placeholder="Enter phone number"
+                    placeholder="Enter Phone Number"
                     value={value}
+                    disableCountryCode={true}
                     onChange={(phone) => {
                         setValue(phone);
                         formik.setFieldValue("phone", phone);
@@ -163,11 +164,18 @@ export default function BlogForm() {
                         background: "rgba(255,255,255,0.05)",
                         color: "white",
                         borderRadius: "8px",
-                        border: "1px solid rgba(255,255,255,0.2)"
+                        border: "1px solid rgba(255,255,255,0.2)",
+                        paddingLeft: "70px",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        fontFamily: "Montserrat",
+                        lineHeight: "16px"
                     }}
                     buttonStyle={{
                         background: "rgba(255,255,255,0.1)",
-                        border: "1px solid rgba(255,255,255,0.2)"
+                        border: "1px solid rgba(255,255,255,0.2)",
+                        borderRadius: "14px 0 0 14px",
+                        width: "60px"
                     }}
                     dropdownStyle={{
                         background: "#111",

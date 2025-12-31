@@ -199,7 +199,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                                         {img}
                                                     </div>
 
-                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-[100%]! mb-0 relative">
+                                                    <p className="text-black font-sans text-base! not-italic font-normal leading-[normal]! mb-0 relative">
                                                         {t?.content || ""}
                                                     </p>
                                                 </div>
