@@ -133,7 +133,7 @@ export default function ReferForm() {
             className="w-full"
         >
             <div className="w-full mb-7">
-                <Label htmlFor="first_name">Your Name</Label> 
+                <Label htmlFor="first_name" className="mb-3!">Your Name</Label> 
                 <Input 
                     type="text" 
                     placeholder="Your Name*" 
@@ -142,7 +142,7 @@ export default function ReferForm() {
                     value={formik.values.first_name}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="text-white! font-medium! leading-4! text-[14px]!"
+                    className="text-white! font-medium! leading-4! text-[14px]! rounded-[8px]!"
                 />
                 
                 {
@@ -152,7 +152,7 @@ export default function ReferForm() {
             </div>
 
             <div className="w-full mb-7 refer-phone">
-                <Label htmlFor="phone">Your Phone Number</Label>
+                <Label htmlFor="phone" className="mb-3!">Your Phone Number</Label>
                 <PhoneInput
                     country="ae"
                     disableCountryCode={true}                  
@@ -172,7 +172,7 @@ export default function ReferForm() {
                         height: "60px",
                         background: "#c3c3c333",
                         color: "white",
-                        borderRadius: "14px",
+                        borderRadius: "8px",
                         border: "1px solid rgba(255,255,255,0.2)",
                         paddingLeft: "70px",
                         fontWeight: "500",
@@ -183,7 +183,7 @@ export default function ReferForm() {
                     buttonStyle={{
                         background: "rgba(255,255,255,0.1)",
                         border: "1px solid rgba(255,255,255,0.2)",
-                        borderRadius: "14px 0 0 14px",
+                        borderRadius: "8px 0 0 8px",
                         width: "60px"
                     }}
                     dropdownStyle={{
@@ -199,7 +199,7 @@ export default function ReferForm() {
             </div>
 
             <div className="w-full mb-7">
-                <Label htmlFor="email">Your Email Address</Label> 
+                <Label htmlFor="email" className="mb-3!">Your Email Address</Label> 
                 <Input 
                     type="email" 
                     placeholder="Your Email Address*" 
@@ -208,7 +208,7 @@ export default function ReferForm() {
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="text-white! font-medium! leading-4! text-[14px]!"
+                    className="text-white! font-medium! leading-4! text-[14px]! rounded-[8px]!"
                 />
 
                 {
@@ -219,7 +219,7 @@ export default function ReferForm() {
             </div>
 
             <div className="w-full mb-7 mt-6">
-                <Label htmlFor="referrer_has_company_registered">Do you have a company registered in Innovation City?</Label>                
+                <Label htmlFor="referrer_has_company_registered" className="mb-3!">Do you have a company registered in Innovation City?</Label>                
                 <div className="w-full flex flex-row items-center gap-6">
                     <RadioGroup 
                         value={formik.values.referrer_has_company_registered ? "yes" : "no"}
@@ -254,7 +254,7 @@ export default function ReferForm() {
             </div>
 
             <div className="w-full mb-7">
-                <Label htmlFor="referrer_name">Referral Name</Label> 
+                <Label htmlFor="referrer_name" className="mb-3!">Referral Name</Label> 
                 <Input 
                     type="text" 
                     placeholder="Referral Name*" 
@@ -263,7 +263,7 @@ export default function ReferForm() {
                     value={formik.values.referrer_name}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="text-white! font-medium! leading-4! text-[14px]!"
+                    className="text-white! font-medium! leading-4! text-[14px]! rounded-[8px]!"
                 />
                 
                 {
@@ -273,7 +273,7 @@ export default function ReferForm() {
             </div>
 
             <div className="w-full mb-7 refer-phone">
-                <Label htmlFor="referrer_phone">Referral Phone Number</Label>  
+                <Label htmlFor="referrer_phone" className="mb-3!">Referral Phone Number</Label>  
                 <PhoneInput
                     country="ae"                    
                     disableCountryCode={true}
@@ -293,7 +293,7 @@ export default function ReferForm() {
                         height: "60px",
                         background: "#c3c3c333",
                         color: "white",
-                        borderRadius: "14px",
+                        borderRadius: "8px",
                         border: "1px solid rgba(255,255,255,0.2)",
                         paddingLeft: "70px",
                         fontWeight: "500",
@@ -304,7 +304,7 @@ export default function ReferForm() {
                     buttonStyle={{
                         background: "rgba(255,255,255,0.1)",
                         border: "1px solid rgba(255,255,255,0.2)",
-                        borderRadius: "14px 0 0 14px",
+                        borderRadius: "8px 0 0 8px",
                         width: "60px"
                     }}
                     dropdownStyle={{
@@ -320,7 +320,7 @@ export default function ReferForm() {
             </div>
 
             <div className="w-full mb-9">
-                <Label htmlFor="referrer_email">Referral Email Address</Label> 
+                <Label htmlFor="referrer_email" className="mb-3!">Referral Email Address</Label> 
                 <Input 
                     type="email" 
                     placeholder="Referral Email Address*" 
@@ -329,7 +329,7 @@ export default function ReferForm() {
                     value={formik.values.referrer_email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="text-white! font-medium! leading-4! text-[14px]!" 
+                    className="text-white! font-medium! leading-4! text-[14px]! rounded-[8px]!" 
                 />
                 
                 {

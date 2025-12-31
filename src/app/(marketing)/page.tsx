@@ -164,7 +164,7 @@ export default async function Page() {
                     {
                         section.packageContent && (
                             <div className="container mx-auto">
-                                <div className="w-full flex justify-center relative package-btm-txt" dangerouslySetInnerHTML={{ __html: getBodyText(section?.packageContent) }}></div>
+                                <div className="w-full flex justify-center relative package-btm-txt max-md:px-8" dangerouslySetInnerHTML={{ __html: getBodyText(section?.packageContent) }}></div>
                             </div>
                         )
                     }

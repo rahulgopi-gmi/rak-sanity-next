@@ -118,7 +118,7 @@ export default async function Page() {
 
                     <div className="w-full absolute top-0">
                         <div className="container">
-                            <div className="w-full pt-[210px] lg:pt-[340px] pb-[100px] lg:pb-[50px]">
+                            <div className="w-full pt-[210px] lg:pt-[360px] pb-[100px] lg:pb-[50px]">
                                 <div className="max-w-[580px] md:w-full refer-page-hdr">
                                     {
                                         section?.header && (
@@ -131,10 +131,10 @@ export default async function Page() {
                     </div>    
                 </section>
     
-                <section className="w-full pb-[100px] refer-form-section">
+                <section className="w-full pb-[100px] refer-top-section">
                     <div className="container">
                         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-14">
-                            <div className="w-full -mt-20 lg:mt-0">
+                            <div className="w-full -mt-20 lg:mt-0 lg:pr-14">
                                 <div className="w-full">
                                     {
                                         section?.body && (
@@ -143,8 +143,8 @@ export default async function Page() {
                                     }                                    
                                 </div>
     
-                                <div className="w-full pt-6">
-                                    <ul className="flex flex-col gap-9" data-aos="fade-up">
+                                <div className="w-full pt-6 max-md:pt-5">
+                                    <ul className="flex flex-col gap-9 max-md:gap-12" data-aos="fade-up">
                                         {
                                             keywords.map((i: any, index: number) => (
                                                 <li key={index} className="text-[#FFFFFFCC] flex gap-6 items-center text-[16px] leading-7! tracking-[0.16px] font-normal font-sans">
@@ -166,7 +166,7 @@ export default async function Page() {
                             </div>
     
                             <div className="w-full black-form" data-aos="fade-up">
-                                <div className="py-14 md:py-12 px-4 md:px-9 border border-[#FFFFFF1A] form-section rounded-3xl">
+                                <div className="py-14 md:py-12 px-4 refre md:px-9 refer-form-section border border-[#FFFFFF1A] form-section rounded-3xl">
                                     <ReferForm />
                                 </div>
                             </div>

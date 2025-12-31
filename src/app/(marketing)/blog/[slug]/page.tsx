@@ -121,7 +121,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
         return (
             <main className="bg-black w-full">
-                <section className="relative w-full bg-[url('/aboutbgmob.jpg')] md:bg-[url('/aboutbgdesk.jpg')] bg-contain bg-no-repeat with-overlay pt-[211px] pb-[380px]">
+                <section className="relative w-full bg-[url('/aboutbgmob.jpg')] md:bg-[url('/aboutbgdesk.jpg')] max-md:bg-cover bg-contain bg-no-repeat with-overlay pt-[211px] pb-[380px]">
                     <div className="container">
                          <div className="text-white" data-aos="fade-up">
                             <div className="flex items-center gap-3">

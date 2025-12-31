@@ -180,7 +180,7 @@ export default async function Page() {
                                         {section?.sectionSubHeader || ""}
                                     </h3>
 
-                                    <p className="text-[#D5D5D5] text-[16px]! font-sans leading-normal! text-center md:text-left max-w-[486px] ml-auto mr-auto md:ml-auto md:mr-0" data-aos="fade-up">
+                                    <p className="text-[#D5D5D5] text-[16px]! font-sans leading-[normal]! text-center md:text-left max-w-[486px] ml-auto mr-auto md:ml-auto md:mr-0" data-aos="fade-up">
                                         {section?.sectionContent || ""}
                                     </p>
                                 </div>
