@@ -1466,6 +1466,23 @@ body .phone-section .iti {
 
 @media (max-width: 768px) {
 
+  .refer-page-hdr h2{
+    font-weight: 800;
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 45px;
+    letter-spacing: -0.45px;
+  }
+
+  .refer-section p{
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: 0.16px;
+  }
+
   .privacy-policy-banner-overlay{
     top:0px;
   }  
