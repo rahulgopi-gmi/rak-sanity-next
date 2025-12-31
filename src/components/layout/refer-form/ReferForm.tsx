@@ -142,7 +142,7 @@ export default function ReferForm() {
                     value={formik.values.first_name}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="text-white! font-medium leading-4! text-base"
+                    className="text-white! font-medium! leading-4! text-[14px]!"
                 />
                 
                 {
@@ -176,7 +176,7 @@ export default function ReferForm() {
                         border: "1px solid rgba(255,255,255,0.2)",
                         paddingLeft: "70px",
                         fontWeight: "500",
-                        fontSize: "16px",
+                        fontSize: "14px",
                         fontFamily: "Montserrat",
                         lineHeight: "16px"
                     }}
@@ -208,7 +208,7 @@ export default function ReferForm() {
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="text-white! font-medium leading-4! text-base"
+                    className="text-white! font-medium! leading-4! text-[14px]!"
                 />
 
                 {
@@ -263,7 +263,7 @@ export default function ReferForm() {
                     value={formik.values.referrer_name}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="text-white! font-medium leading-4! text-base"
+                    className="text-white! font-medium! leading-4! text-[14px]!"
                 />
                 
                 {
@@ -297,7 +297,7 @@ export default function ReferForm() {
                         border: "1px solid rgba(255,255,255,0.2)",
                         paddingLeft: "70px",
                         fontWeight: "500",
-                        fontSize: "16px",
+                        fontSize: "14px",
                         fontFamily: "Montserrat",
                         lineHeight: "16px"
                     }}
@@ -329,7 +329,7 @@ export default function ReferForm() {
                     value={formik.values.referrer_email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="text-white! font-medium leading-4! text-base" 
+                    className="text-white! font-medium! leading-4! text-[14px]!" 
                 />
                 
                 {
