@@ -65,7 +65,7 @@ export default function BlogSwiper({ keywords }: KeywordsType | any) {
                     keywords.map((s: KeywordsType,i:number)=> (
                         <SwiperSlide className="slide-custom">
                             <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
-                                <div className="w-full md:h-full h-[350px] relative overflow-hidden group rounded-2xl">
+                                <div className="w-full md:h-full h-[520px]! relative overflow-hidden group rounded-2xl">
                                     <Image 
                                         fill alt={s?.icon.alt} 
                                         src={urlFor(s?.icon).url()}  

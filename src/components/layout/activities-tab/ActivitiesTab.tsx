@@ -133,7 +133,7 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                         <TabsTrigger
                             key={tab.header}
                             value={tab.header.toLowerCase()}
-                            className="flex-1 h-[95px] max-md:h-full data-[state=active]:border-b-0! border-b! group-data-[state=active]:justify-start border-[rgba(255,255,255,0.18)]! flex flex-col text-left whitespace-normal p-4 group"
+                            className="flex-1 h-[82px] max-md:h-full data-[state=active]:border-b-0! border-b! group-data-[state=active]:justify-start border-[rgba(255,255,255,0.18)]! flex flex-col text-left whitespace-normal py-5 px-4! max-md:px-4 max-md:py-4 group"
                         >
                             <span className="uppercase font-sans font-semibold max-md:leading-[100%] max-md:text-sm! group-data-[state=active]:max-md:mt-0 max-md:mt-auto">{tab.header}</span>
                             <p className="hidden group-data-[state=active]:block text-xs! leading-[normal] font-sans mt-0 font-normal text-[#D5D5D5] text-center">
@@ -193,7 +193,7 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                         </div>
 
                         <div className="w-full -mt-2">
-                            <div className="overflow-x-auto rounded-t-[10px] border border-[rgba(255,255,255,0.18)]">
+                            <div className="overflow-x-auto rounded-[10px] border border-[rgba(255,255,255,0.18)] ">
                                 <Table>
                                     <TableHeader className="bg-[#5FC2D54D] text-sm hover:bg-[#5FC2D54D]">
                                         <TableRow>
@@ -230,12 +230,12 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                                     <TableBody className="text-white">
                                         {
                                             paginatedActivities(tab.header.toLowerCase()).length > 0 ? (
-                                            paginatedActivities(tab.header.toLowerCase()).map((activity) => (
+                                                paginatedActivities(tab.header.toLowerCase()).map((activity, index, array) => (
                                                 <TableRow key={activity._id}>
-                                                    <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[normal] font-normal">{activity.code}</TableCell>
-                                                    <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[normal] font-normal">{activity.activityName}</TableCell>
-                                                    <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[normal] font-normal">{activity.activityGroup}</TableCell>                                                  
-                                                    <TableCell className="text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[normal] font-normal">
+                                                    <TableCell className={`${index === array.length - 1 ? "border-b-0 rounded-l-[10px]" : ""} text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[normal] font-normal`}>{activity.code}</TableCell>
+                                                    <TableCell className={`${index === array.length - 1 ? "border-b-0" : ""} text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[normal] font-normal`}>{activity.activityName}</TableCell>
+                                                    <TableCell className={`${index === array.length - 1 ? "border-b-0" : ""} text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[normal] font-normal`}>{activity.activityGroup}</TableCell>                                                  
+                                                    <TableCell className={`${index === array.length - 1 ? "border-b-0" : ""} text-sm! max-md:text-[13px]! text-[#d5d5d5] leading-[normal] font-normal`}>
                                                         <p className="line-clamp-2 desc overflow-hidden text-ellipsis leading-[normal] font-normal text-sm! font-sans text-[#D5D5D5]">
                                                             {activity.description}
                                                         </p>

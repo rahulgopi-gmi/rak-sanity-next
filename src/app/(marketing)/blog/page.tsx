@@ -126,7 +126,7 @@ export default async function Page() {
                         <div className="flex flex-col items-center justify-center text-center pt-[150px] max-md:pt-[135]" data-aos="fade-up">
                             {
                                 section?.title && (
-                                    <PillTag className="mb-8!">{section?.title}</PillTag>
+                                    <PillTag className="mb-8! max-md:mb-5!">{section?.title}</PillTag>
                                 )
                             }                            
 
@@ -158,9 +158,9 @@ export default async function Page() {
                     </div>
                 </section>
 
-                <section className="w-full mt-[-410px] z-1 relative">
+                <section className="w-full mt-[-410px] max-md:mt-[-395px] z-1 relative">
                     <div className="container">
-                        <div className="w-full pb-14">                            
+                        <div className="w-full pb-24">                            
                             <BlogItems 
                                 posts={posts}
                                 categories={categories}
@@ -169,7 +169,7 @@ export default async function Page() {
                     </div>                  
                 </section>
 
-                <section className="pb-[90px] bg-black relative [px-20px]">
+                <section className="pb-[115px] bg-black relative [px-20px]">
                     <div className="w-full">
                         <Image fill alt="" src="/form-box-blue-shadow.png" />
                     </div>

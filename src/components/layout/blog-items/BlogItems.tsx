@@ -13,7 +13,7 @@ interface BlogItemsProps {
     loadMoreCount?: number;
 }
 
-let count = 9;
+let count = 6;
 
 export default function BlogItems(
     { posts, categories = [], initialCount = count, loadMoreCount = count }: BlogItemsProps) {          
@@ -88,7 +88,7 @@ export default function BlogItems(
                 )
             }                           
                                     
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-aos="fade-up">
                 {
                     filteredPosts.slice(0, visibleCount).map((post: PostType, index: number) => (
                         <BlogList
@@ -108,7 +108,7 @@ export default function BlogItems(
                     :                    
                     visibleCount < posts.length && 
                     (
-                        <div className="w-full flex justify-center pt-14" data-aos="fade-up">
+                        <div className="w-full flex justify-center pt-12" data-aos="fade-up">
                             <Button
                                 type="button"
                                 onClick={handleLoadMore}

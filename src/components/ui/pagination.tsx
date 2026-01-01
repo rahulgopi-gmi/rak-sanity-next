@@ -6,68 +6,89 @@ interface Props {
     onPageChange: (page: number) => void;
 }
 
-export default function Pagination({ currentPage, totalPages, onPageChange }: Props) {
-    // Generate the pagination with ellipsis
+export default function Pagination({
+    currentPage,
+    totalPages,
+    onPageChange,
+}: Props) {
     const generatePages = () => {
         const pages: (number | "...")[] = [];
 
-        if (totalPages <= 5) {
-            // Show all pages
+        // If total pages are small, show all
+        if (totalPages <= 7) {
             for (let i = 1; i <= totalPages; i++) pages.push(i);
-        } else {
-            // Always show first page
-            pages.push(1);
-            if (currentPage > 4) pages.push("...");
-            const start = Math.max(2, currentPage - 1);
-            const end = Math.min(totalPages - 1, currentPage + 1);
-            for (let i = start; i <= end; i++) pages.push(i);
-            if (currentPage < totalPages - 3) pages.push("...");
-            pages.push(totalPages);
+            return pages;
         }
 
-        return pages;
+        // Always show first page
+        pages.push(1);
+
+        // Left ellipsis
+        if (currentPage > 4) {
+            pages.push("...");
+        }
+
+        // Middle pages
+        const start = Math.max(2, currentPage - 1);
+        const end = Math.min(totalPages - 1, currentPage + 1);
+
+        for (let i = start; i <= end; i++) {
+            pages.push(i);
+        }
+
+        // Right ellipsis
+        if (currentPage < totalPages - 3) {
+            pages.push("...");
+        }
+
+        // Always show last page
+        pages.push(totalPages);
+
+        // Remove duplicates just in case
+        return [...new Set(pages)];
     };
 
     return (
-        <div className="flex items-center gap-2 justify-center mt-6">
-
-            {/* Prev Button */}
+        <div className="flex items-center justify-center gap-2 mt-6">
+            {/* Prev */}
             <button
-                onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
-                className="px-3 py-2 rounded-lg text-[#5FC2D5] disabled:opacity-30 cursor-pointer"
+                onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
+                className="px-3 py-2 rounded-lg text-[#5FC2D5] disabled:opacity-30"
             >
                 <ChevronLeft size={18} />
             </button>
 
-            {/* Page Numbers */}
-            {generatePages().map((p, idx) =>
-                p === "..." ? (
-                    <div
-                        key={idx}
-                        className="px-4 py-2 rounded-lg bg-[#0E1A1F] text-[#5FC2D5]"
+            {/* Pages */}
+            {generatePages().map((page, idx) =>
+                page === "..." ? (
+                    <span
+                        key={`dots-${idx}`}
+                        className="px-4 py-2 rounded-lg bg-[#0E1A1F] text-[#5FC2D5] cursor-default"
                     >
                         …
-                    </div>
+                    </span>
                 ) : (
                     <button
-                        key={p}
-                        onClick={() => onPageChange(p as number)}
-                            className={`px-4 py-2 rounded-lg border font-sans cursor-pointer text-sm border-transparent ${currentPage === p
+                        key={page}
+                        onClick={() => onPageChange(page)}
+                        className={`px-4 py-2 rounded-lg text-sm font-sans border border-transparent
+              ${currentPage === page
                                 ? "bg-[#5FC2D5] text-black"
                                 : "bg-[#0E1A1F] text-[#5FC2D5] hover:bg-[#12282F]"
-                            }`}
+                            }
+            `}
                     >
-                        {p}
+                        {page}
                     </button>
                 )
             )}
 
-            {/* Next Button */}
+            {/* Next */}
             <button
-                onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
-                className="px-3 py-2 rounded-lg text-[#5FC2D5] disabled:opacity-30 cursor-pointer"
+                onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
+                className="px-3 py-2 rounded-lg text-[#5FC2D5] disabled:opacity-30"
             >
                 <ChevronRight size={18} />
             </button>

@@ -134,7 +134,7 @@ export default async function Page() {
                 <section className="w-full pb-[100px] refer-top-section">
                     <div className="container">
                         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-14">
-                            <div className="w-full -mt-20 lg:mt-0 lg:pr-14">
+                            <div className="w-full -mt-20 lg:mt-0 lg:pr-14 relative z-10">
                                 <div className="w-full">
                                     {
                                         section?.body && (

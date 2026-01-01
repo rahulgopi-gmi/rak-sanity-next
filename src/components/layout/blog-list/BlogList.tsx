@@ -55,7 +55,7 @@ export default function BlogList({ posts }: BlogItemsProps){
                     >
                     </div>
 
-                    <p className="text-white mt-2 text-left font-sans text-[12px]! font-normal leading-none! capitalize">
+                    <p className="text-white mt-2 max-md:mt-3 text-left font-sans text-[12px]! font-normal leading-none! capitalize">
                         BY {posts?.author?.name || 'Unknown Author'}
                     </p>
                 </div>
