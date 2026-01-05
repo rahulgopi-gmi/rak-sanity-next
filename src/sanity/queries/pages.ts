@@ -85,9 +85,42 @@ export const getCategories = `
   }
 `;
 
-
 export const getAllPostsQuery = `
 *[_type == "post"] | order(publishedAt desc) {
+  _id,
+  title,
+  "slug": slug.current,
+  publishedAt,
+  body,
+  mainImage{
+    asset->{
+      _id,
+      url
+    },
+    alt
+  },
+  author->{
+    _id,
+    name,
+    role,
+    bio,
+    image{
+      asset->{
+        _id,
+        url
+      }
+    }
+  },
+  categories[]->{
+    _id,
+    title,
+    description
+  }
+}
+`;
+
+export const getAllPostsBySlideQuery = `
+*[_type == "post" &&  showInSlider == true] | order(publishedAt desc) {
   _id,
   title,
   "slug": slug.current,
@@ -126,7 +159,15 @@ export const getPostBySlug = `
     title,
     "slug": slug.current,
     publishedAt,
-    body,    
+    body[]{
+      ...,
+      _type == "video" => {
+        ...,
+        asset->{
+          url
+        }
+      }
+    },    
     mainImage{
       asset->{
         _id,

@@ -1,6 +1,7 @@
 import BlogForm from "@/components/layout/blog-form/BlogForm";
 import BlogList from "@/components/layout/blog-list/BlogList";
 import BlogNewsLetter from "@/components/layout/blog-newsletter/BlogNewsletter";
+import BlogRelated from "@/components/layout/blog-related/BlogRelated";
 import BlogSideList from "@/components/layout/blog-side-list/BlogSideList";
 import { CategoryType, PostType } from "@/features/application/types/sanity";
 import { formatDate } from "@/lib/date";
@@ -241,19 +242,22 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             RELATED BLOG
                         </h2>
 
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {
-                                related.length > 0 ? (
-                                    related.map((r : PostType, index: number)=>(
-                                        <BlogList
-                                            posts={r}
-                                            key={index}
-                                        />
-                                    ))
-                                ) : (
-                                    <p className="text-white/50">No related blogs found.</p>
-                                )
-                            }
+                        <div className="w-full">
+                            <BlogRelated
+                                post={related}
+                            />
+                            {/* // {
+                            //     related.length > 0 ? (
+                            //         related.map((r : PostType, index: number)=>(
+                            //             <BlogList
+                            //                 posts={r}
+                            //                 key={index}
+                            //             />
+                            //         ))
+                            //     ) : (
+                            //         <p className="text-white/50">No related blogs found.</p>
+                            //     )
+                            // } */}
                         </div>
                     </div>
                 </section>

@@ -19,7 +19,7 @@ export default function BlogList({ posts }: BlogItemsProps){
                             fill
                             alt={posts?.mainImage?.alt || posts?.title}
                             src={urlFor(posts?.mainImage).url()}
-                            className="transition-transform duration-500 ease-out group-hover:scale-110"
+                            className="transition-transform duration-500 ease-out group-hover:scale-110 object-cover"
                         />
                     </div>
 
@@ -45,7 +45,7 @@ export default function BlogList({ posts }: BlogItemsProps){
                         {formatDate(posts?.publishedAt)}
                     </p>
 
-                    <h3 className="text-white font-sans text-[18px]! capitalize font-semibold leading-normal! mb-3 line-clamp-1">
+                    <h3 className="text-white font-sans text-[18px]! capitalize font-semibold leading-normal! mb-2.5 line-clamp-1">
                         {posts?.title}
                     </h3>
 

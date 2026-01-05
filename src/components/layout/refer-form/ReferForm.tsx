@@ -16,7 +16,11 @@ import PhoneInput from "react-phone-input-2";
 import 'react-phone-input-2/lib/style.css';
 
 export default function ReferForm() {
-    const [value, setValue] = useState<any>();
+    const [country, setCountry] = useState("ae");
+    const [countryCode, setCountryCode] = useState("");
+    const [refrCountry, setReferCountry] = useState("ae");
+    const [referCountryCode, setReferCountryCode] = useState("");
+
     const searchParams = useSearchParams();
     const router = useRouter();
     
@@ -46,15 +50,29 @@ export default function ReferForm() {
             .required("First Name is required"),
         email: Yup.string().email("Invalid email").required("Email is required"),
         phone: Yup.string().required("Phone Number is required")
-        .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
-                    .test("valid", "Phone Number is invalid", value => isValidPhoneNumber(value || "")),
+            .test(
+                "valid-phone",
+                "Invalid phone number for selected country",
+                function (value) {
+                    if (!value || !countryCode) return false;
+                    const fullNumber = `+${countryCode} ${value}`;
+                    return isValidPhoneNumber(fullNumber);
+                }
+            ),
         referrer_name: Yup.string()
             .max(50, "Referral Name cannot exceed 50 characters")
             .matches(/^[\p{L} ]+$/u, "Referral Name can only contain letters and spaces")
             .required("Referral Name is required"),
         referrer_phone: Yup.string().required("Referral Phone Number is required")
-        .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
-                    .test("valid", "Referral Phone Number is invalid", value => isValidPhoneNumber(value || "")),
+            .test(
+                "valid-phone",
+                "Invalid phone number for selected country",
+                function (value) {
+                    if (!value || !countryCode) return false;
+                    const fullNumber = `+${countryCode} ${value}`;
+                    return isValidPhoneNumber(fullNumber);
+                }
+            ),
         referrer_email: Yup.string().email("Invalid email").required("Referral Email is required"),
         referrer_has_company_registered: Yup.boolean()
             .required("Company Registered is required")
@@ -153,44 +171,64 @@ export default function ReferForm() {
 
             <div className="w-full mb-7 refer-phone">
                 <Label htmlFor="phone" className="mb-3!">Your Phone Number</Label>
-                <PhoneInput
-                    country="ae"
-                    disableCountryCode={true}                  
-                    placeholder="Enter Phone Number*"
-                    value={value}
-                    onChange={(phone) => {
-                        setValue(phone);
-                        formik.setFieldValue("phone", phone);
-                    }}
-                    onBlur={() => formik.setFieldTouched("phone", true)}           
-                    enableSearch={true}
-                    containerStyle={{
-                        width: "100%"
-                    }}
-                    inputStyle={{
-                        width: "100%",
-                        height: "60px",
-                        background: "#c3c3c333",
-                        color: "white",
-                        borderRadius: "8px",
-                        border: "1px solid rgba(255,255,255,0.2)",
-                        paddingLeft: "70px",
-                        fontWeight: "500",
-                        fontSize: "14px",
-                        fontFamily: "Montserrat",
-                        lineHeight: "16px"
-                    }}
-                    buttonStyle={{
-                        background: "rgba(255,255,255,0.1)",
-                        border: "1px solid rgba(255,255,255,0.2)",
-                        borderRadius: "8px 0 0 8px",
-                        width: "60px"
-                    }}
-                    dropdownStyle={{
-                        background: "#111",
-                        color: "white"
-                    }}
-                />                
+                 <div className="w-full flex gap-1">
+                        <div className="w-32">
+                        <PhoneInput
+                            country={country}
+                            enableSearch={true}
+                            value={countryCode.replace("+", "")}
+                            disableCountryCode={false}
+                            disableDropdown={false}
+                            onChange={(_, countryData: any) => {
+                                setCountry(countryData?.countryCode);
+                                setCountryCode(countryData?.dialCode);
+                                formik.setFieldValue("phone", "");
+                            }}
+                            containerStyle={{
+                                width: "100%"
+                            }}
+                            inputStyle={{
+                                width: "100%",
+                                height: "60px",
+                                background: "#c3c3c333",
+                                color: "white",
+                                borderRadius: "8px",
+                                border: "1px solid rgba(255,255,255,0.2)",
+                                paddingLeft: "50px",
+                                fontWeight: "500",
+                                fontSize: "14px",
+                                lineHeight: "16px",
+                                pointerEvents: "none"
+                            }}
+                            buttonStyle={{
+                                background: "transparent",
+                                border: "0",
+                                borderRadius: "8px 0 0 8px",
+                                width: "70px"
+                            }}
+                            dropdownStyle={{
+                                background: "#111",
+                                color: "white"
+                            }}
+                        />
+                    </div>
+
+                    <div className="w-full">
+                        <Input
+                            type="tel"
+                            placeholder="Enter Phone Number"
+                            value={formik.values.phone}
+                            onChange={(e) =>
+                                formik.setFieldValue(
+                                    "phone",
+                                    e.target.value.replace(/\D/g, "")
+                                )
+                            }
+                            className="text-white! font-medium! leading-4! text-[14px]! rounded-[8px]!"
+                            onBlur={() => formik.setFieldTouched("phone", true)}
+                        />
+                    </div>
+                </div>               
                 
                 {
                     formik.touched.phone && formik.errors.phone &&
@@ -274,44 +312,64 @@ export default function ReferForm() {
 
             <div className="w-full mb-7 refer-phone">
                 <Label htmlFor="referrer_phone" className="mb-3!">Referral Phone Number</Label>  
-                <PhoneInput
-                    country="ae"                    
-                    disableCountryCode={true}
-                    placeholder="Enter Phone Number*"
-                    value={value}
-                    onChange={(phone) => {
-                        setValue(phone);
-                        formik.setFieldValue("referrer_phone", phone);
-                    }}
-                    onBlur={() => formik.setFieldTouched("referrer_phone", true)}           
-                    enableSearch={true}
-                    containerStyle={{
-                        width: "100%"
-                    }}
-                    inputStyle={{
-                        width: "100%",
-                        height: "60px",
-                        background: "#c3c3c333",
-                        color: "white",
-                        borderRadius: "8px",
-                        border: "1px solid rgba(255,255,255,0.2)",
-                        paddingLeft: "70px",
-                        fontWeight: "500",
-                        fontSize: "14px",
-                        fontFamily: "Montserrat",
-                        lineHeight: "16px"
-                    }}
-                    buttonStyle={{
-                        background: "rgba(255,255,255,0.1)",
-                        border: "1px solid rgba(255,255,255,0.2)",
-                        borderRadius: "8px 0 0 8px",
-                        width: "60px"
-                    }}
-                    dropdownStyle={{
-                        background: "#111",
-                        color: "white"
-                    }}
-                />
+                <div className="w-full flex gap-1">
+                    <div className="w-32">
+                        <PhoneInput
+                            country={country}
+                            enableSearch={true}
+                            value={referCountryCode.replace("+", "")}
+                            disableCountryCode={false}
+                            disableDropdown={false}
+                            onChange={(_, countryData: any) => {                                
+                                setReferCountry(countryData?.countryCode);
+                                setReferCountryCode(countryData?.dialCode);
+                                formik.setFieldValue("referrer_phone", "");
+                            }}
+                            containerStyle={{
+                                width: "100%"
+                            }}
+                            inputStyle={{
+                                width: "100%",
+                                height: "60px",
+                                background: "#c3c3c333",
+                                color: "white",
+                                borderRadius: "8px",
+                                border: "1px solid rgba(255,255,255,0.2)",
+                                paddingLeft: "50px",
+                                fontWeight: "500",
+                                fontSize: "14px",
+                                lineHeight: "16px",
+                                pointerEvents: "none"
+                            }}
+                            buttonStyle={{
+                                background: "transparent",
+                                border: "0",
+                                borderRadius: "8px 0 0 8px",
+                                width: "70px"
+                            }}
+                            dropdownStyle={{
+                                background: "#111",
+                                color: "white"
+                            }}
+                        />
+                    </div>        
+
+                    <div className="w-full">
+                        <Input
+                            type="tel"
+                            placeholder="Enter Referral Phone Number*"
+                            value={formik.values.referrer_phone}
+                            onChange={(e) =>
+                                formik.setFieldValue(
+                                    "referrer_phone",
+                                    e.target.value.replace(/\D/g, "")
+                                )
+                            }
+                            className="text-white! font-medium! leading-4! text-[14px]! rounded-[8px]!"
+                            onBlur={() => formik.setFieldTouched("referrer_phone", true)}
+                        />
+                    </div>
+                </div>    
                 
                 {
                     formik.touched.referrer_phone && formik.errors.referrer_phone &&

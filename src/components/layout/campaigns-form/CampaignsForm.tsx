@@ -20,8 +20,8 @@ type CampaignsFormTYPE = {
 }
 
 export default function CampaignsForm({ mode } : CampaignsFormTYPE){
-    const [value, setValue] = useState<any>();
-    const [dialCode, setDialCode] = useState("971"); 
+    const [country, setCountry] = useState("ae"); 
+    const [countryCode, setCountryCode] = useState(""); 
 
     const searchParams = useSearchParams();
     const router = useRouter();        
@@ -49,8 +49,15 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
             .required("First Name is required"),
         email: Yup.string().email("Invalid email").required("Email is required"),
         phone: Yup.string().required("Phone Number is required")
-        .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
-            .test("valid", "Phone Number is invalid", value => isValidPhoneNumber(value || "")),
+            .test(
+                "valid-phone",
+                "Invalid phone number for selected country",
+                function (value) {
+                    if (!value || !countryCode) return false;
+                    const fullNumber = `+${countryCode} ${value}`;
+                    return isValidPhoneNumber(fullNumber);
+                }
+            ),
         business_activity: Yup.string()
             .required("Business Activity is required")
             .max(50, "Business Activity cannot exceed 50 characters")
@@ -96,7 +103,6 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                     router.push('/thankyou');
                     setSubmitting(false);
                     resetForm();
-                    setValue('');
                 } 
                 else {
                     toast.error("Error sending message");
@@ -138,46 +144,63 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
 
                 <div className="mb-8 w-full campaigns-form-phone">
                     <Label size="sm" className="font-semibold">Your Phone Number</Label>
-                    <PhoneInput
-                        country="ae"
-                        disableCountryCode={true}
-                        placeholder="Your Phone Number"
-                        value={value}
-                        onChange={(phone, country) => {                            
-                            // if (country?.dialCode !== dialCode) {
-                            //     setDialCode(country.dialCode);
-                            // }
-                            setValue(phone);
-                            formik.setFieldValue("phone", phone);
-                        }}
-                        onBlur={() => formik.setFieldTouched("phone", true)}           
-                        enableSearch={true}
-                        containerStyle={{
-                            width: "100%"
-                        }}
-                        inputStyle={{
-                            width: "100%",
-                            height: "60px",
-                            background: "rgba(255,255,255,0.05)",
-                            color: "white",
-                            borderRadius: "14px",
-                            border: "1px solid rgba(255,255,255,0.2)",
-                            paddingLeft: "70px",
-                            fontWeight: "400",
-                            fontSize: "16px",
-                            fontFamily: "Montserrat"
-                        }}
-                        buttonStyle={{
-                            background: "rgba(255,255,255,0.1)",
-                            border: "1px solid rgba(255,255,255,0.2)",
-                            borderRadius: "14px 0 0 14px",
-                            width: "60px"
-                        }}
-                        dropdownStyle={{
-                            background: "#111",
-                            color: "white"
-                        }}
-                    />
+                    <div className="w-full flex gap-1">
+                        <div className="w-32">
+                            <PhoneInput
+                                country={country}
+                                enableSearch={true}
+                                value={countryCode.replace("+", "")}
+                                disableCountryCode={false}
+                                disableDropdown={false}                    
+                                onChange={(_, countryData:any) => {                            
+                                    setCountry(countryData?.countryCode);
+                                    setCountryCode(countryData?.dialCode);
+                                    formik.setFieldValue("phone", "");
+                                }}
+                                containerStyle={{
+                                    width: "100%"
+                                }}
+                                inputStyle={{
+                                    width: "100%",
+                                    height: "60px",
+                                    background: "rgba(255,255,255,0.05)",
+                                    color: "white",
+                                    borderRadius: "14px",
+                                    border: "1px solid rgba(255,255,255,0.2)",
+                                    paddingLeft: "50px",
+                                    fontWeight: "400",
+                                    fontSize: "16px",
+                                    pointerEvents: "none"
+                                }}
+                                buttonStyle={{
+                                    background: "transparent",
+                                    border: "0",
+                                    borderRadius: "14px 0 0 14px",
+                                    width: "60px"
+                                }}
+                                dropdownStyle={{
+                                    background: "#111",
+                                    color: "white"
+                                }}
+                            />
+                        </div>
+
+                        <div className="w-full">
+                            <Input                                
+                                type="tel"
+                                placeholder="Enter Phone Number"
+                                value={formik.values.phone}
+                                onChange={(e) =>
+                                    formik.setFieldValue(
+                                        "phone",
+                                        e.target.value.replace(/\D/g, "")
+                                    )
+                                }
+                                className="bg-white/5 text-white"
+                                onBlur={() => formik.setFieldTouched("phone", true)}
+                            />
+                        </div>
+                    </div>        
 
                     {
                         formik.touched.phone && formik.errors.phone &&

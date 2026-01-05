@@ -1,5 +1,5 @@
 import {defineType, defineArrayMember} from 'sanity'
-import {ImageIcon} from '@sanity/icons'
+import { ImageIcon, PlayIcon } from '@sanity/icons'
 
 /**
  * This is the schema type for block content used in the post document type
@@ -71,6 +71,34 @@ export const blockContentType = defineType({
           title: 'Alternative Text',
         }
       ]
+    }),
+
+    // 🎥 Video upload block
+    defineArrayMember({
+      name: "video",
+      title: "Video",
+      type: "object", // 👈 IMPORTANT
+      icon: PlayIcon,
+      fields: [
+        {
+          name: "asset",
+          title: "Video File",
+          type: "file",
+          options: {
+            accept: "video/*",
+          },
+        },
+        {
+          name: "title",
+          type: "string",
+          title: "Video Title",
+        },
+        {
+          name: "caption",
+          type: "string",
+          title: "Caption",
+        },
+      ],
     }),
   ],
 })

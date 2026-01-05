@@ -12,8 +12,9 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatDate } from '@/lib/date';
 import Link from 'next/link';
+import BlogList from '../blog-list/BlogList';
 
-export default function BlogSwiper({ post }: PostType | any) {
+export default function BlogRelated({ post }: PostType | any) {
     const prevRef = useRef(null);
     const nextRef = useRef(null); 
     const [swiperInstance, setSwiperInstance] = useState<any>(null);
@@ -27,14 +28,12 @@ export default function BlogSwiper({ post }: PostType | any) {
         swiperInstance.navigation.update();
     }, [swiperInstance]);
 
-    console.log(post, 'swiper');
-
     return(
         <div className="w-full">
             <Swiper
                 modules={[Autoplay, Pagination, Navigation]}
                 slidesPerView={1}
-                spaceBetween={30}
+                spaceBetween={20}
                 loop
                 autoHeight
                 autoplay={{
@@ -58,62 +57,20 @@ export default function BlogSwiper({ post }: PostType | any) {
                 breakpoints={{
                     768: { slidesPerView: 1 },
                     1024: { slidesPerView: 1 },
-                    1200: { slidesPerView: 1, spaceBetween:0 },
+                    1200: { slidesPerView: 3 },
                 }}
                 onSwiper={setSwiperInstance}
                 className="mySwiper max-w-full mx-auto"
             >
 
                 {
-                    post.map((posts: PostType,i:number)=> (
-                        <SwiperSlide className="slide-custom cursor-pointer">
-                            <Link key={posts?._id} href={`blog/${posts?.slug}`}>
-                                <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
-                                    <div className="w-full md:h-full h-[520px]! relative overflow-hidden group rounded-2xl">
-                                        <Image 
-                                            fill alt={posts?.mainImage.alt} 
-                                            src={urlFor(posts?.mainImage).url()}  
-                                            className="rounded-2xl shadow-lg transition-transform duration-500 ease-out group-hover:scale-110 object-cover" 
-                                        />
-                                        <div className="absolute top-2 left-2">
-                                            {
-                                                posts?.categories?.length ? (
-                                                    posts?.categories.map((cat: CategoryType) => (
-                                                        <span
-                                                            key={cat._id}
-                                                            className="px-4 py-1 rounded-full bg-[rgba(27,26,26,0.7)] border border-[#333] text-white font-sans text-[14px] font-normal leading-normal">
-                                                            {cat.title}
-                                                        </span>
-                                                    ))
-                                                )
-                                                :
-                                                null
-                                            }
-                                        </div>
-                                    </div>
-
-                                    <div className="w-full px-8 xl:px-12 max-md:pt-4 max-md:pb-10 py-20 flex flex-col gap-y-0 lg:gap-y-3">
-                                        <h3 className="text-[16px]! font-sans leading-[100%]! font-light text-white mb-6 mt-7 lg:mt-0 lg:mb-0">
-                                            {formatDate(posts?.publishedAt)}
-                                        </h3>
-                                        
-                                        <h2 className="text-white font-sans text-[18px]! xl:text-[22px]! leading-[normal]! font-semibold capitalize max-w-[380px]  mb-6 mt-0 lg:mt-0 lg:mb-0">
-                                            {posts?.title}
-                                        </h2>
-                                                                            
-                                        <div
-                                            className="blog-content-view line-clamp-3"
-                                            dangerouslySetInnerHTML={{ __html: getBodyText(posts?.body) }}
-                                        >
-                                        </div>
-
-                                        <h4 className="text-[12px]! leading-[100%]! font-normal font-sans text-white capitalize mb-0">
-                                            {posts?.author?.name || 'Unknown Author'}
-                                        </h4>
-                                    </div>
-                                </div>
-                            </Link>                                
-                        </SwiperSlide>
+                    post.map((posts: PostType, index:number)=> (
+                        <SwiperSlide className="slide-custom cursor-pointer h-full">
+                            <BlogList
+                                posts={posts}
+                                key={index}
+                            />
+                        </SwiperSlide>                        
                     ))
                 }
             </Swiper>

@@ -55,68 +55,108 @@ export const slugify = (str: string) =>
     .replace(/^-|-$/g, "");
 
 export const getBodyText = (body: any[] = []) => {
-    let html = "";
-    let inUL = false;
-    let inOL = false;    
+  let html = "";
+  let inUL = false;
+  let inOL = false;
 
-    body.forEach((block) => {
-        if (block._type !== "block" || !block.children) return;
+  body.forEach((block) => {
 
-        const text = block.children.map((c: any) => c.text).join("");
+    /* ---------------- IMAGE BLOCK ---------------- */
+    if (block._type === "image") {
+      if (inUL) { html += "</ul>"; inUL = false; }
+      if (inOL) { html += "</ol>"; inOL = false; }
 
-        // ----- LIST ITEMS -----
-        if (block.listItem === "bullet") {
-            // open <ul> if not open
-            if (!inUL) {
-                if (inOL) { html += "</ol>"; inOL = false; }
-                html += "<ul>";
-                inUL = true;
-            }
-            html += `<li>${text}</li>`;
-            return;
-        }
+      const imageUrl = block.asset?._ref
+        ? `https://cdn.sanity.io/images/${projectId}/${dataset}/${block.asset._ref
+            .replace("image-", "")
+            .replace("-jpg", ".jpg")
+            .replace("-png", ".png")
+            .replace("-webp", ".webp")}`
+        : "";
 
-        if (block.listItem === "number") {
-            // open <ol> if not open
-            if (!inOL) {
-                if (inUL) { html += "</ul>"; inUL = false; }
-                html += "<ol>";
-                inOL = true;
-            }
-            html += `<li>${text}</li>`;
-            return;
-        }
+      html += `
+        <figure>
+          <img src="${imageUrl}" alt="${block.alt || ""}" />
+          ${block.caption ? `<figcaption>${block.caption}</figcaption>` : ""}
+        </figure>
+      `;
+      return;
+    }
 
-        // If block is NOT list, close lists
-        if (inUL) { html += "</ul>"; inUL = false; }
+    /* ---------------- VIDEO BLOCK ---------------- */
+    if (block._type === "video") {
+      if (inUL) { html += "</ul>"; inUL = false; }
+      if (inOL) { html += "</ol>"; inOL = false; }
+        
+      //const videoUrl = block?.asset?.asset?._ref ? `https://cdn.sanity.io/files/${projectId}/${dataset}/${block?.asset?.asset?._ref}` : "";
+      const videoUrl = block.asset?.url;
+        console.log(videoUrl, 'videoUrl')
+      if (!videoUrl) return;
+      
+      
+      html += `
+        <figure>
+          <video controls class="blog-video">
+            <source src="${videoUrl}" type="video/mp4" />
+          </video>
+          ${block.caption ? `<figcaption>${block.caption}</figcaption>` : ""}
+        </figure>
+      `;
+      return;
+    }
+
+    /* ---------------- TEXT BLOCK ---------------- */
+    if (block._type !== "block" || !block.children) return;
+
+    const text = block.children.map((c: any) => c.text).join("");
+
+    /* -------- LIST ITEMS -------- */
+    if (block.listItem === "bullet") {
+      if (!inUL) {
         if (inOL) { html += "</ol>"; inOL = false; }
+        html += "<ul>";
+        inUL = true;
+      }
+      html += `<li>${text}</li>`;
+      return;
+    }
 
-        // ----- HEADING & NORMAL TEXT -----
-        switch (block.style) {
-            case "h1":
-                html += `<h1>${text}</h1>`;
-                break;
-            case "h2":                
-                html += `<h2 id=${slugify(text)}>${text}</h2>`;
-                break;
-            case "h3":
-                html += `<h3>${text}</h3>`;
-                break;
-            case "blockquote":
-                html += `<blockquote>${text}</blockquote>`;
-                break;
-            case "normal":
-            default:
-                html += `<p>${text}</p>`;
-                break;
-        }
-    });
+    if (block.listItem === "number") {
+      if (!inOL) {
+        if (inUL) { html += "</ul>"; inUL = false; }
+        html += "<ol>";
+        inOL = true;
+      }
+      html += `<li>${text}</li>`;
+      return;
+    }
 
-    // Ensure lists are closed at end
-    if (inUL) html += "</ul>";
-    if (inOL) html += "</ol>";
+    if (inUL) { html += "</ul>"; inUL = false; }
+    if (inOL) { html += "</ol>"; inOL = false; }
 
-    return html;
+    /* -------- HEADINGS -------- */
+    switch (block.style) {
+      case "h1":
+        html += `<h1>${text}</h1>`;
+        break;
+      case "h2":
+        html += `<h2 id="${slugify(text)}">${text}</h2>`;
+        break;
+      case "h3":
+        html += `<h3>${text}</h3>`;
+        break;
+      case "blockquote":
+        html += `<blockquote>${text}</blockquote>`;
+        break;
+      default:
+        html += `<p>${text}</p>`;
+    }
+  });
+
+  if (inUL) html += "</ul>";
+  if (inOL) html += "</ol>";
+
+  return html;
 };
 
 export const getBodyJSON = (body: any[] = []) => {

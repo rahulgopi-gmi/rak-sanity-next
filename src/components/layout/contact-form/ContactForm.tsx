@@ -32,7 +32,8 @@ export default function ContactForm({ formonly = true }: Props) {
     const referrer_name = searchParams.get("referrer_name") || "";
     const referrer_email = searchParams.get("referrer_email") || "";
     
-    const [value, setValue] = useState<any>("");
+    const [country, setCountry] = useState("ae"); 
+    const [countryCode, setCountryCode] = useState("");
     const router = useRouter();
     
     const initialValues = {
@@ -55,8 +56,15 @@ export default function ContactForm({ formonly = true }: Props) {
             .required("Last Name is required"),
         email: Yup.string().email("Invalid email").required("Email is required"),
         phone: Yup.string().required("Phone Number is required")
-        .transform(value => (value && !value.startsWith("+") ? `+${value}` : value))
-            .test("valid", "Phone Number is invalid", value => isValidPhoneNumber(value || "")),
+            .test(
+                "valid-phone",
+                "Invalid Phone Number for selected country",
+                function (value) {
+                    if (!value || !countryCode) return false;
+                    const fullNumber = `+${countryCode} ${value}`;
+                    return isValidPhoneNumber(fullNumber);
+                }
+            ),
         message: Yup.string()
             .max(1000, "Message cannot exceed 1000 characters"),
         enquiry_type: Yup.string().required("Enquiry Type is required")
@@ -89,7 +97,6 @@ export default function ContactForm({ formonly = true }: Props) {
                     router.push('/thankyou');
                     setSubmitting(false);
                     resetForm();
-                    setValue('');
                 } 
                 else {
                     toast.error("Error sending message");
@@ -193,47 +200,65 @@ export default function ContactForm({ formonly = true }: Props) {
                             </div>
 
                             <div className="w-full phone-section">
-                                <PhoneInput
-                                    country="ae"
-                                    disableCountryCode={true}
-                                    value={value}
-                                    inputClass={formonly ? "phone-input" : "phone-input-cs"}
-                                    inputProps={{
-                                        placeholder: "Enter Phone Number*",
-                                        name: "phone"
-                                    }}
-                                    onChange={(phone) => {
-                                        setValue(phone);
-                                        formik.setFieldValue("phone", phone);
-                                    }}
-                                    onBlur={() => formik.setFieldTouched("phone", true)}           
-                                    enableSearch={true}
-                                    containerStyle={{
-                                        width: "100%"
-                                    }}
-                                    inputStyle={{
-                                        width: "100%",
-                                        height: "60px",
-                                        background: "#c3c3c333",
-                                        color: "white",
-                                        borderRadius: "14px",
-                                        border: "1px solid rgba(255,255,255,0.2)",
-                                        paddingLeft: "70px",
-                                        fontWeight: "400",
-                                        fontSize: "16px",
-                                        fontFamily: "Montserrat"
-                                    }}
-                                    buttonStyle={{
-                                        background: "rgba(255,255,255,0.1)",
-                                        border: "1px solid rgba(255,255,255,0.2)",
-                                        borderRadius: "14px 0 0 14px",
-                                        width: "60px"
-                                    }}
-                                    dropdownStyle={{
-                                        background: "#111",
-                                        color: "white"
-                                    }}
-                                />
+                                <div className="w-full flex gap-1">
+                                    <div className="w-32">
+                                        <PhoneInput
+                                            country={country}
+                                            enableSearch={true}
+                                            value={countryCode.replace("+", "")}
+                                            disableCountryCode={false}
+                                            disableDropdown={false}
+                                            inputClass={formonly ? "phone-input" : "phone-input-cs"}                   
+                                            onChange={(_, countryData:any) => {
+                                                setCountry(countryData?.countryCode);
+                                                setCountryCode(countryData?.dialCode);
+                                                formik.setFieldValue("phone", "");
+                                            }}                                                
+                                            containerStyle={{
+                                                width: "100%"
+                                            }}
+                                            inputStyle={{
+                                                width: "100%",
+                                                height: "60px",
+                                                background: "#c3c3c333",
+                                                color: "white",
+                                                borderRadius: "14px",
+                                                border: "1px solid rgba(255,255,255,0.2)",
+                                                paddingLeft: "50px",
+                                                fontWeight: "500",
+                                                fontSize: "16px",                                    
+                                                lineHeight: "16px",
+                                                pointerEvents: "none"
+                                            }}
+                                            buttonStyle={{
+                                                background: "transparent",
+                                                border: "0",
+                                                borderRadius: "8px 0 0 8px",
+                                                width: "70px"
+                                            }}
+                                            dropdownStyle={{
+                                                background: "#111",
+                                                color: "white"
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="w-full">
+                                        <Input                                             
+                                            type="tel" 
+                                            placeholder="Enter Phone Number"
+                                            value={formik.values.phone}
+                                            onChange={(e) =>
+                                                formik.setFieldValue(
+                                                    "phone",
+                                                    e.target.value.replace(/\D/g, "")
+                                                )
+                                            }
+                                            autoComplete='off'                                            
+                                            onBlur={() => formik.setFieldTouched("phone", true)}
+                                        />                            
+                                    </div>
+                                </div>        
 
                                 {
                                     formik.touched.phone && formik.errors.phone &&

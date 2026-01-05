@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { CategoryType, KeywordsType, PageDataType, PostType } from "@/features/application/types/sanity";
 import { sanityFetch } from "@/sanity/lib/live";
-import { getAllPostsQuery, getCategories, getPageBySlug } from "@/sanity/queries/pages";
+import { getAllPostsBySlideQuery, getAllPostsQuery, getCategories, getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
@@ -19,6 +19,7 @@ interface GetDataResult {
     page: PageDataType | null;
     posts: PostType[];
     categories: CategoryType[];
+    slidePosts: PostType[];
 }
 
 /** Fetch Sanity Data with caching */
@@ -27,7 +28,8 @@ const getData = cache(async (slug: string, template:string): Promise<GetDataResu
         const [
             { data: page },
             { data: posts },
-            { data: categories }
+            { data: categories },
+            { data: slidePosts}
         ] = await Promise.all([
             sanityFetch({
                 query: getPageBySlug,
@@ -44,13 +46,18 @@ const getData = cache(async (slug: string, template:string): Promise<GetDataResu
             sanityFetch({
                 query: getCategories,
                 stega: false,
+            }),
+            sanityFetch({
+                query: getAllPostsBySlideQuery,
+                stega: false
             })
         ]);
 
         return {
             page: page ?? null,
             posts: posts ?? [],
-            categories: categories ?? []
+            categories: categories ?? [],
+            slidePosts: slidePosts ?? []
         };
     }
     catch (error) {
@@ -58,7 +65,8 @@ const getData = cache(async (slug: string, template:string): Promise<GetDataResu
         return {
             page: null,
             posts: [],
-            categories: []
+            categories: [],
+            slidePosts: []
         };
     }
 });
@@ -113,8 +121,8 @@ export default async function Page() {
     try {        
         const slug = "blog";
         const template = "other";
-        const { page, posts, categories } = await getData(slug, template);
-        if (!page) return notFound();
+        const { page, posts, categories, slidePosts } = await getData(slug, template);
+        if (!page) return notFound();        
         
         const section: PageDataType | undefined = page?.sections?.[0];
         const keywords: KeywordsType[] = normalizeArray(section?.keywords);
@@ -153,7 +161,7 @@ export default async function Page() {
 
                     <div className="relative pt-[30px] pb-[461px] w-full px-[30px] max-md:px-[16px]" data-aos="fade-up">
                         <BlogSwiper
-                            keywords={keywords}
+                            post={slidePosts}
                         />
                     </div>
                 </section>
