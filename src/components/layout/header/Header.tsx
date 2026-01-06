@@ -144,7 +144,7 @@ export default function Header({ settings }: HeaderProps) {
                               </span>
                               {
                                 item?.children && 
-                                <ul className="absolute px-3 py-4 top-full left-0 w-56 bg-black/50 border border-white/10 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                <ul className="absolute px-3 py-4 top-full left-0 w-56 bg-black/90 border border-white/10 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                                   {                                    
                                       item?.children.map((child: HeaderMenuChild) => (
                                         <li>
