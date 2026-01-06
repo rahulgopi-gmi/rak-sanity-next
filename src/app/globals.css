@@ -608,7 +608,7 @@ body .phone-section .iti {
 .refer-form-section{
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.10);
-  background: linear-gradient(151deg, rgba(255, 255, 255, 0.04) 0.07%, rgba(255, 255, 255, 0.11) 100%);
+  background: linear-gradient(180deg, #0F0F10 0%, #1A1A1A 100%);
 }
 
 .li-sub-icon {
@@ -683,6 +683,8 @@ body .phone-section .iti {
   line-height: 63px;
   margin-top:2rem;
   font-size:64px;
+  position:relative;
+  z-index:100;
 }
 
 .refer-page-hdr h2 span{

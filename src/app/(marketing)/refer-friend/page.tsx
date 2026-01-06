@@ -96,22 +96,25 @@ export default async function Page() {
                 <section className="relative h-[520px] max-md:h-[430px]">
                     {
                         section?.bannerdesktop && (
-                            <div className="hidden md:block w-full h-[520px] relative">
-                                <Image 
-                                    fill 
-                                    alt={section?.bannerdesktop.alt} 
-                                    src={urlFor(section?.bannerdesktop).url()}
-                                    quality={100}
-                                    className="object-cover"
-                                />
+                            <div 
+                                className="hidden md:block w-full h-[520px] relative bg-cover"
+                                style={{
+                                    backgroundImage: `url(${urlFor(section?.bannerdesktop).url()})`,
+                                }}
+                            >                                
                             </div>
                         )
                     }
                 
                     {
                         section?.bannermobile && (
-                            <div className="w-full h-[430px] md:hidden relative">
-                                <Image fill alt={section?.bannermobile.alt} src={urlFor(section?.bannermobile).url()} />
+                            <div 
+                                className="w-full h-[430px] md:hidden relative bg-cover"
+                                style={{
+                                    backgroundImage: `url(${urlFor(section?.bannermobile).url()})`,
+                                }}
+                            >
+                                {/* <Image fill alt={section?.bannermobile.alt} src={urlFor(section?.bannermobile).url()} /> */}
                             </div>
                         )        
                     }
