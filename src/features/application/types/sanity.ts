@@ -292,7 +292,7 @@ export interface HeaderMenuItem {
         _type?: string;
         current?: string;
     };
-    children?: HeaderMenuChild[];
+    children?: HeaderMenuChild[] | any;
 }
 
 export interface HeaderMenuChild {

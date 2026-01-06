@@ -37,7 +37,7 @@ export default {
                             title: "Slug",
                             type: "slug",
                             options: {
-                                source: "label",
+                                source: (_doc: any, context: any) => context.parent?.label,
                                 maxLength: 96,
                             },
                         },
@@ -50,7 +50,15 @@ export default {
                                     type: "object",
                                     fields: [
                                         { name: "label", title: "Label", type: "string" },
-                                        { name: "url", title: "URL", type: "string" },
+                                        {
+                                            name: "slug",
+                                            title: "Slug",
+                                            type: "slug",
+                                            options: {
+                                                source: (_doc:any, context:any) => context.parent?.label,
+                                                maxLength: 96,
+                                            },
+                                        }
                                     ],
                                 },
                             ],

@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "../../ui/button";
-import { PageSettingsType } from "@/features/application/types/sanity";
+import { HeaderMenuChild, PageSettingsType } from "@/features/application/types/sanity";
 import { urlFor } from "@/sanity/lib/image";
 import { usePathname } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 
 interface HeaderProps {
   settings : PageSettingsType 
@@ -97,12 +98,12 @@ export default function Header({ settings }: HeaderProps) {
   return (
     <header className="fixed top-0 z-50 w-full flex items-center">
       <div ref={headerInnerRef} className="transition-all duration-300 w-full">
-        <div ref={headerContentRef} className="bg-black/40 border backdrop-blur-lg border-white/10 px-4 lg:px-5 py-4 lg:py-4 transition-all duration-500 ease-in-out">
+        <div ref={headerContentRef} className="bg-black/40 border backdrop-blur-lg border-white/10 px-4 lg:px-5 transition-all duration-500 ease-in-out max-md:py-4">
           <div className="container flex justify-between items-center">
             <div className="flex items-center space-x-12 relative w-full">
               <Link
                 href="/"
-                className="main-logo mr-0 relative h-10 w-32 lg:w-[240px] lg:h-14"
+                className="main-logo mr-0 relative h-10 w-32 lg:w-[240px] lg:h-14 py-4"
               >
                 {
                   logo?.asset && (
@@ -116,7 +117,7 @@ export default function Header({ settings }: HeaderProps) {
                 }
               </Link>
 
-              <ul className="hidden md:flex space-x-12 justify-start ml-12 w-full">
+              <ul className="hidden md:flex space-x-12 justify-start ml-12 max-lg:ml-6 max-lg:space-x-6 w-full">
                 {
                   menu.map((item) => {
                     const slug = item.slug?.current || "";
@@ -124,7 +125,7 @@ export default function Header({ settings }: HeaderProps) {
                     const isActive = pathname === `/${slug}`;
 
                     return (
-                      <li key={item.label} className="flex items-center last:ml-auto ">
+                      <li key={item.label} className={`${item?.children ? 'group' : ''} py-5.5 flex items-center last:ml-auto relative`}>
                         {
                           isContact ? (                          
                             <Link href={`/${slug}`}>
@@ -135,9 +136,24 @@ export default function Header({ settings }: HeaderProps) {
                           (                          
                             <Link
                               href={`/${slug}`}
-                                className={`${isActive ? 'text-primary' : 'text-white hover:text-primary'} transition-all ease-in  font-sans text-md md:max-lg:text-sm! font-semibold`}
+                                className={`transition-all ease-in  font-sans text-md md:max-lg:text-sm! font-semibold`}
                             >
-                              {item.label}
+                                <span className={`${isActive ? 'text-primary' : 'text-white hover:text-primary'} w-full flex items-center gap-3`}>
+                                {item.label}
+                                {item?.children && <ChevronDown size={14}/>}
+                              </span>
+                              {
+                                item?.children && 
+                                <ul className="absolute px-3 py-4 top-full left-0 w-56 bg-black/50 border border-white/10 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                  {                                    
+                                      item?.children.map((child: HeaderMenuChild) => (
+                                        <li>
+                                          <Link className="text-white hover:text-primary" href={`/${child.label}`}>{child.label}</Link>
+                                        </li>
+                                      ))                                    
+                                  }                                  
+                                </ul>
+                              }
                             </Link>
                           )
                         }
@@ -179,8 +195,8 @@ export default function Header({ settings }: HeaderProps) {
               menu.map((item, index) => {
                 const slug = item.slug?.current || "";
                 const isContact = slug === "contact";
-                const isLast = index === menu.length - 1;
-                const isActive = pathname === `/${slug}`;
+                const isLast = index+1 === menu.length - 1;
+                const isActive = pathname === `/${slug}`;                              
 
                 if (isContact) {
                   return (
@@ -199,10 +215,33 @@ export default function Header({ settings }: HeaderProps) {
                     key={item.label}
                     href={`/${slug}`}
                     onClick={handleMenuClose}
-                    className={`${isActive ? 'text-primary' : 'text-white'} font-sans text-sm font-semibold py-8 w-full text-left ${!isLast ? "border-b border-[#DEDEDE]/15" : ""
-                      }`}
+                    className={`group relative font-sans text-sm font-semibold py-8 w-full text-left  ${!isLast ? "border-b border-[#DEDEDE]/15" : ""}`}
                   >
-                    {item.label}
+                    <span className={`relative z-50 flex items-center justify-between ${isActive ? 'text-primary' : 'text-white'}`}>
+                      {item.label}
+                      {item?.children && <ChevronDown size={14} />}
+                    </span>
+                    {
+                      item?.children &&
+                      <ul 
+                        className="
+                        absolute left-0 top-16 w-56 bg-black shadow-lg z-30
+                        opacity-0
+                        pointer-events-none
+                        transition-all duration-300 ease-out
+                        group-hover:opacity-100  
+                        group-hover:mt-2 
+                        group-hover:pointer-events-auto"
+                      >
+                        {
+                          item?.children.map((child: HeaderMenuChild) => (
+                            <li>
+                              <Link className="text-white hover:text-primary" href={`/${child.label}`}>{child.label}</Link>
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    }
                   </Link>
                 );
               })
