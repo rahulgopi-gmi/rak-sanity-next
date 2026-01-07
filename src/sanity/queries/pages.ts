@@ -251,7 +251,7 @@ export const globalSettingsQuery = `*[_type == "settings"][0]{
     slug,
     children[]{
       label,
-      url
+      slug
     }
   },
 

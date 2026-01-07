@@ -9,11 +9,9 @@ import { useFormik } from "formik";
 import { Error } from "@/components/ui/error";
 import { Spinner } from "@/components/ui/spinner";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 export default function BlogNewsLetter(props : { view : boolean}) {
     const { view } = props;
-    const router = useRouter();
 
     const initialValues = {
         email: "",       
@@ -28,21 +26,23 @@ export default function BlogNewsLetter(props : { view : boolean}) {
         validationSchema: validationSchema,
         onSubmit: async (values, { resetForm, setSubmitting }) => {
             try {
-                const res = await fetch("/api/contact", {
+                const res = await fetch("/api/subscribe", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(values),
-                });  
+                    body: JSON.stringify({email : values.email}),
+                });
+
+                const data = await res.json();        
 
                 if (res.ok) {
-                    toast.success("Message sent successfully!");
-                    router.push('/thankyou');
+                    toast.success("Subscribed successfully!");                    
                     setSubmitting(false);
                     resetForm();
                 } 
                 else {
-                    toast.error("Error sending message");
-                    setSubmitting(false);                
+                    toast.error(data.error || data);
+                    setSubmitting(false);
+                    resetForm();              
                 }
             } 
             catch (error) {

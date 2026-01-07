@@ -297,7 +297,10 @@ export interface HeaderMenuItem {
 
 export interface HeaderMenuChild {
     label?: string;
-    url?: string;
+    slug?: {
+        _type?: string;
+        current?: string;
+    };
 }
 
 export interface FooterMenuItem {

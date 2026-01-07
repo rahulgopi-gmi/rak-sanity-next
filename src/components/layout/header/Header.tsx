@@ -122,7 +122,12 @@ export default function Header({ settings }: HeaderProps) {
                   menu.map((item) => {
                     const slug = item.slug?.current || "";
                     const isContact = slug === "contact";
-                    const isActive = pathname === `/${slug}`;
+                    const cleanPath = pathname.replace(/\/$/, "");
+                    const parentActive =
+                    cleanPath === `/${slug}` || 
+                      item.children?.some(
+                        (child: HeaderMenuChild) => cleanPath === `/${child?.slug?.current}`
+                      );
 
                     return (
                       <li key={item.label} className={`${item?.children ? 'group' : ''} py-5.5 flex items-center last:ml-auto relative`}>
@@ -138,20 +143,32 @@ export default function Header({ settings }: HeaderProps) {
                               href={`/${slug}`}
                                 className={`transition-all ease-in  font-sans text-md md:max-lg:text-sm! font-semibold`}
                             >
-                                <span className={`${isActive ? 'text-primary' : 'text-white hover:text-primary'} w-full flex items-center gap-3`}>
+                                <span className={`${parentActive ? 'text-primary' : 'text-white hover:text-primary'} w-full flex items-center gap-3`}>
                                 {item.label}
                                 {item?.children && <ChevronDown size={14}/>}
                               </span>
                               {
                                 item?.children && 
-                                <ul className="absolute px-3 py-4 top-full left-0 w-56 bg-black/90 border border-white/10 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                                  {                                    
-                                      item?.children.map((child: HeaderMenuChild) => (
-                                        <li>
-                                          <Link className="text-white hover:text-primary" href={`/${child.label}`}>{child.label}</Link>
-                                        </li>
-                                      ))                                    
-                                  }                                  
+                                <ul className="absolute px-3 py-2 top-full left-0 w-56 bg-black/90 border border-white/10 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                      {
+                                        item.children.map((child: HeaderMenuChild) => {
+                                          const childActive = cleanPath === `/${child?.slug?.current}`;
+
+                                          return (
+                                            <li key={child.label}>
+                                              <Link
+                                                href={`/${child?.slug?.current}`}                                                
+                                                className={`block px-2 py-2 text-sm ${childActive
+                                                    ? "text-primary"
+                                                    : "text-white hover:text-primary"
+                                                  }`}
+                                              >
+                                                {child.label}
+                                              </Link>
+                                            </li>
+                                          );
+                                        })
+                                      }
                                 </ul>
                               }
                             </Link>
