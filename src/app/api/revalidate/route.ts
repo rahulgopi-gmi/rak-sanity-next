@@ -1,14 +1,15 @@
 // app/api/revalidate/route.ts
-import { revalidateTag } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
   const body = await req.json()
-  const slug = body?.slug?.current
+  const slug = body?.slug?.current  
 
-  if (slug) {
-      revalidateTag(`campaigns:${slug}`, 'max')
+  if (!slug) {
+    return NextResponse.json({ error: "Missing slug" }, { status: 400 });
   }
 
+  revalidatePath(`/${slug}`);
   return NextResponse.json({ revalidated: true })
 }
