@@ -29,6 +29,7 @@ export default function MarketingLayoutClient({
           },
         }}
       />
+      <div id="modal-root"></div>
       <Footer settings={settings} />
     </Fragment>
   );
