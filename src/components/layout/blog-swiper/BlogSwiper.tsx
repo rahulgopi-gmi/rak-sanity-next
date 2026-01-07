@@ -27,8 +27,6 @@ export default function BlogSwiper({ post }: PostType | any) {
         swiperInstance.navigation.update();
     }, [swiperInstance]);
 
-    console.log(post, 'swiper');
-
     return(
         <div className="w-full">
             <Swiper
