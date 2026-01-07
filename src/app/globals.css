@@ -1007,7 +1007,8 @@ body .phone-section .iti {
   margin:0px;
 }
 
-.blog-details-content h2{
+.blog-details-content h2,
+.blog-details-content h3{
   color:#fff;
   line-height: 30px;
   font-weight: 500;
@@ -1702,4 +1703,16 @@ body .phone-section .iti {
 
 #mobileMenu a:last-child{
   padding-top:50px!important;
+}
+
+.package-swiper .swiper-wrapper{
+  height:100% !important;
+}
+
+.package-swiper .swiper-wrapper .swiper-slide{
+  height: 100% !important;
+}
+
+.swiper-slide .swiper-slide-inner{
+  min-height: 590px;
 }
