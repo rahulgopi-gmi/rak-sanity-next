@@ -118,7 +118,7 @@ export default function ContactForm({ formonly = true }: Props) {
                     {
                         formonly &&
                             <div className="w-full px-2 [@media(max-width:991px)]:text-center [@media(max-width:991px)]:pb-[18px]" data-aos="fade-up" data-aos-duration="2000">                                
-                                <PillTag className="mb-[30px] max-lg:mx-auto" variant={'light'}>Get Started</PillTag>
+                                <PillTag className="mb-[30px] max-lg:mx-auto px-4" variant={'light'}>Get Started</PillTag>
 
                                 <h2 className="font-extrabold uppercase text-black mb-8">
                                     Let’s start building the&nbsp;

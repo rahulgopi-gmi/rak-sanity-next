@@ -112,7 +112,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                                     </div>
 
                                     <div className="lg:w-1/2 px-2" data-aos="fade-up" data-aos-duration="2000">
-                                        <PillTag className="mb-7! max-lg:mx-auto">{a?.title || ""}</PillTag>
+                                        <PillTag className="mb-7! max-lg:mx-auto px-4">{a?.title || ""}</PillTag>
                                         <div dangerouslySetInnerHTML={{ __html: getBodyText(a?.header) || "" }}></div>
                                         <div className="about-section" dangerouslySetInnerHTML={{ __html: getBodyText(a?.content) || "" }}></div>                                        
                                         <Link href={`#${a.ctaLink}`}>
@@ -124,7 +124,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
                         }
 
                         <div className="special-benfit-wrapper mt-[40px]">
-                            <PillTag className="mb-[25px]! max-lg:mx-auto">{data?.keywordstitle || ""}</PillTag>
+                            <PillTag className="mb-[25px]! max-lg:mx-auto px-4">{data?.keywordstitle || ""}</PillTag>
 
                             <div className="row flex flex-wrap -mx-2">
                                 {
@@ -160,7 +160,7 @@ export default function Hero({ data }: { data: SectionType | any }) {
 
             <section id="sectors" className="who-this-for-wrapper section-space-top section-space-bottom text-center bg-[#FFFFFF] relative">
                 <div className="container mx-auto relative z-10">
-                    <PillTag className="mx-auto mb-[30px]" variant={'light'}>{data?.itemTitle || ""}</PillTag>
+                    <PillTag className="mx-auto mb-[30px] px-4" variant={'light'}>{data?.itemTitle || ""}</PillTag>
                     <div className="who-this-for-header mb-[30px]" ref={elementRef || ""}></div>                
 
                     <div className="services-main-wrapper max-w-[1196px] m-auto [@media(max-width:991px)]:px-[30px] [@media(max-width:991px)]:py-0" data-aos="fade-up" data-aos-duration="2000">

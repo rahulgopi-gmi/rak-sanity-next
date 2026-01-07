@@ -145,7 +145,7 @@ export default async function Page() {
                     <div className="container mx-auto text-center mb-10">
                         {
                             section.packageTitle && (
-                                <PillTag className="mx-auto relative mb-4">{section.packageTitle}</PillTag>
+                                <PillTag className="mx-auto relative mb-4 px-4">{section.packageTitle}</PillTag>
                             )
                         }
 
