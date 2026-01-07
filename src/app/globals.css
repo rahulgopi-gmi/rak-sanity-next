@@ -395,6 +395,10 @@ body .contact-form .select-wrapper-main button{
   color: #fff;
 }
 
+html body[data-scroll-locked]{
+  margin-right:0px !important;
+}
+
 body .phone-section .iti {
   background: #f3f3f3;
   width: 100%;
