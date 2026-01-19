@@ -3,16 +3,15 @@ import { getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
-import { CardType, PageDataType } from "@/features/application/types/sanity";
-import ReferForm from "@/components/layout/refer-form/ReferForm";
-import Image from "next/image";
+import { FeatureItem, PageDataType, HomeKeyWords } from "@/features/application/types/sanity";
 import { urlFor } from "@/sanity/lib/image";
 import { getBodyText } from "@/sanity/lib/utils";
-import { cache } from "react";
 import { normalizeArray } from "@/lib/helpers";
+import ReferForm from "@/components/layout/refer-friend/refer-form/ReferForm";
+import Image from "next/image";
 
-/** Fetch Sanity Data with cache */
-const getData = cache(async (slug: string, template:string): Promise<PageDataType | null> => {
+/** Fetch Sanity Data */
+const getData = async (slug: string, template:string): Promise<PageDataType | null> => {
     try {
         const { data } = await sanityFetch({
             query: getPageBySlug,
@@ -28,7 +27,7 @@ const getData = cache(async (slug: string, template:string): Promise<PageDataTyp
         console.error(`Sanity Fetch Error ${slug} : `, error);        
         return null;
     }    
-});
+};
 
 /**
  * Generate metadata for the page.
@@ -40,9 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const seo = data?.seo;
 
     const title = seo?.metaTitle || "Innovation City";
-    const description = 
-        seo ? toPlainText(seo.metaDescription) 
-        : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
+    const description = seo ? toPlainText(seo.metaDescription || []) : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
     const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
     const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
 
@@ -86,10 +83,10 @@ export default async function Page() {
         const data = await getData(slug, template);
         if (!data) return notFound();
 
-        const section: PageDataType | undefined = data?.sections?.[0];
+        const section: FeatureItem | undefined = data?.sections?.[0];
         if (!section) return notFound();
         
-        const keywords: CardType[] = normalizeArray(section?.keywords);                
+        const keywords = normalizeArray(section?.keywords);                
 
         return (
             <main className="relative w-full">
@@ -99,7 +96,7 @@ export default async function Page() {
                             <div 
                                 className="hidden md:block w-full h-[520px] relative bg-cover"
                                 style={{
-                                    backgroundImage: `url(${urlFor(section?.bannerdesktop).url()})`,
+                                    backgroundImage: `url(${urlFor(section?.bannerdesktop) || ""})`,
                                 }}
                             >                                
                             </div>
@@ -111,7 +108,7 @@ export default async function Page() {
                             <div 
                                 className="w-full h-[430px] md:hidden relative bg-cover"
                                 style={{
-                                    backgroundImage: `url(${urlFor(section?.bannermobile).url()})`,
+                                    backgroundImage: `url(${urlFor(section?.bannermobile) || ""})`,
                                 }}
                             >
                                 {/* <Image fill alt={section?.bannermobile.alt} src={urlFor(section?.bannermobile).url()} /> */}
@@ -149,13 +146,13 @@ export default async function Page() {
                                 <div className="w-full pt-6 max-md:pt-5">
                                     <ul className="flex flex-col gap-9 max-md:gap-12" data-aos="fade-up">
                                         {
-                                            keywords.map((i: any, index: number) => (
+                                            keywords.map((i: HomeKeyWords, index: number) => (
                                                 <li key={index} className="text-[#FFFFFFCC] flex gap-6 items-center text-[16px] leading-7! tracking-[0.16px] font-normal font-sans">
                                                     {
                                                         i.icon && (
                                                             <span className="li-sub-icon flex items-center justify-center">
                                                                 <span className="inline-block w-6 h-6 relative">
-                                                                    <Image fill alt={i.icon.alt} src={urlFor(i.icon).url()} />
+                                                                    <Image fill alt={i.icon.alt} src={urlFor(i.icon) || ""} />
                                                                 </span>
                                                             </span>
                                                         )

@@ -1,8 +1,8 @@
-import ContactForm from "@/components/layout/contact-form/ContactForm";
+import ContactForm from "@/components/layout/contact/contact-form/ContactForm";
 import Hero from "@/components/layout/hero/Hero";
-import PackagesDetails from "@/components/layout/packages-details/PackagesDetails";
-import PillTag from "@/components/layout/pill-tag/PillTag";
-import { BannerType, CardType, HomeBannerType, PageDataType } from "@/features/application/types/sanity";
+import PackagesDetails from "@/components/layout/packages/packages-details/PackagesDetails";
+import PillTag from "@/components/ui/pill-tag";
+import { HomeBannerType, PageDataType, PackageType, FeatureItem, SectionHeroType } from "@/features/application/types/sanity";
 import { normalizeArray } from "@/lib/helpers";
 import { sanityFetch } from "@/sanity/lib/live";
 import { getBodyText } from "@/sanity/lib/utils";
@@ -11,10 +11,11 @@ import { getPackages, getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
-import { cache } from "react";
 
-/** Fetch Sanity Data with cache */
-const getData = cache(async (slug: string, template: string): Promise<{ page: PageDataType | null; packages: any[] }> => {
+/** Fetch Sanity Data */
+const getData = async (
+    slug: string, 
+    template: string): Promise<{ page: PageDataType | null; packages: PackageType[] }> => {
     try {
         const [{ data: page }, { data: packages }] = await Promise.all([
             sanityFetch({
@@ -37,7 +38,7 @@ const getData = cache(async (slug: string, template: string): Promise<{ page: Pa
         console.error(`Sanity Fetch Error ${slug}: `, error);
         return { page: null, packages: [] };
     }
-});
+};
 
 /**
  * Generate metadata for the page.
@@ -93,16 +94,33 @@ export default async function Page() {
         const { page, packages } = await getData(slug, template);
         if (!page) return notFound();
 
-        const section: PageDataType | undefined = page?.sections?.[0];
+        const section = page?.sections?.[0];
         if (!section) return notFound();
 
         const banners: HomeBannerType[] = normalizeArray(section?.banner);
         const currency = 'AED';
+
+        const mapFeatureToHero = (feature: FeatureItem): SectionHeroType => ({
+            about: feature.about ?? [],
+            banner: feature.banner ?? [],
+            itemHeader: feature.itemHeader ?? [],
+            itemTitle: feature.itemTitle ?? "",
+            items: feature.items ?? [],
+            keywords: feature.keywords ?? [],
+            keywordstitle: feature.keywordstitle ?? "",
+            packageContent: feature.packageContent ?? [],
+            packageHeader: feature.packageHeader ?? [],
+            packageTitle: feature.packageTitle ?? "",
+            _key: feature._key ?? "",
+            _type: feature._type ?? "",
+        });
+
+        const heroData = mapFeatureToHero(section);
         
         return(
             <main className="w-full">
                 {
-                    banners.map((b,i)=>(
+                    banners.map((b)=>(
                         <section key={`banner-${b._key}`} className="home-banner relative [@media(min-width:1025px)]:h-screen">
                             {
                                 b.videoDesktop && (
@@ -138,7 +156,7 @@ export default async function Page() {
                 }
 
                 <section className="w-full">
-                    <Hero data={section} key={'hero-section'} />
+                    <Hero data={heroData} key={'hero-section'} />
                 </section>    
 
                 <section className="w-full home-package-wraper relative section-space-top section-space-bottom">

@@ -1,8 +1,6 @@
 import { HomeIcon } from "@sanity/icons";
-import { title } from "process";
-import { validation } from "sanity";
 
-export default {
+const heroSection = {
     name: "heroSection",
     title: "Hero Section",
     type: "object",
@@ -204,3 +202,5 @@ export default {
         },
     }
 };
+
+export default heroSection;

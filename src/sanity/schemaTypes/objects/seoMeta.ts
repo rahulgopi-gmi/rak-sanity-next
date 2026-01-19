@@ -1,4 +1,6 @@
-export default {
+import { Rule } from "sanity";
+
+const seoMeta = {
     name: "seoMeta",
     title: "SEO Metadata",
     type: "object",
@@ -7,13 +9,13 @@ export default {
             name: "metaTitle", 
             type: "string", 
             title: "Meta Title",
-            validation: (Rule : any) => Rule.max(60).warning("Titles over 60 characters may be truncated")
+            validation: (Rule : Rule) => Rule.max(60).warning("Titles over 60 characters may be truncated")
         },
         { 
             name: "metaDescription", 
             type: "text", 
             title: "Meta Description",
-            validation: (Rule: any) => Rule.max(160).warning("Descriptions over 160 characters may be truncated"),
+            validation: (Rule: Rule) => Rule.max(160).warning("Descriptions over 160 characters may be truncated"),
         },
         {
             name: "keywords",
@@ -31,7 +33,7 @@ export default {
                     name: "alt",
                     type: "string",
                     title: "Alt Text",
-                    validation: (Rule: any) => Rule.required().warning("OG image should include alt text")
+                    validation: (Rule: Rule) => Rule.required().warning("OG image should include alt text")
                 }
             ]
         },
@@ -39,7 +41,7 @@ export default {
             name: "openGraphUrl",
             type: "url",
             title: "Open Graph URL",
-            validation: (Rule: any) =>
+            validation: (Rule: Rule) =>
                 Rule.uri({
                     scheme: ["http", "https"],
                 }).warning("URL should be valid and include http/https"),
@@ -64,3 +66,5 @@ export default {
         }
     }
 }
+
+export default seoMeta;

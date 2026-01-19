@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 
-interface ErrorProps extends React.HTMLAttributes<HTMLParagraphElement> { }
+type ErrorProps = React.HTMLAttributes<HTMLParagraphElement>;
 
 function Error({ className, children, ...props }: ErrorProps) {
     return(

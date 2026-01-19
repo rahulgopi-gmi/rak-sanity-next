@@ -1,19 +1,20 @@
 import { sanityFetch } from "@/sanity/lib/live";
-import { KeywordsType, PageDataType } from "@/features/application/types/sanity";
+import { PageDataType, PackageType } from "@/features/application/types/sanity";
 import { Fragment } from "react";
 import { getPageBySlug, getPackages } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
 import { urlFor } from "@/sanity/lib/image";
-import Image from "next/image";
 import { getBodyText } from "@/sanity/lib/utils";
-import CampaignsForm from "@/components/layout/campaigns-form/CampaignsForm";
 import { normalizeArray } from "@/lib/helpers";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import CampaignsAccordion from "@/components/layout/campaigns-accordion/CampaignsAccordion";
-import PackagesDetails from "@/components/layout/packages-details/PackagesDetails";
+import Image from "next/image";
+import Link from "next/link";
+import CampaignsAccordion from "@/components/layout/campaigns/campaigns-accordion/CampaignsAccordion";
+import PackagesDetails from "@/components/layout/packages/packages-details/PackagesDetails";
+import CampaignsForm from "@/components/layout/campaigns/campaigns-form/CampaignsForm";
+import { PortableTextBlock } from "sanity";
 
 /** 
  *  Fetch Sanity Data
@@ -21,7 +22,7 @@ import PackagesDetails from "@/components/layout/packages-details/PackagesDetail
 async function getData(
   slug: string,
   template: string
-): Promise<{ page: PageDataType | null; packages: any[] }> {
+): Promise<{ page: PageDataType | null; packages: PackageType[] }> {
   try {    
     const [{ data: page }, { data: packages }] = await Promise.all([
       sanityFetch({
@@ -56,9 +57,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const seo = page?.seo;
 
     const title = seo?.metaTitle || "Innovation City";
-    const description =
-        seo ? toPlainText(seo.metaDescription)
-            : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
+    const description = seo ? toPlainText(seo.metaDescription || []) : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
     const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
     const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];
 
@@ -103,8 +102,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         const section = page.sections?.[0];
         if (!section) return notFound();
 
-        const keywords: KeywordsType[] = normalizeArray(section?.keywords);
-        const techkeywords: KeywordsType[] = normalizeArray(section.techkeywords);
+        const keywords = normalizeArray(section?.keywords);
+        const techkeywords = normalizeArray(section?.techkeywords);
 
         return(
             <main className={`${section?.mode === "dark"? "campaign-dark" : "campaign-light"  }`}>
@@ -115,7 +114,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                 <Image 
                                     fill 
                                     alt={section?.bannerdesktop?.alt} 
-                                    src={urlFor(section?.bannerdesktop).url()} 
+                                    src={urlFor(section?.bannerdesktop) || ""} 
                                     className="object-cover" 
                                 />
                             )
@@ -125,7 +124,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                     <div className="w-full h-[827px] relative block md:hidden">
                         {
                             section?.bannermobile && (
-                                <Image fill alt={section?.bannermobile?.alt} src={urlFor(section?.bannermobile).url()} className="object-cover" />
+                                <Image fill alt={section?.bannermobile?.alt} src={urlFor(section?.bannermobile) || ""} className="object-cover" />
                             )
                         }                        
                     </div>
@@ -135,7 +134,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             <div className="relative w-[225px] h-12 z-20">
                                 {
                                     section?.logo && (
-                                        <Image fill alt={section?.logo?.alt} src={urlFor(section?.logo).url()} />
+                                        <Image fill alt={section?.logo?.alt} src={urlFor(section?.logo) || ""} />
                                     )
                                 }                                
                             </div>
@@ -161,7 +160,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                         section?.icon && (
                                             <Image                                                
                                                 alt={section?.icon?.alt}
-                                                src={urlFor(section?.icon).url()}
+                                                src={urlFor(section?.icon) || ""}
                                                 className="object-cover"
                                                 width={240}
                                                 height={120}
@@ -180,14 +179,24 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                         <div className="space-y-10" data-aos="fade-up">
                             <ul className="space-y-8 keywords-left">
                                 {
-                                    keywords.map((k, index: number) => (
+                                    keywords.map((k : {
+                                        header: string;
+                                        icon?: {
+                                            alt?: string;
+                                        };
+                                        body?: PortableTextBlock[];
+                                    }) => (
                                         <li
-                                            key={k._key}
+                                            key={k.header}
                                             className="flex items-center gap-6"
                                         >
                                             <div className="w-[60px] h-[60px] flex items-center justify-center bg-[#5FC2D5]/20 rounded-2xl rounded-br-none p-4">
                                                 <div className="w-6 h-6 relative">
-                                                    <Image fill alt={k?.icon?.alt} src={urlFor(k?.icon).url()} />
+                                                    {
+                                                        k?.icon && (
+                                                            <Image fill alt={k?.icon?.alt || ""} src={urlFor(k?.icon) || ""} />
+                                                        )
+                                                    }                                                    
                                                 </div>
                                             </div>
 
@@ -195,8 +204,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                                 <h4 className="font-sans text-[16px]! leading-7! font-bold tracking-[0.16px]">
                                                     {k?.header}
                                                 </h4>
-
-                                                <div className="campaigns-sub" dangerouslySetInnerHTML={{ __html: getBodyText(k?.body) }}></div>
+                                                
+                                                <div className="campaigns-sub" dangerouslySetInnerHTML={{ __html: getBodyText(k?.body) }}></div>                                                                                          
                                             </div>
                                         </li>
                                     ))
@@ -255,7 +264,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                                 sizes="(max-width: 768px) 100vw, 50vw"
                                                 className="w-full h-auto"
                                                 alt={techkeywords[0]?.icon?.alt || ""}
-                                                src={urlFor(techkeywords[0].icon).url()}
+                                                src={urlFor(techkeywords[0].icon) || ""}
                                             />
                                         </div>
 
@@ -277,14 +286,14 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                     techkeywords[1] && (
                                         <div className="items-2 box-bg px-8 max-md:px-4 rt-padding lg:py-10 py-[34px]">
                                             <h3 className="max-w-[100px] max-md:max-w-full max-md:text-center font-mono font-bold xl:text-[28px]! text-[20px]! leading-8! tracking-[-0.56px] rt-box">
-                                                {techkeywords[1]?.header}
+                                                { typeof techkeywords[1]?.header === "string" && techkeywords[1]?.header }
                                             </h3>
 
                                             <div className="xl:mt-[60px] max-md:mx-auto md:mt-10 mt-[20px] w-[100px] h-[75px] relative">
                                                 <Image
                                                     fill
                                                     alt={techkeywords[1]?.icon?.alt || ""}
-                                                    src={urlFor(techkeywords[1].icon).url()}
+                                                    src={urlFor(techkeywords[1].icon) || ""}
                                                 />
                                             </div>
                                         </div>
@@ -302,7 +311,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                                 <Image
                                                     fill
                                                     alt={techkeywords[2]?.icon?.alt || ""}
-                                                    src={urlFor(techkeywords[2].icon).url()}
+                                                    src={urlFor(techkeywords[2].icon) || ""}
                                                 />
                                             </div>
                                         </div>
@@ -316,7 +325,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                                 <Image
                                                     fill
                                                     alt={techkeywords[3]?.icon?.alt || ""}
-                                                    src={urlFor(techkeywords[3].icon).url()}
+                                                    src={urlFor(techkeywords[3].icon) || ""}
                                                 />
                                             </div>
                                             <div className="absolute bottom-0 lg:px-[32px] lg:py-[40px]  px-[24px] py-[30px]">
@@ -342,7 +351,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                             <Image
                                                 fill
                                                 alt={techkeywords[4]?.icon?.alt || ""}
-                                                src={urlFor(techkeywords[4].icon).url()}
+                                                src={urlFor(techkeywords[4].icon) || ""}
                                             />
                                         </div>
 
@@ -366,7 +375,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                             <Image
                                                 fill
                                                 alt={techkeywords[5]?.icon?.alt || ""}
-                                                src={urlFor(techkeywords[5].icon).url()}
+                                                src={urlFor(techkeywords[5].icon) || ""}
                                             />
                                         </div>
 
@@ -461,7 +470,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                                 <Image
                                                     fill
                                                     alt={section?.businessImage?.alt || ""}
-                                                    src={urlFor(section?.businessImage).url()}                                                     
+                                                    src={urlFor(section?.businessImage) || ""}                                                     
                                                 />
                                             </div>    
                                         )
@@ -483,7 +492,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                             sizes="(max-width: 768px) 100vw, 50vw"
                                             className="w-full h-auto"
                                             alt={section?.secondarydesktop?.alt || ""}
-                                            src={urlFor(section?.secondarydesktop).url()}                                        
+                                            src={urlFor(section?.secondarydesktop) || ""}                                        
                                         />
                                     )
                                 }                                                                     
@@ -497,7 +506,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                                 height={365}
                                                 sizes="(max-width: 768px) 100vw, 50vw"
                                                 alt={section?.secondarymobile?.alt || ""}
-                                                src={urlFor(section?.secondarymobile).url()}
+                                                src={urlFor(section?.secondarymobile) || ""}
                                                 className="object-contain"
                                             />   
                                         )

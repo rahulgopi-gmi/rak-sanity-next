@@ -1,6 +1,6 @@
 import { TiersIcon } from "@sanity/icons";
 
-export default {
+const campaigns = {
     name: "campaigns",
     title: "Campaigns",
     type: "object",
@@ -272,3 +272,5 @@ export default {
         },
     }
 }
+
+export default campaigns;

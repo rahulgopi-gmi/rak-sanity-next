@@ -1,6 +1,4 @@
-import { Rule } from "sanity";
-
-export default {
+const contactForm = {
     name: "contactForm",
     title: "Contact Form",
     type: "object",
@@ -33,4 +31,6 @@ export default {
             };
         } 
     }           
-}        
+}
+
+export default contactForm;

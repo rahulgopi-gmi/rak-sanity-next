@@ -1,4 +1,4 @@
-export default {
+const card = {
     name: "card",
     title: "Card",
     type: "object",
@@ -7,7 +7,7 @@ export default {
             name: "tag", 
             title: "Tag", 
             type: "string",            
-            hidden: ({ parent }: any) => !["content", "benefits"].includes(parent?.cardType)
+            hidden: ({ parent }: { parent?: { cardType?: string } }) => !["content", "benefits"].includes(parent?.cardType ?? "")
         },
         { 
             name: "header", 
@@ -18,33 +18,33 @@ export default {
             name: "subheader", 
             title: "Sub Header", 
             type: "string",            
-            hidden: ({ parent }: any) => !["content", "benefits"].includes(parent?.cardType)
+            hidden: ({ parent }: { parent?: { cardType?: string } }) => !["content", "benefits"].includes(parent?.cardType ?? "")
         },
         { 
             name: "content", 
             title: "Content", 
             type: "text",
-            hidden: ({ parent }: any) => ["benefits"].includes(parent?.cardType)
+            hidden: ({ parent }: { parent?: { cardType?: string } }) => ["benefits"].includes(parent?.cardType ?? "")
         },
         { 
             name: "link", 
             title: "Link", 
             type: "string",
-            hidden: ({ parent }: any) => !["benefits"].includes(parent?.cardType)
+            hidden: ({ parent }: { parent?: { cardType?: string } }) => !["benefits"].includes(parent?.cardType ?? "")
         },
         {
             name: "videoDesktop",
             type: "file",
             title: "Desktop Video",
             options: { accept: "video/*" },
-            hidden: ({ parent }: any) => !["content", "benefits"].includes(parent?.cardType)
+            hidden: ({ parent }: { parent?: { cardType?: string } }) => !["content", "benefits"].includes(parent?.cardType ?? "")
         },
         {
             name: "videoMobile",
             type: "file",
             title: "Mobile Video",
             options: { accept: "video/*" },
-            hidden: ({ parent }: any) => !["content", "benefits"].includes(parent?.cardType)
+            hidden: ({ parent }: { parent?: { cardType?: string } }) => !["content", "benefits"].includes(parent?.cardType ?? "")
         },
         {
             name: "image",
@@ -57,7 +57,9 @@ export default {
             name: "body", 
             title: "Body", 
             type: "blockContent",
-            hidden: ({ parent }: any) => !["benefits"].includes(parent?.cardType)
+            hidden: ({ parent }: { parent?: { cardType?: string } }) => !["benefits"].includes(parent?.cardType ?? "")
         }
     ],
 };
+
+export default card;

@@ -1,19 +1,17 @@
-import BlogForm from "@/components/layout/blog-form/BlogForm";
-import BlogList from "@/components/layout/blog-list/BlogList";
-import BlogNewsLetter from "@/components/layout/blog-newsletter/BlogNewsletter";
-import BlogRelated from "@/components/layout/blog-related/BlogRelated";
-import BlogSideList from "@/components/layout/blog-side-list/BlogSideList";
+import BlogForm from "@/components/layout/blog/blog-form/BlogForm";
+import BlogNewsLetter from "@/components/layout/blog/blog-newsletter/BlogNewsletter";
+import BlogRelated from "@/components/layout/blog/blog-related/BlogRelated";
+import BlogSideList from "@/components/layout/blog/blog-side-list/BlogSideList";
+import Image from "next/image";
 import { CategoryType, PostType } from "@/features/application/types/sanity";
 import { formatDate } from "@/lib/date";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
-import { getBodyJSON, getBodyText, scrollToId, slugify } from "@/sanity/lib/utils";
+import { getBodyJSON, getBodyText } from "@/sanity/lib/utils";
 import { getCategories, getPostBySlug, getRelatedPosts } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
-import Image from "next/image";
 import { notFound } from "next/navigation";
-import { cache } from "react";
 
 interface GetDataResult {
     page: PostType | null;
@@ -21,8 +19,8 @@ interface GetDataResult {
     related: PostType [];
 }
 
-/** Fetch Sanity Data with caching */
-const getData = cache(async (slug: string): Promise<GetDataResult> => {
+/** Fetch Sanity Data  */
+const getData = async (slug: string): Promise<GetDataResult> => {
     try {
         const [
             { data: page },
@@ -67,7 +65,7 @@ const getData = cache(async (slug: string): Promise<GetDataResult> => {
             related: []
         };
     }
-});
+};
 
 /**
  * Generate metadata for the page.
@@ -122,7 +120,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
         return (
             <main className="bg-black w-full">
-                <section className="relative w-full bg-[url('/aboutbgmob.jpg')] md:bg-[url('/aboutbgdesk.jpg')] max-md:bg-cover bg-contain bg-no-repeat with-overlay pt-[211px] pb-[380px]">
+                <section className="relative w-full max-md:bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-[url('/images/gradient/bg-grd-banner.jpg')] max-md:bg-cover bg-contain bg-no-repeat with-overlay pt-[211px] pb-[380px]">
                     <div className="container">
                          <div className="text-white" data-aos="fade-up">
                             <div className="flex items-center gap-3">
@@ -131,13 +129,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                 </span>
 
                                 {
-                                    page?.categories.map((category: CategoryType | any, index:number) => (
-                                        <span
-                                            key={`categories-${index}`}
-                                            className="px-3 py-1 rounded-full bg-[rgba(27,26,26,0.70)] text-white font-sans text-[14px] font-normal leading-[21px]">
-                                            {category?.title}
-                                        </span>
-                                    ))
+                                    page?.categories ?
+                                        page?.categories.map((category: CategoryType, index:number) => (
+                                            <span
+                                                key={`categories-${index}`}
+                                                className="px-3 py-1 rounded-full bg-[rgba(27,26,26,0.70)] text-white font-sans text-[14px] font-normal leading-[21px]">
+                                                {category?.title}
+                                            </span>
+                                        ))
+                                    :
+                                    []
                                 }                                                                
                             </div>
 
@@ -154,7 +155,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                     <Image 
                                         fill 
                                         alt={page?.mainImage?.alt || page?.title}
-                                        src={urlFor(page?.mainImage).url()}
+                                        src={urlFor(page?.mainImage) || ""}
                                         className="rounded-xl w-full h-auto shadow-xl object-cover"
                                     />
                                 </div>
@@ -225,7 +226,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
                             <div className="rounded-[10px] border-[1.701px] border-[rgba(255,255,255,0.10)] bg-[rgba(255,255,255,0.03)] p-6">  
                                 <h3 className="text-white font-sans text-[16px]! font-normal leading-6! mb-6">
-                                    Let's Connect
+                                    Let`&apos;s Connect
                                 </h3>
 
                                 <div className="w-full black-form blog-form">
@@ -245,19 +246,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                         <div className="w-full">
                             <BlogRelated
                                 post={related}
-                            />
-                            {/* // {
-                            //     related.length > 0 ? (
-                            //         related.map((r : PostType, index: number)=>(
-                            //             <BlogList
-                            //                 posts={r}
-                            //                 key={index}
-                            //             />
-                            //         ))
-                            //     ) : (
-                            //         <p className="text-white/50">No related blogs found.</p>
-                            //     )
-                            // } */}
+                            />                           
                         </div>
                     </div>
                 </section>

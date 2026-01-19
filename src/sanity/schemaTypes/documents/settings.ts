@@ -1,6 +1,6 @@
 import { CogIcon } from "@sanity/icons";
 
-export default {
+const settings = {
     name: "settings",
     title: "Global Settings",
     type: "document",
@@ -37,7 +37,10 @@ export default {
                             title: "Slug",
                             type: "slug",
                             options: {
-                                source: (_doc: any, context: any) => context.parent?.label,
+                                source: (
+                                    _doc : unknown,
+                                    context: { parent?: { label?: string } }
+                                ) => context.parent?.label ?? "",
                                 maxLength: 96,
                             },
                         },
@@ -54,8 +57,11 @@ export default {
                                             name: "slug",
                                             title: "Slug",
                                             type: "slug",
-                                            options: {
-                                                source: (_doc:any, context:any) => context.parent?.label,
+                                             options: {
+                                                source: (
+                                                     _doc: unknown,
+                                                context: { parent?: { label?: string } }
+                                                ) => context.parent?.label ?? "",
                                                 maxLength: 96,
                                             },
                                         }
@@ -141,3 +147,5 @@ export default {
         },
     },
 };
+
+export default settings;

@@ -34,7 +34,7 @@ export default function Footer({ settings }: HeaderProps) {
                                     >
                                         <div className="w-4 h-4 hover:opacity-50 cursor-pointer relative">
                                             <Image 
-                                                src={urlFor(s?.icon).url()}
+                                                src={urlFor(s?.icon) || ""}
                                                 fill
                                                 alt={s?.platform || ""}
                                                 className="object-contain"

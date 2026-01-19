@@ -1,6 +1,5 @@
-import ActivitiesTab from "@/components/layout/activities-tab/ActivitiesTab";
-import PillTag from "@/components/layout/pill-tag/PillTag";
-import { ActivitiesType, KeywordsType, PageDataType } from "@/features/application/types/sanity";
+import ActivitiesTab from "@/components/layout/activities/activities-tab/ActivitiesTab";
+import { ActivitiesType, PageDataType } from "@/features/application/types/sanity";
 import { normalizeArray } from "@/lib/helpers";
 import { sanityFetch } from "@/sanity/lib/live";
 import { getBodyText } from "@/sanity/lib/utils";
@@ -8,10 +7,10 @@ import { getActivitiesItems, getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
-import { cache } from "react";
+import PillTag from "@/components/ui/pill-tag";
 
 /** 
- *  Fetch Sanity Data (cached)
+ *  Fetch Sanity Data
 */
 const getData = async (slug: string, template:string): Promise<{ page: PageDataType | null; activities: ActivitiesType }> => {
     try {
@@ -98,19 +97,19 @@ export default async function Page() {
         const { page, activities } = await getData(slug, template);
         if (!page) return notFound();
 
-        const section: PageDataType | undefined = page?.sections?.[0];
+        const section = page?.sections?.[0];
         if (!section) return notFound();
 
-        const keywords: KeywordsType[] = normalizeArray(section?.keywords);
+        const keywords = normalizeArray(section?.keywords);
 
         return (
             <main className="w-full">
-                <section className="relative w-full bg-black bg-[url('/bg-grd-banner.jpg')] max-md:bg-cover max-md:bg-[url('/bg-grd-banner-mob.png')] bg-contain bg-no-repeat with-overlay">
+                <section className="relative w-full bg-black bg-[url('/images/gradient/bg-grd-banner.jpg')] max-md:bg-cover max-md:bg-[url('/images/gradient/bg-grd-banner-mob.png')] bg-contain bg-no-repeat with-overlay">
                     <div className="container max-auto" data-aos="fade-up" data-aos-delay="200">
                         <div className="activities-top-section activities-top-section-wd mx-auto flex flex-col items-center justify-center text-center pt-[150px] max-md:pt-[135] pb-[30px]">
                             {
                                 section.title && (
-                                    <PillTag className="mx-auto mb-[25px] max-md:mb-5">
+                                    <PillTag className="mx-auto mb-6.25 max-md:mb-5">
                                         {section.title}
                                     </PillTag>
                                 )

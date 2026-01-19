@@ -1,6 +1,6 @@
 import { MasterDetailIcon } from "@sanity/icons";
 
-export default {
+const standardActivities = {
     name: "standardActivities",
     type: "document",
     title: "Standard Activities",
@@ -24,3 +24,5 @@ export default {
         }
     }
 }
+
+export default standardActivities;

@@ -1,6 +1,7 @@
 import { BinaryDocumentIcon } from "@sanity/icons";
+import { type SanityDocument } from "next-sanity";
 
-export default {
+const featureItem = {
     name: "featureItem",
     title: "Feature Item",
     type: "object",
@@ -12,8 +13,8 @@ export default {
             type: "image",
             options: { hotspot: true },
             fields: [{ name: "alt", type: "string", title: "Alt Text" }],
-            hidden: ({ document }: any) => {
-                const hiddenSlugs = ["contact", "activities", "packages", "thankyou", "blog"];
+            hidden: ({ document }: { document?: SanityDocument }) => {
+                const hiddenSlugs = ["contact", "activities", "packages", "thankyou", "blog", "partners-listing"];
                 return hiddenSlugs.includes(document?.slug?.current);
             }
         },        
@@ -23,8 +24,8 @@ export default {
             type: "image",
             options: { hotspot: true },
             fields: [{ name: "alt", type: "string", title: "Alt Text" }],
-            hidden: ({ document }: any) => {
-                const hiddenSlugs = ["contact", "activities", "packages", "thankyou", "blog"];
+            hidden: ({ document }: { document?: SanityDocument }) => {
+                const hiddenSlugs = ["contact", "activities", "packages", "thankyou", "blog", "partners-listing"];
                 return hiddenSlugs.includes(document?.slug?.current);
             }
         },
@@ -33,8 +34,8 @@ export default {
             title: "Icon",
             type: "image",
             options: { hotspot: true },
-            hidden: ({ document }: any) => {
-                const hiddenSlugs = ["contact", "refer-friend", "activities", "packages", "privacy-policy", "thankyou", "blog"];
+            hidden: ({ document }: { document?: SanityDocument }) => {
+                const hiddenSlugs = ["contact", "refer-friend", "activities", "packages", "privacy-policy", "thankyou", "blog", "partners-listing"];
                 return hiddenSlugs.includes(document?.slug?.current);
             }
 
@@ -43,7 +44,7 @@ export default {
             name: "title",
             title: "Title",
             type: "string",
-            hidden: ({ document }: any) => {
+            hidden: ({ document }: { document?: SanityDocument }) => {
                 const hiddenSlugs = ["refer-friend", "privacy-policy", "thankyou"];
                 return hiddenSlugs.includes(document?.slug?.current);
             }
@@ -57,7 +58,7 @@ export default {
             name: "subheader",
             title: "SubHeader",
             type: "string",
-            hidden: ({ document }: any) => {
+            hidden: ({ document }: { document?: SanityDocument }) => {
                 const hiddenSlugs = ["refer-friend", "activities", "packages", "privacy-policy", "thankyou", "blog"];
                 return hiddenSlugs.includes(document?.slug?.current);
             }
@@ -66,7 +67,7 @@ export default {
             name: "body",
             title: "Body",
             type: "blockContent",
-            hidden: ({ document }: any) => {
+            hidden: ({ document }: { document?: SanityDocument }) => {
                 const hiddenSlugs = ["contact"];
                 return hiddenSlugs.includes(document?.slug?.current);
             }
@@ -75,7 +76,7 @@ export default {
             name: "ctaName",
             title: "CTA Name",
             type: "string",
-            hidden: ({ document }: any) => {
+            hidden: ({ document }: { document?: SanityDocument }) => {
                 const hiddenSlugs = ["thankyou"];
                 return !hiddenSlugs.includes(document?.slug?.current);
             }
@@ -84,7 +85,7 @@ export default {
             name: "ctaLink",
             title: "CTA Link",
             type: "string",
-            hidden: ({ document }: any) => {
+            hidden: ({ document }: { document?: SanityDocument }) => {
                 const hiddenSlugs = ["thankyou"];
                 return !hiddenSlugs.includes(document?.slug?.current);
             }
@@ -93,7 +94,7 @@ export default {
             name: "keywords",
             type: "array",
             title: "Keywords",
-            hidden: ({ document }: any) => {
+            hidden: ({ document }: { document?: SanityDocument }) => {
                 const hiddenSlugs = ["packages", "privacy-policy", "thankyou"];
                 return hiddenSlugs.includes(document?.slug?.current);
             },
@@ -110,7 +111,7 @@ export default {
                                 dateFormat: "DD-MM-YYYY",
                                 calendarTodayLabel: "Today"
                             },
-                            hidden: ({ document }: any) => {
+                            hidden: ({ document }: { document?: SanityDocument }) => {
                                 const hiddenSlugs = ["blog"];
                                 return !hiddenSlugs.includes(document?.slug?.current);
                             }
@@ -121,7 +122,7 @@ export default {
                             title: "Icon",
                             options: { hotspot: true },
                             fields: [{ name: "alt", type: "string", title: "Alt Text" }],
-                            hidden: ({ document }: any) => {
+                            hidden: ({ document }: { document?: SanityDocument }) => {
                                 const hiddenSlugs = ["activities"];
                                 return hiddenSlugs.includes(document?.slug?.current);
                             }
@@ -130,7 +131,7 @@ export default {
                             name: "header",
                             type: "string",
                             title: "Header",
-                            hidden: ({ document }: any) => {
+                            hidden: ({ document }: { document?: SanityDocument }) => {
                                 const hiddenSlugs = ["refer-friend"];
                                 return hiddenSlugs.includes(document?.slug?.current);
                             }
@@ -139,7 +140,7 @@ export default {
                             name: "body",
                             title: "Body",
                             type: "blockContent",
-                            hidden: ({ document }: any) => {
+                            hidden: ({ document }: { document?: SanityDocument }) => {
                                 const hiddenSlugs = ["contact", "activities"];
                                 return hiddenSlugs.includes(document?.slug?.current);
                             }
@@ -148,7 +149,7 @@ export default {
                             name: "content",
                             type: "text",
                             title: "Content",
-                            hidden: ({ document }: any) => {
+                            hidden: ({ document }: { document?: SanityDocument }) => {
                                 const hiddenSlugs = ["refer-friend", "blog"];
                                 return hiddenSlugs.includes(document?.slug?.current);
                             }
@@ -157,7 +158,7 @@ export default {
                             name: "subtitle",
                             type: "string",
                             title: "Subtitle",
-                            hidden: ({ document }: any) => {
+                            hidden: ({ document }: { document?: SanityDocument }) => {
                                 const hiddenSlugs = ["blog"];
                                 return !hiddenSlugs.includes(document?.slug?.current);
                             }
@@ -166,7 +167,7 @@ export default {
                             name: "price",
                             type: "string",
                             title: "Price",
-                            hidden: ({ document }: any) => {
+                            hidden: ({ document }: { document?: SanityDocument }) => {
                                 const hiddenSlugs = ["activities"];
                                 return !hiddenSlugs.includes(document?.slug?.current);
                             }
@@ -177,7 +178,7 @@ export default {
                             media: "icon",
                             title: "header"
                         },
-                        prepare({ media, title } : any) {
+                        prepare({ media, title } : { media?: unknown; title?: string }) {
                             return {
                                 title: title ? title : "Keywords",
                                 media: media,
@@ -187,19 +188,19 @@ export default {
                 },
             ],
         },
-        {
-            name: "forms",
-            title: "Forms",
-            type: "array",           
-            of: [
-                { type: "contactForm" },
-                { type: "referAFriendForm" }       
-            ],
-            hidden: ({ document }: any) => {
-                const hiddenSlugs = ["contact", "refer-friend"];
-                return !hiddenSlugs.includes(document?.slug?.current);
-            }
-        }
+        // {
+        //     name: "forms",
+        //     title: "Forms",
+        //     type: "array",           
+        //     of: [
+        //         { type: "contactForm" },
+        //         { type: "referAFriendForm" }       
+        //     ],
+        //     hidden: ({ document }: any) => {
+        //         const hiddenSlugs = ["contact", "refer-friend"];
+        //         return !hiddenSlugs.includes(document?.slug?.current);
+        //     }
+        // }
     ],
     preview: {
         select: {
@@ -213,3 +214,5 @@ export default {
         },
     }
 }
+
+export default featureItem;

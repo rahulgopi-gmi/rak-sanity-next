@@ -10,7 +10,6 @@ import card from './objects/card'
 import imageView from './objects/imageView'
 import seoMeta from './objects/seoMeta'
 import featureItem from './objects/featureItem'
-import referAFriendForm from './objects/referAFriendForm'
 import contactForm from './objects/contactForm'
 import standardActivities from './documents/standardActivities'
 import customActivities  from './documents/customActivities'
@@ -18,6 +17,10 @@ import premiumActivities from './documents/premiumActivities'
 import campaigns from './objects/campaigns'
 import settings from './documents/settings'
 import aboutSection from './objects/aboutSection'
+import productsItems from './objects/productsItems'
+import header from './objects/header'
+import serviceItem from './objects/serviceItem'
+import serviceCard from './objects/serviceCard'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [    
@@ -33,12 +36,15 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     packages,
     seoMeta,
     featureItem,
-    contactForm,
-    referAFriendForm,
+    contactForm,    
     standardActivities,
     customActivities,
     premiumActivities,
     campaigns,
     settings,
+    productsItems,
+    header,
+    serviceItem,
+    serviceCard
   ],
 }

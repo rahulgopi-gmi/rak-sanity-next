@@ -1,6 +1,7 @@
-import ContactForm from "@/components/layout/contact-form/ContactForm";
-import PillTag from "@/components/layout/pill-tag/PillTag";
-import { CardType, PageDataType } from "@/features/application/types/sanity";
+import ContactForm from "@/components/layout/contact/contact-form/ContactForm";
+import Image from "next/image";
+import PillTag from "@/components/ui/pill-tag";
+import { FeatureItem, PageDataType } from "@/features/application/types/sanity";
 import { normalizeArray } from "@/lib/helpers";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
@@ -8,14 +9,12 @@ import { getBodyText } from "@/sanity/lib/utils";
 import { getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
-import Image from "next/image";
 import { notFound } from "next/navigation";
-import { cache } from "react";
 
 /** 
  *  Fetch Sanity Data
 */
-const getData = cache(async (slug: string, template:string): Promise<PageDataType | null> => {
+const getData = async (slug: string, template:string): Promise<PageDataType | null> => {
     try {
         const { data: page } = await sanityFetch({
             query: getPageBySlug,
@@ -31,7 +30,7 @@ const getData = cache(async (slug: string, template:string): Promise<PageDataTyp
         console.error(`Sanity Fetch Error ${slug} : `, error);
         return null;
     }
-});
+};
 
 /**
  * Generate metadata for the page.
@@ -87,14 +86,14 @@ export default async function Page() {
         const page = await getData(slug, template);
         if (!page) return notFound();
 
-        const section: PageDataType | undefined = page?.sections?.[0];
+        const section: FeatureItem | undefined = page?.sections?.[0];
         if (!section) return notFound();
         
-        const keywords: CardType[] = normalizeArray(section?.keywords);
+        const keywords = normalizeArray(section?.keywords);
 
         return (
             <main className="w-full">
-                <section className="relative w-full bg-[url('/bg-grd-banner.jpg')] max-md:bg-[url('/bg-grd-banner-mob.png')] bg-cover bg-no-repeat">
+                <section className="relative w-full max-md:bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-cover bg-no-repeat">
                     <div className="flex flex-col items-center justify-center text-center pt-[150px] max-md:pt-[135]">
                         <div className="container contact-section"  data-aos="fade-up" data-aos-delay="200">
                             {
@@ -119,13 +118,13 @@ export default async function Page() {
                                 <div className="space-y-8">
                                     <ul className="space-y-6 lg:max-w-[427px]">
                                         {
-                                            keywords.map((i: any, index: number) => (
+                                            keywords.map((i, index: number) => (
                                                 <li key={`keyword-${index}`} className="flex items-start">
                                                     <span className="mr-4 flex items-center justify-center bg-[rgba(95,194,213,0.18)] max-md:w-[63px] max-md:h-[63px] rounded-tl-[18px] rounded-tr-[18px] rounded-bl-[18px] rounded-br-none p-4">
                                                         <span className="inline-block w-5 h-5 max-md:w-[32px]! max-md:h-[32px]! relative">
                                                             {
                                                                 i.icon && (
-                                                                    <Image fill alt={i.icon.alt} src={urlFor(i.icon).url()} />
+                                                                    <Image fill alt={i.icon.alt} src={urlFor(i.icon) || ""} />
                                                                 )
                                                             }
                                                         </span>

@@ -1,5 +1,4 @@
-import PillTag from "@/components/layout/pill-tag/PillTag";
-import { CardType, ContentType, PageDataType } from "@/features/application/types/sanity";
+import { PageDataType, FeatureItem, HomeKeyWords } from "@/features/application/types/sanity";
 import { normalizeArray } from "@/lib/helpers";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
@@ -9,12 +8,12 @@ import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { cache } from "react";
+import PillTag from "@/components/ui/pill-tag";
 
 /** 
- *  Fetch Sanity Data (cached)
+ *  Fetch Sanity Data
 */
-const getData = cache(async (slug: string, template:string): Promise<PageDataType | null> => {
+const getData = async (slug: string, template:string): Promise<PageDataType | null> => {
     try {
         const { data } = await sanityFetch({
             query: getPageBySlug,
@@ -30,7 +29,7 @@ const getData = cache(async (slug: string, template:string): Promise<PageDataTyp
         console.error(`Sanity Fetch Error ${slug} : `, error);
         return null;
     }
-});
+};
 
 /**
  * Generate metadata for the page.
@@ -42,9 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const seo = page?.seo;
 
     const title = seo?.metaTitle || "Innovation City";
-    const description = 
-        seo ? toPlainText(seo.metaDescription) 
-        : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
+    const description = seo ? toPlainText(seo.metaDescription || []) : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
     const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
     const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
 
@@ -88,16 +85,17 @@ export default async function Page() {
         const data = await getData(slug, template);
         if (!data) return notFound();
         
-        const section: PageDataType | undefined = data?.sections?.[0];
+        const section: FeatureItem | undefined = data?.sections?.[0];
         if (!section) return notFound();
         
-        const keywords: CardType[] = normalizeArray(section?.keywords);
-        const desktopImage = section?.imageDesktop && urlFor(section?.imageDesktop).url();
-        const mobileImage = section?.imageMobile && urlFor(section?.imageMobile).url();        
+        const keywords = normalizeArray(section?.keywords);
+
+        const desktopImage = urlFor(section?.imageDesktop) ?? "";
+        const mobileImage = urlFor(section?.imageMobile) ?? "";        
 
         return(
             <main className="w-full">                
-                <section className="about-sec relative bg-black max-md:bg-[url('/aboutbgmob.jpg')] bg-[url('/aboutbgdesk.jpg')]  bg-no-repeat bg-cover pt-[150px] pb-[7px] text-center overflow-hidden max-md:pt-[130px] max-md:pb-[25px]">
+                <section className="about-sec relative bg-black max-md:bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-no-repeat bg-cover pt-[150px] pb-[7px] text-center overflow-hidden max-md:pt-[130px] max-md:pb-[25px]">
                     <div className="container mx-auto about-top-section" data-aos="fade-up" data-aos-delay="200">                        
                         <PillTag className="mx-auto mb-[30px]! max-md:mb-5">
                             {section.title ?? ""}
@@ -165,7 +163,7 @@ export default async function Page() {
                                         {
                                             section?.sectionImage && (
                                                 <Image
-                                                    src={urlFor(section.sectionImage).url()}
+                                                    src={urlFor(section.sectionImage) || ""}
                                                     alt={section?.sectionImage?.alt ?? ""}
                                                     fill
                                                     className="object-cover"
@@ -194,8 +192,8 @@ export default async function Page() {
                         <section className="ourvmv-sec w-full max-md:pt-[90px] max-md:pb-[50px] py-[120px]">
                             <div className="container">
                                 {
-                                    keywords.map((c: CardType, index:number) => {
-                                        const cardImage = c.image && urlFor(c.image).url();
+                                    keywords.map((c: HomeKeyWords, index:number) => {
+                                        const cardImage = c.image && urlFor(c.image) || "";
                                         if (!cardImage) return null;
 
                                         return(                                        
@@ -218,7 +216,7 @@ export default async function Page() {
                                                 <div className="md:w-1/2 w-full max-md:mb-10">
                                                     <PillTag variant={'light'} className="mb-3 max-md:mx-auto px-4">{c.tag || ""}</PillTag>
                                                     <h3 className="font-semibold font-mono mb-5! text-center md:text-left text-[45px]! max-md:text-[44px]! max-md:leading-[44px]!">
-                                                        {c.header || ""}
+                                                        {c.header as string}
                                                     </h3>
                                                     <p className="text-base! font-sans leading-normal! text-center max-w-[348px] mx-auto md:text-left md:mr-auto md:ml-0 md:max-w-[420px]">
                                                         {c.content || ""}

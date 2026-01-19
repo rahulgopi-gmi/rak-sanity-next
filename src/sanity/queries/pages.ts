@@ -1,5 +1,47 @@
-// /sanity/queries/pages.ts
-export const getPageBySlug = `
+// src/sanity/queries/pages.ts
+import { groq } from "next-sanity";
+
+// -------------------
+// Shared Fields
+// -------------------
+const postFields = groq`
+  _id,
+  title,
+  "slug": slug.current,
+  publishedAt,
+  body,
+  mainImage{
+    asset->{
+      _id,
+      url
+    },
+    alt
+  },
+  author->{
+    _id,
+    name,
+    role,
+    bio,
+    image{
+      asset->{
+        _id,
+        url
+      }
+    }
+  },
+  categories[]->{
+    _id,
+    title,
+    description
+  }
+`;
+
+const basePostQuery = `*[_type == "post" && defined(slug.current)]`;
+
+// -------------------
+// Pages
+// -------------------
+export const getPageBySlug = groq`
   *[_type == "page" && slug.current == $slug && template == $template][0]{
     _id,
     title,
@@ -23,13 +65,16 @@ export const getPageBySlug = `
       facebookAppId
     },
     sections[]{
-      ...,       
+      ...
     }
   }
 `;
 
-export const getPackages = `
-  *[_type == "packages"] {
+// -------------------
+// Packages
+// -------------------
+export const getPackages = groq`
+  *[_type == "packages"] | order(order asc, _createdAt desc) {
     _id,
     _createdAt,
     order,
@@ -45,9 +90,12 @@ export const getPackages = `
   }
 `;
 
-export const getActivitiesItems = `
+// -------------------
+// Activities
+// -------------------
+export const getActivitiesItems = groq`
 {
-  "standard": *[_type == "standardActivities"]{
+  "standard": *[_type == "standardActivities"] | order(_createdAt desc){
     _id,
     _createdAt,
     code,
@@ -56,7 +104,7 @@ export const getActivitiesItems = `
     description,
     active
   },
-  "premium": *[_type == "premiumActivities"]{
+  "premium": *[_type == "premiumActivities"] | order(_createdAt desc){
     _id,
     _createdAt,
     code,
@@ -65,7 +113,7 @@ export const getActivitiesItems = `
     description,
     active
   },
-  "custom": *[_type == "customActivities"]{
+  "custom": *[_type == "customActivities"] | order(_createdAt desc){
     _id,
     _createdAt,
     code,
@@ -77,89 +125,48 @@ export const getActivitiesItems = `
 }
 `;
 
-export const getCategories = `
-  * [_type == "category"] | order(title asc) {
+// -------------------
+// Categories
+// -------------------
+export const getCategories = groq`
+  *[_type == "category"] | order(title asc) {
     _id,
     title,
     description
   }
 `;
 
-export const getAllPostsQuery = `
-*[_type == "post"] | order(publishedAt desc) {
-  _id,
-  title,
-  "slug": slug.current,
-  publishedAt,
-  body,
-  mainImage{
-    asset->{
-      _id,
-      url
-    },
-    alt
-  },
-  author->{
-    _id,
-    name,
-    role,
-    bio,
-    image{
-      asset->{
-        _id,
-        url
-      }
-    }
-  },
-  categories[]->{
-    _id,
-    title,
-    description
+// -------------------
+// Posts
+// -------------------
+export const getAllPostsQuery = groq`
+  ${basePostQuery} | order(order asc, publishedAt desc){
+    ${postFields}
   }
-}
 `;
 
-export const getAllPostsBySlideQuery = `
-*[_type == "post" &&  showInSlider == true] | order(publishedAt desc) {
-  _id,
-  title,
-  "slug": slug.current,
-  publishedAt,
-  body,
-  mainImage{
-    asset->{
-      _id,
-      url
-    },
-    alt
-  },
-  author->{
-    _id,
-    name,
-    role,
-    bio,
-    image{
-      asset->{
-        _id,
-        url
-      }
-    }
-  },
-  categories[]->{
-    _id,
-    title,
-    description
+export const getAllPostsBySlideQuery = groq`
+  ${basePostQuery}[showInSlider == true] | order(order asc, publishedAt desc){
+    ${postFields}
   }
-}
 `;
 
-export const getPostBySlug = `
+// -------------------
+// Paginated Posts (example)
+export const getPaginatedPostsQuery = groq`
+  ${basePostQuery} | order(order asc, publishedAt desc)
+  [$offset...$offset + $limit]{
+    ${postFields}
+  }
+`;
+
+// -------------------
+// Single Post by Slug
+// -------------------
+export const getPostBySlug = groq`
   *[_type == "post" && slug.current == $slug][0]{
-    _id,
-    title,
-    "slug": slug.current,
-    publishedAt,
-    body[]{
+    ${postFields},
+    body[] {
       ...,
       _type == "video" => {
         ...,
@@ -167,34 +174,7 @@ export const getPostBySlug = `
           url
         }
       }
-    },    
-    mainImage{
-      asset->{
-        _id,
-        url
-      },
-      alt
     },
-
-    author->{
-      _id,
-      name,
-      role,
-      bio,
-      image{
-        asset->{
-          _id,
-          url
-        }
-      }
-    },
-
-    categories[]->{
-      _id,
-      title,
-      description
-    },
-
     seo {
       metaTitle,
       metaDescription,
@@ -208,35 +188,20 @@ export const getPostBySlug = `
   }
 `;
 
-export const getRelatedPosts = `
-  *[_type == "post" && references($categoryId) && slug.current != $slug]{
-    title,
-    _id,
-    "slug": slug.current,
-    mainImage,
-    publishedAt,
-    body, 
-    author->{
-      _id,
-      name,
-      role,
-      bio,
-      image{
-        asset->{
-          _id,
-          url
-        }
-      }
-    },
-    categories[]->{
-      _id,
-      title,
-      description
-    }
-  }[0..3]
+// -------------------
+// Related Posts
+// -------------------
+export const getRelatedPosts = groq`
+  *[_type == "post" && references($categoryId) && slug.current != $slug] | order(order asc, publishedAt desc)[0..3] {
+    ${postFields}
+  }
 `;
 
-export const globalSettingsQuery = `*[_type == "settings"][0]{
+// -------------------
+// Global Settings
+// -------------------
+export const globalSettingsQuery = groq`
+*[_type == "settings"][0]{
   siteName,
   logo{
     asset->{
@@ -244,40 +209,12 @@ export const globalSettingsQuery = `*[_type == "settings"][0]{
     },
     alt
   },
-
-  // Header Menu
-  headerMenu[]{
-    label,
-    slug,
-    children[]{
-      label,
-      slug
-    }
-  },
-
-  // Footer Menu
-  footerMenu[]{
-    label,
-    url
-  },
-
-  // Social Links
-  socialLinks[]{
-    platform,
-    url,
-    icon{
-      asset->{
-        url
-      }
-    }
-  },
-
-  // Contact Fields
+  headerMenu[] { label, slug, children[]{label, slug} },
+  footerMenu[] { label, url },
+  socialLinks[] { platform, url, icon{ asset->{url} } },
   contactEmail,
   phone,
   address,
-
-  // SEO
   seo{
     metaTitle,
     metaDescription,
@@ -285,14 +222,12 @@ export const globalSettingsQuery = `*[_type == "settings"][0]{
     openGraphImage{
       asset->{
         url,
-        metadata {
-          lqip,
-          dimensions
-        }
+        metadata { lqip, dimensions }
       },        
       alt
     },
     openGraphUrl,
     facebookAppId
   }
-}`;
+}
+`;

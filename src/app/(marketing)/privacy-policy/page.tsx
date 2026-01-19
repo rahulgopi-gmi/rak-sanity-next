@@ -7,10 +7,9 @@ import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { cache } from "react";
 
-/** Fetch Sanity Data with caching */
-const getData = cache(async (slug: string, template:string): Promise<PageDataType | null> => {    
+/** Fetch Sanity Data */
+const getData = async (slug: string, template:string): Promise<PageDataType | null> => {    
     try {
         const { data } = await sanityFetch({
             query: getPageBySlug,
@@ -26,7 +25,7 @@ const getData = cache(async (slug: string, template:string): Promise<PageDataTyp
         console.error(`Sanity Fetch Error ${slug} : `, error);
         return null;
     }    
-});
+};
 
 /**
  * Generate metadata for the page.
@@ -80,7 +79,7 @@ export default async function Page() {
         const template = "other";
         const data = await getData(slug, template);
         if (!data) return notFound();
-        const section: PageDataType | undefined = data?.sections?.[0];   
+        const section = data?.sections?.[0];   
         if (!section) return notFound();
 
         return(
@@ -89,7 +88,7 @@ export default async function Page() {
                     {
                         section?.bannerdesktop && ( 
                             <div className="w-full h-[350px] relative hidden md:block">
-                                <Image fill alt={section?.bannerdesktop.alt} src={urlFor(section?.bannerdesktop).url()} />
+                                <Image fill alt={section?.bannerdesktop.alt} src={urlFor(section?.bannerdesktop) || ""} />
                             </div>
                         )
                     }                
@@ -97,7 +96,7 @@ export default async function Page() {
                     {
                         section?.bannermobile && (
                             <div className="w-full h-[350px] relative block md:hidden">
-                                <Image fill alt={section?.bannermobile.alt} src={urlFor(section?.bannermobile).url()} />
+                                <Image fill alt={section?.bannermobile.alt} src={urlFor(section?.bannermobile) || ""} />
                             </div>    
                         )
                     }

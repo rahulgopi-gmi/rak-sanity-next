@@ -1,18 +1,16 @@
 
 import Image from "next/image";
-import { CategoryType, KeywordsType, PageDataType, PostType } from "@/features/application/types/sanity";
+import { CategoryType, FeatureItem, PageDataType, PostType } from "@/features/application/types/sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 import { getAllPostsBySlideQuery, getAllPostsQuery, getCategories, getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
-import PillTag from "@/components/layout/pill-tag/PillTag";
+import PillTag from "@/components/ui/pill-tag";
 import { getBodyText } from "@/sanity/lib/utils";
-import BlogSwiper from "@/components/layout/blog-swiper/BlogSwiper";
-import BlogItems from "@/components/layout/blog-items/BlogItems";
-import BlogNewsLetter from "@/components/layout/blog-newsletter/BlogNewsletter";
-import { cache } from "react";
-import { normalizeArray } from "@/lib/helpers";
+import BlogItems from "@/components/layout/blog/blog-items/BlogItems";
+import BlogNewsLetter from "@/components/layout/blog/blog-newsletter/BlogNewsletter";
+import BlogSwiper from "@/components/layout/blog/blog-swiper/BlogSwiper";
 
 // Define the return type for getData
 interface GetDataResult {
@@ -22,8 +20,8 @@ interface GetDataResult {
     slidePosts: PostType[];
 }
 
-/** Fetch Sanity Data with caching */
-const getData = cache(async (slug: string, template:string): Promise<GetDataResult> => {
+/** Fetch Sanity Data */
+const getData = async (slug: string, template:string): Promise<GetDataResult> => {
     try {
         const [
             { data: page },
@@ -69,7 +67,7 @@ const getData = cache(async (slug: string, template:string): Promise<GetDataResu
             slidePosts: []
         };
     }
-});
+};
 
 /**
  * Generate metadata for the page.
@@ -122,14 +120,13 @@ export default async function Page() {
         const slug = "blog";
         const template = "other";
         const { page, posts, categories, slidePosts } = await getData(slug, template);
-        if (!page) return notFound();        
-        
-        const section: PageDataType | undefined = page?.sections?.[0];
-        const keywords: KeywordsType[] = normalizeArray(section?.keywords);
+        if (!page) return notFound();
+
+        const section: FeatureItem | undefined = page?.sections?.[0];        
 
         return(
             <main className="bg-black">
-                <section className="relative w-full bg-[url('/aboutbgmob.jpg')] md:bg-[url('/bg-grd-banner.jpg')] bg-contain bg-no-repeat with-overlay">
+                <section className="relative w-full max-md:bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-contain bg-no-repeat with-overlay">
                     <div className="container">
                         <div className="flex flex-col items-center justify-center text-center pt-[150px] max-md:pt-[135]" data-aos="fade-up">
                             {
@@ -179,7 +176,7 @@ export default async function Page() {
 
                 <section className="pb-[115px] bg-black relative [px-20px]">
                     <div className="w-full">
-                        <Image fill alt="" src="/form-box-blue-shadow.png" />
+                        <Image fill alt="" src="/images/gradient/form-box-blue-shadow.png" />
                     </div>
 
                     <div className="container w-full flex justify-center" data-aos="fade-up">

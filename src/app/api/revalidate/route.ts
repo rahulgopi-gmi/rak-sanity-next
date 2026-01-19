@@ -1,5 +1,5 @@
 // app/api/revalidate/route.ts
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {

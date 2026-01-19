@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { PageDataType } from "@/features/application/types/sanity";
+import { FeatureItem, PageDataType } from "@/features/application/types/sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 import { getBodyText } from "@/sanity/lib/utils";
 import { getPageBySlug } from "@/sanity/queries/pages";
@@ -40,9 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const page = await getData(slug, template);
     const seo = page?.seo;
     const title = seo?.metaTitle || "Innovation City";
-    const description =
-        seo ? toPlainText(seo.metaDescription)
-            : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
+    const description = seo ? toPlainText(seo.metaDescription || []) : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
     const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
     const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];
 
@@ -85,7 +83,8 @@ export default async function Page() {
         const template = "other";
         const data = await getData(slug, template);
         if (!data) return notFound();
-        const section = data.sections?.[0];
+        const section: FeatureItem | undefined = data.sections?.[0];
+        if (!section) return notFound();
 
         return (
             <section className="bg-[url('/thank-you-desk-bg.png')] bg-no-repeat bg-top bg-black bg-cover max-lg:h-full min:h-screen py-20 relative">
@@ -147,9 +146,9 @@ export default async function Page() {
         )
     } 
     catch (error) {
-        console.error("Page render failed");        
+        console.error("Page render failed:", error);
         return <div className="w-full h-screen flex items-center justify-center">
             <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
         </div>;
-    }    
+    }   
 }

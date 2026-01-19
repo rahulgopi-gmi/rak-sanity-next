@@ -52,7 +52,9 @@ export const page = defineType({
         { type: "heroSection" },
         { type: "aboutSection" },
         { type: "featureItem" },
-        { type: "campaigns"}
+        { type: "campaigns" },
+        { type: "productsItems" },
+        { type: "serviceItem" }
       ],
       validation: (Rule) => Rule.max(1).warning("Only one section can be added.")
     },

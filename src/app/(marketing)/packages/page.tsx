@@ -1,19 +1,18 @@
-import ContactForm from "@/components/layout/contact-form/ContactForm"
-import PackagesDetails from "@/components/layout/packages-details/PackagesDetails"
-import PillTag from "@/components/layout/pill-tag/PillTag";
-import { PageDataType } from "@/features/application/types/sanity";
+import ContactForm from "@/components/layout/contact/contact-form/ContactForm"
+import PackagesDetails from "@/components/layout/packages/packages-details/PackagesDetails"
+import PillTag from "@/components/ui/pill-tag";
+import { PageDataType, PackageType } from "@/features/application/types/sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 import { getBodyText } from "@/sanity/lib/utils";
 import { getPackages, getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
-import { cache } from "react";
 
 /** 
- * Fetch Sanity Data (cached)
+ * Fetch Sanity Data
 */
-const getData = async (slug: string, template: string): Promise<{ page: PageDataType | null; packages: any[] }> => {
+const getData = async (slug: string, template: string): Promise<{ page: PageDataType | null; packages: PackageType[] }> => {
     try {
         const [{ data: page }, { data: packages }] = await Promise.all([
             sanityFetch({
@@ -92,12 +91,12 @@ export default async function Page() {
         const { page, packages } = await getData(slug, template);
         if (!page) return notFound();
 
-        const data: PageDataType | undefined = page?.sections?.[0];
+        const data = page?.sections?.[0];
         const currency = 'AED';
 
         return (
             <main className="w-full">
-                <section className="package-sec relative bg-[url('/packagebg.jpg')] max-md:bg-[url('/packagebgmob.jpg')] bg-no-repeat bg-cover pt-[150px] pb-[120px] text-center overflow-hidden max-md:pt-[130] max-md:pb-[80]">
+                <section className="package-sec relative bg-[url('/images/gradient/bg-grd-banner.jpg')] max-md:bg-[url('/images/gradient/bg-grd-banner-mob.png')] bg-no-repeat bg-cover pt-[150px] pb-[120px] text-center overflow-hidden max-md:pt-[130] max-md:pb-[80]">
                     <div className="container mx-auto package-top-section" data-aos="fade-up" data-aos-delay="200">
                         {
                             data?.title && (

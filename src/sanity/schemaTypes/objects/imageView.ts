@@ -1,4 +1,4 @@
-export default {
+const imageView = {
     name: "imageView",
     title: "Image with Content",
     type: "object",
@@ -22,3 +22,5 @@ export default {
         { name: "body", title: "Body", type: "blockContent" }
     ],
 };
+
+export default imageView;

@@ -1,51 +1,7 @@
-import createImageUrlBuilder from "@sanity/image-url";
-import { getImageDimensions } from "@sanity/asset-utils";
 import { dataset, projectId } from "../env";
-
-const imageBuilder = createImageUrlBuilder({
-    projectId: projectId || "",
-    dataset: dataset || "",
-});
-
-export const urlForImage = (source: any) => {
-    // Ensure that source image contains a valid reference
-    if (!source?.asset?._ref) {
-        return undefined;
-    }
-
-    const imageRef = source?.asset?._ref;
-    const crop = source.crop;
-
-    // get the image's og dimensions
-    const { width, height } = getImageDimensions(imageRef);
-
-    if (Boolean(crop)) {
-        // compute the cropped image's area
-        const croppedWidth = Math.floor(width * (1 - (crop.right + crop.left)));
-
-        const croppedHeight = Math.floor(height * (1 - (crop.top + crop.bottom)));
-
-        // compute the cropped image's position
-        const left = Math.floor(width * crop.left);
-        const top = Math.floor(height * crop.top);
-
-        // gather into a url
-        return imageBuilder
-            ?.image(source)
-            .rect(left, top, croppedWidth, croppedHeight)
-            .auto("format");
-    }
-
-    return imageBuilder?.image(source).auto("format");
-};
-
-export function resolveOpenGraphImage(image: any, width = 1200, height = 627) {
-    if (!image) return;
-    const url = urlForImage(image)?.width(1200).height(627).fit("crop").url();
-    if (!url) return;
-    return { url, alt: image?.alt as string, width, height };
-}
-
+import { PortableTextBlock } from "next-sanity";
+import type { PortableTextSpan } from "sanity";
+// ---------------- Slug helper ----------------
 export const slugify = (str: string) =>
   str
     .toLowerCase()
@@ -53,6 +9,49 @@ export const slugify = (str: string) =>
     .replace(/[^\w]+/g, "-") 
     .replace(/-+/g, "-") 
     .replace(/^-|-$/g, "");
+
+// ---------------- Browser-safe scroll ----------------
+export const scrollToId = (id: string, offset = 0) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top, behavior: "smooth" });
+};
+
+// ---------------- Extract H2 from Portable Text ----------------
+
+
+type HeadingItem = {
+  type: "h2";
+  text: string;
+};
+
+export const getBodyJSON = (
+  body?: PortableTextBlock[] | any
+): HeadingItem[] => {
+  if (!Array.isArray(body)) return [];
+
+  return body
+    .filter(
+      (
+        block
+      ): block is PortableTextBlock<
+        never,
+        PortableTextSpan,
+        "h2",
+        never
+      > =>
+        block._type === "block" &&
+        block.style === "h2" &&
+        Array.isArray(block.children)
+    )
+    .map((block) => ({
+      type: "h2",
+      text: block.children
+        .map((child) => child.text)
+        .join(""),
+    }));
+};
 
 export const getBodyText = (body: any[] = []) => {
   let html = "";
@@ -159,18 +158,3 @@ export const getBodyText = (body: any[] = []) => {
   return html;
 };
 
-export const getBodyJSON = (body: any[] = []) => {
-    return body
-        .filter(block => block._type === "block" && block.style === "h2")
-        .map(block => ({
-            type: "h2",
-            text: block.children.map((c: any) => c.text).join(""),
-        }));
-};
-
-export const scrollToId = (id: string, offset = 0) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top, behavior: "smooth" });
-};

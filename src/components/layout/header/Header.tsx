@@ -108,7 +108,7 @@ export default function Header({ settings }: HeaderProps) {
                 {
                   logo?.asset && (
                     <Image
-                      src={urlFor(logo).url()}
+                      src={urlFor(logo) || "logo/logo.svg"}
                       fill
                       alt={logo.alt || "Innovation City Logo"}
                       className="transition-all duration-500 ease-in-out"
@@ -188,7 +188,7 @@ export default function Header({ settings }: HeaderProps) {
                 className="text-white w-6 h-6 px-0 relative cursor-pointer" 
                 onClick={handleHamberger}
               >
-                <Image src={"/hamburger-menu.svg"} fill alt="menu icon" />
+                <Image src={"/images/icons/hamburger-icon.svg"} fill alt="menu icon" />
               </Button>
             </div>
           </div>
@@ -252,7 +252,7 @@ export default function Header({ settings }: HeaderProps) {
                       >
                         {
                           item?.children.map((child: HeaderMenuChild) => (
-                            <li>
+                            <li key={child.label}>
                               <Link className="text-white hover:text-primary" href={`/${child.label}`}>{child.label}</Link>
                             </li>
                           ))
@@ -278,7 +278,7 @@ export default function Header({ settings }: HeaderProps) {
                       className="text-white mr-0 relative w-4 h-4"
                     >
                       <Image
-                        src={urlFor(s?.icon).url()}
+                        src={urlFor(s?.icon) || ""}
                         fill
                         alt={s?.platform || ""}
                       />

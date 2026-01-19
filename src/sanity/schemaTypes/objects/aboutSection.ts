@@ -1,6 +1,6 @@
 import { BookIcon } from "@sanity/icons";
 
-export default {
+const aboutSection = {
     name: "aboutSection",
     title: "About",
     type: "object",
@@ -107,3 +107,5 @@ export default {
         },
     }
 };
+
+export default aboutSection;
