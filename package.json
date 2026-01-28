@@ -12,8 +12,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit",
-    "prepare": "if [ \"$CI\" != \"true\" ]; then husky install; fi"
+    "type-check": "tsc --noEmit"   
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",
