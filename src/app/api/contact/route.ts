@@ -10,22 +10,32 @@ export async function POST(request: Request) {
             );
         }
 
-        const apiUrl = `${process.env.NEXT_PUBLIC_EXTERNAL_API}/submit-form`
+        const url = `${process.env.EXTERNAL_API}/submit-form`;
 
-        const externalResponse = await fetch(apiUrl, {
+        const externalResponse = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
-        });
-
-        const result = await externalResponse.json();
+        });        
 
         if (!externalResponse.ok) {
-            return NextResponse.json({ error: result.error || "External API failed" }, { status: 500 });
+            const errorBody = await externalResponse.text();
+            
+            console.error("External API error:", {
+                status: externalResponse.status,
+                body: errorBody,
+            });
+
+            return NextResponse.json(
+                { error: "Server error. Please try again later." },
+                { status: 500 }
+            );
         }
 
+        const result = await externalResponse.json();
         return NextResponse.json({ success: true, data: result });
     } catch (error) {
+        console.error("Unhandled POST /submit-form error:", error);
         return NextResponse.json({ error: "Server error" + error }, { status: 500 });
     }
 }

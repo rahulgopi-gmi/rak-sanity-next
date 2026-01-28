@@ -1,47 +1,13 @@
-import ActivitiesTab from "@/components/layout/activities/activities-tab/ActivitiesTab";
-import { ActivitiesType, PageDataType } from "@/features/application/types/sanity";
 import { normalizeArray } from "@/lib/helpers";
-import { sanityFetch } from "@/sanity/lib/live";
 import { getBodyText } from "@/sanity/lib/utils";
-import { getActivitiesItems, getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
 import PillTag from "@/components/ui/pill-tag";
-
-/** 
- *  Fetch Sanity Data
-*/
-const getData = async (slug: string, template:string): Promise<{ page: PageDataType | null; activities: ActivitiesType }> => {
-    try {
-        const [{ data: page }, { data: activitiesData }] = await Promise.all([
-            sanityFetch({
-                query: getPageBySlug,
-                params: { 
-                    slug,
-                    template
-                },
-                stega: false
-            }),
-            sanityFetch({
-                query: getActivitiesItems,
-                stega: false
-            })
-        ]);
-
-        const activities: ActivitiesType = {
-            standard: activitiesData?.standard ?? [],
-            premium: activitiesData?.premium ?? [],
-            custom: activitiesData?.custom ?? [],
-        };
-
-        return { page: page ?? null, activities: activities ?? [] };
-    }
-    catch (error) {        
-        console.error(`Sanity Fetch Error ${slug}: `, error);
-        return { page: null, activities: { standard: [], premium: [], custom: [] } };
-    }
-};
+import { urlFor } from "@/sanity/lib/image";
+import { getSeoData } from "@/sanity/lib/seo";
+import { getPageWithActivities } from "@/lib/data";
+import ActivitiesTab from "@/components/ActivitiesTab";
 
 /**
  * Generate metadata for the page.
@@ -49,13 +15,14 @@ const getData = async (slug: string, template:string): Promise<{ page: PageDataT
 export async function generateMetadata(): Promise<Metadata> {
     const slug = "activities";
     const template = "other";
-    const { page } = await getData(slug, template);
+    const seo  = await getSeoData(slug, template);
 
-    const seo = page?.seo;
-    const title = seo?.metaTitle || "Innovation City";
-    const description = seo ? toPlainText(seo.metaDescription || []) : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
-    const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
-    const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
+    if (!seo) return {};
+
+    const title = seo?.metaTitle;
+    const description = seo.metaDescription?.length ? toPlainText(seo.metaDescription) : undefined;
+    const ogImageUrl = urlFor(seo?.openGraphImage, { width: 1200, height: 630 });
+    const keywords = seo?.keywords?.map((k: string) => k);
 
     return{
       title,
@@ -70,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
         title,
         description,
         type: "website",
-        url: seo?.openGraphUrl || "https://innovationcity.com",
+        url: seo?.openGraphUrl,
         images: ogImageUrl ? [{ url: ogImageUrl }] : []        
       },
       twitter: {
@@ -94,7 +61,7 @@ export default async function Page() {
     try {
         const slug = "activities";
         const template = "other";
-        const { page, activities } = await getData(slug, template);
+        const { page, activities } = await getPageWithActivities(slug, template);
         if (!page) return notFound();
 
         const section = page?.sections?.[0];
@@ -104,9 +71,9 @@ export default async function Page() {
 
         return (
             <main className="w-full">
-                <section className="relative w-full bg-black bg-[url('/images/gradient/bg-grd-banner.jpg')] max-md:bg-cover max-md:bg-[url('/images/gradient/bg-grd-banner-mob.png')] bg-contain bg-no-repeat with-overlay">
-                    <div className="container max-auto" data-aos="fade-up" data-aos-delay="200">
-                        <div className="activities-top-section activities-top-section-wd mx-auto flex flex-col items-center justify-center text-center pt-[150px] max-md:pt-[135] pb-[30px]">
+                <section className="relative w-full bg-black bg-[url('/images/gradient/bg-grd-banner.jpg')] max-md:bg-[url('/images/gradient/bg-grd-banner-mob.png')] bg-cover max-md:bg-contain bg-no-repeat with-overlay">
+                    <div className="container max-auto">
+                        <div className="activities-top-section activities-top-section-wd mx-auto flex flex-col items-center justify-center text-center pt-37.5 pb-7.5">
                             {
                                 section.title && (
                                     <PillTag className="mx-auto mb-6.25 max-md:mb-5">
@@ -129,7 +96,7 @@ export default async function Page() {
                         </div>
                     </div>
 
-                    <div className="container mx-auto pt-6 pb-44" data-aos="fade-up">
+                    <div className="container mx-auto pt-6 pb-44">
                         <div className="w-full">
                             <ActivitiesTab 
                                 keywords={keywords}

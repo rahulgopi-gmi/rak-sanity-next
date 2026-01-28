@@ -1,6 +1,5 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import LandingLayoutClient from "./LandingLayoutClient";
-import { Suspense } from "react";
 import { PageSettingsType } from "@/features/application/types/sanity";
 import { globalSettingsQuery } from "@/sanity/queries/pages";
 
@@ -40,11 +39,9 @@ export default async function MarketingLayout({
         );
     }
 
-    return (
-        <Suspense fallback={null}>
-            <LandingLayoutClient settings={settings}>
-                {children}
-            </LandingLayoutClient>
-        </Suspense>
+    return (       
+        <LandingLayoutClient settings={settings}>
+            {children}
+        </LandingLayoutClient>        
     );
 }

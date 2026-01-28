@@ -1,73 +1,17 @@
 
 import Image from "next/image";
-import { CategoryType, FeatureItem, PageDataType, PostType } from "@/features/application/types/sanity";
-import { sanityFetch } from "@/sanity/lib/live";
-import { getAllPostsBySlideQuery, getAllPostsQuery, getCategories, getPageBySlug } from "@/sanity/queries/pages";
+import { FeatureItem } from "@/features/application/types/sanity";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
 import PillTag from "@/components/ui/pill-tag";
 import { getBodyText } from "@/sanity/lib/utils";
-import BlogItems from "@/components/layout/blog/blog-items/BlogItems";
-import BlogNewsLetter from "@/components/layout/blog/blog-newsletter/BlogNewsletter";
-import BlogSwiper from "@/components/layout/blog/blog-swiper/BlogSwiper";
-
-// Define the return type for getData
-interface GetDataResult {
-    page: PageDataType | null;
-    posts: PostType[];
-    categories: CategoryType[];
-    slidePosts: PostType[];
-}
-
-/** Fetch Sanity Data */
-const getData = async (slug: string, template:string): Promise<GetDataResult> => {
-    try {
-        const [
-            { data: page },
-            { data: posts },
-            { data: categories },
-            { data: slidePosts}
-        ] = await Promise.all([
-            sanityFetch({
-                query: getPageBySlug,
-                params: { 
-                    slug,
-                    template
-                },
-                stega: false,
-            }),
-            sanityFetch({
-                query: getAllPostsQuery,
-                stega: false,
-            }),
-            sanityFetch({
-                query: getCategories,
-                stega: false,
-            }),
-            sanityFetch({
-                query: getAllPostsBySlideQuery,
-                stega: false
-            })
-        ]);
-
-        return {
-            page: page ?? null,
-            posts: posts ?? [],
-            categories: categories ?? [],
-            slidePosts: slidePosts ?? []
-        };
-    }
-    catch (error) {
-        console.error(`Sanity Fetch Error for slug "${slug}":`, error);
-        return {
-            page: null,
-            posts: [],
-            categories: [],
-            slidePosts: []
-        };
-    }
-};
+import { urlFor } from "@/sanity/lib/image";
+import { getSeoData } from "@/sanity/lib/seo";
+import { getPageWithBlog } from "@/lib/data";
+import BlogNewsLetter from "@/components/BlogNewsletter";
+import BlogSwiper from "@/components/BlogSwiper";
+import BlogItems from "@/components/BlogItems";
 
 /**
  * Generate metadata for the page.
@@ -75,12 +19,15 @@ const getData = async (slug: string, template:string): Promise<GetDataResult> =>
 export async function generateMetadata(): Promise<Metadata> {
     const slug = "blog";
     const template = "other";
-    const { page } = await getData(slug, template);
-    const seo = page?.seo;
-    const title = seo?.metaTitle || "Innovation City";
-    const description = seo ? toPlainText(seo.metaDescription || []) : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
-    const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
-    const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
+
+    const seo  = await getSeoData(slug, template);
+
+    if (!seo) return {};
+
+    const title = seo?.metaTitle;
+    const description = seo.metaDescription?.length ? toPlainText(seo.metaDescription) : undefined;
+    const ogImageUrl = urlFor(seo?.openGraphImage, { width: 1200, height: 630 });
+    const keywords = seo?.keywords?.map((k: string) => k);
 
     return{
       title,
@@ -95,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
         title,
         description,
         type: "website",
-        url: seo?.openGraphUrl || "https://innovationcity.com",
+        url: seo?.openGraphUrl,
         images: ogImageUrl ? [{ url: ogImageUrl }] : []        
       },
       twitter: {
@@ -119,23 +66,23 @@ export default async function Page() {
     try {        
         const slug = "blog";
         const template = "other";
-        const { page, posts, categories, slidePosts } = await getData(slug, template);
+        const { page, posts, categories, slidePosts } = await getPageWithBlog(slug, template);
         if (!page) return notFound();
 
         const section: FeatureItem | undefined = page?.sections?.[0];        
 
         return(
             <main className="bg-black">
-                <section className="relative w-full max-md:bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-contain bg-no-repeat with-overlay">
+                <section className="relative w-full max-md:bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-cover max-md:bg-contain bg-no-repeat with-overlay">
                     <div className="container">
-                        <div className="flex flex-col items-center justify-center text-center pt-[150px] max-md:pt-[135]" data-aos="fade-up">
+                        <div className="flex flex-col items-center justify-center text-center pt-37.5 max-md:pt-32.5 max-md:pb-6.25">
                             {
                                 section?.title && (
                                     <PillTag className="mb-8! max-md:mb-5!">{section?.title}</PillTag>
                                 )
                             }                            
 
-                            <div className="max-w-[900px] mx-auto blog-top-section">
+                            <div className="max-w-225 mx-auto blog-top-section">
                                 {
                                     section?.header && (
                                         <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>
@@ -145,9 +92,8 @@ export default async function Page() {
                                 {
                                     section?.body && (
                                         <div 
-                                            dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}
-                                            data-aos="fade-up" 
-                                            className="mt-7 text-[#D5D5D5] text-[16px]! font-normal font-sans normal-case px-10 leading-[normal]!"
+                                            dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}                                             
+                                            className="mt-7 text-lightgray text-base! font-normal font-sans normal-case px-10 leading-[normal]!"
                                         >
                                         </div>
                                     )
@@ -156,14 +102,14 @@ export default async function Page() {
                         </div>
                     </div>
 
-                    <div className="relative pt-[30px] pb-[461px] w-full px-[30px] max-md:px-[16px]" data-aos="fade-up">
+                    <div className="relative pt-7.5 pb-115.25 w-full px-7.5 max-md:px-4">
                         <BlogSwiper
                             post={slidePosts}
                         />
                     </div>
                 </section>
 
-                <section className="w-full mt-[-410px] max-md:mt-[-395px] z-1 relative">
+                <section className="w-full -mt-102.5 max-md:-mt-98.75 z-1 relative">
                     <div className="container">
                         <div className="w-full pb-24">                            
                             <BlogItems 
@@ -174,25 +120,25 @@ export default async function Page() {
                     </div>                  
                 </section>
 
-                <section className="pb-[115px] bg-black relative [px-20px]">
+                <section className="pb-28.75 bg-black relative [px-20px]">
                     <div className="w-full">
                         <Image fill alt="" src="/images/gradient/form-box-blue-shadow.png" />
                     </div>
 
-                    <div className="container w-full flex justify-center" data-aos="fade-up">
-                        <div className="max-w-[692px] lg:max-w-[792px] w-full py-[42px] md:px-[120px] px-5 rounded-3xl border border-[rgba(95,194,213,0.20)] form-box-bg md:bg-blog-banner-mob bg-cover bg-no-repeat with-overlay text-white relative z-10">
-                            <h2 className="text-white font-sans text-[21px]! font-semibold leading-[29px]! mb-3.5 sm:text-left text-center">
+                    <div className="container w-full flex justify-center">
+                        <div className="max-w-173 lg:max-w-198 w-full py-10.5 md:px-30 px-5 rounded-3xl border border-[rgba(95,194,213,0.20)] bg-[linear-gradient(180deg,rgba(95,194,213,0.08)_0%,rgba(95,194,213,0.04)_85%,rgba(0,0,0,0.4)_100%)] md:bg-blog-banner-mob bg-cover bg-no-repeat with-overlay text-white relative z-10">
+                            <h2 className="text-white font-sans text-21! font-semibold leading-7.25! mb-3.5 sm:text-left text-center">
                                 Stay Updated
                             </h2>
 
-                            <p className="text-white/80 font-sans text-[16px]! font-normal leading-6! max-w-2xl mb-[21px] sm:text-left text-center">
+                            <p className="text-white/80 font-sans text-base! font-normal leading-6! max-w-2xl mb-5.25 sm:text-left text-center">
                                 Join 10,000+ entrepreneurs receiving weekly insights on business
                                 setup, Web3 innovation, and UAE opportunities.
                             </p>
 
                             <BlogNewsLetter view={true} />                         
 
-                            <div className="flex items-center sm:justify-center justify-start  gap-2 mt-4 text-white/50 font-sans text-[12px] font-normal leading-[18px] sm:text-center text-left">
+                            <div className="flex items-center sm:justify-center justify-start gap-2 mt-4 text-white/50 font-sans text-xs font-normal leading-4.5 sm:text-center text-left">
                                 <span>🔒 We respect your privacy. Unsubscribe anytime.</span>
                             </div>
                         </div>

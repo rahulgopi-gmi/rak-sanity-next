@@ -1,7 +1,6 @@
 import { PageSettingsType } from "@/features/application/types/sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 import { globalSettingsQuery } from "@/sanity/queries/pages";
-import { Suspense } from "react";
 import MarketingLayoutClient from "./MarketingLayoutClient";
 
 /** 
@@ -32,16 +31,14 @@ export default async function MarketingLayout({ children }: Readonly<{
     if (!settings) {
         return (
             <div className="w-full h-screen flex items-center justify-center">
-                <p>Something went wrong. Please try again later.</p>
+                <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
             </div>
         );
     }
 
-    return (
-        <Suspense fallback={null}>
-            <MarketingLayoutClient settings={settings}>
-                {children}
-            </MarketingLayoutClient>
-        </Suspense>
+    return (        
+        <MarketingLayoutClient settings={settings}>
+            {children}
+        </MarketingLayoutClient>        
     );       
 }

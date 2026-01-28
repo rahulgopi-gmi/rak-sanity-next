@@ -17,10 +17,6 @@ import premiumActivities from './documents/premiumActivities'
 import campaigns from './objects/campaigns'
 import settings from './documents/settings'
 import aboutSection from './objects/aboutSection'
-import productsItems from './objects/productsItems'
-import header from './objects/header'
-import serviceItem from './objects/serviceItem'
-import serviceCard from './objects/serviceCard'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [    
@@ -42,9 +38,5 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     premiumActivities,
     campaigns,
     settings,
-    productsItems,
-    header,
-    serviceItem,
-    serviceCard
   ],
 }

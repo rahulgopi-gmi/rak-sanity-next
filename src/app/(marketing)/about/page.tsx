@@ -1,35 +1,14 @@
-import { PageDataType, FeatureItem, HomeKeyWords } from "@/features/application/types/sanity";
+import { FeatureItem, HomeKeyWords } from "@/features/application/types/sanity";
 import { normalizeArray } from "@/lib/helpers";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
 import { getBodyText } from "@/sanity/lib/utils";
-import { getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import PillTag from "@/components/ui/pill-tag";
-
-/** 
- *  Fetch Sanity Data
-*/
-const getData = async (slug: string, template:string): Promise<PageDataType | null> => {
-    try {
-        const { data } = await sanityFetch({
-            query: getPageBySlug,
-            params: { 
-                slug,
-                template
-            },
-            stega: false,
-        });
-        return data ?? null;
-    }
-    catch (error){        
-        console.error(`Sanity Fetch Error ${slug} : `, error);
-        return null;
-    }
-};
+import { getSeoData } from "@/sanity/lib/seo";
+import { getPageDataOnly } from "@/lib/data";
 
 /**
  * Generate metadata for the page.
@@ -37,13 +16,14 @@ const getData = async (slug: string, template:string): Promise<PageDataType | nu
 export async function generateMetadata(): Promise<Metadata> {
     const slug = "about";
     const template = "other";    
-    const page  = await getData(slug, template);
-    const seo = page?.seo;
+    const seo  = await getSeoData(slug, template);
 
-    const title = seo?.metaTitle || "Innovation City";
-    const description = seo ? toPlainText(seo.metaDescription || []) : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
-    const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
-    const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
+    if (!seo) return {};
+
+    const title = seo?.metaTitle;
+    const description = seo.metaDescription?.length ? toPlainText(seo.metaDescription) : undefined;
+    const ogImageUrl = urlFor(seo?.openGraphImage, { width: 1200, height: 630 });
+    const keywords = seo?.keywords?.map((k: string) => k);
 
     return{
       title,
@@ -58,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
         title,
         description,
         type: "website",
-        url: seo?.openGraphUrl || "https://innovationcity.com",
+        url: seo?.openGraphUrl,
         images: ogImageUrl ? [{ url: ogImageUrl }] : []        
       },
       twitter: {
@@ -82,7 +62,7 @@ export default async function Page() {
     try {
         const slug = "about";
         const template = "other";
-        const data = await getData(slug, template);
+        const data = await getPageDataOnly(slug, template);
         if (!data) return notFound();
         
         const section: FeatureItem | undefined = data?.sections?.[0];
@@ -95,9 +75,11 @@ export default async function Page() {
 
         return(
             <main className="w-full">                
-                <section className="about-sec relative bg-black max-md:bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-no-repeat bg-cover pt-[150px] pb-[7px] text-center overflow-hidden max-md:pt-[130px] max-md:pb-[25px]">
-                    <div className="container mx-auto about-top-section" data-aos="fade-up" data-aos-delay="200">                        
-                        <PillTag className="mx-auto mb-[30px]! max-md:mb-5">
+                <section className="relative bg-black pt-37.5 pb-1.75 text-center max-md:bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-no-repeat bg-cover max-md:bg-contain overflow-hidden max-md:pt-32.5 max-md:pb-6.25">
+                    
+                    
+                    <div className="container mx-auto about-top-section">                        
+                        <PillTag className="mx-auto mb-7.5! max-md:mb-5">
                             {section.title ?? ""}
                         </PillTag>  
 
@@ -116,15 +98,15 @@ export default async function Page() {
 
                         {
                             (desktopImage || mobileImage) && (
-                                <div className="abtimg-wrap mb-[90px] md:mb-[65px]" data-aos="fade-up">
+                                <div className="abtimg-wrap mb-22.5 md:mb-16.25">
                                     {
                                         desktopImage && (
-                                            <div className="w-full h-[495px] relative hidden md:block">
+                                            <div className="w-full h-123.75 relative hidden md:block">
                                                 <Image 
                                                     fill 
                                                     alt={section.imageDesktop?.alt ?? ""}
                                                     src={desktopImage}
-                                                    className="rounded-[10px] object-cover" 
+                                                    className="rounded-10 object-cover" 
                                                 />
                                             </div>
                                         )
@@ -132,12 +114,12 @@ export default async function Page() {
 
                                     {
                                         mobileImage && (
-                                            <div className="w-full h-[495px] relative block md:hidden">
+                                            <div className="w-full h-123.75 relative block md:hidden">
                                                 <Image 
                                                     fill 
                                                     alt={section.imageMobile?.alt ?? ""}
                                                     src={mobileImage}
-                                                    className="rounded-[10px] object-cover" 
+                                                    className="rounded-10 object-cover" 
                                                 />
                                             </div>
                                         )
@@ -159,7 +141,7 @@ export default async function Page() {
                         <div className="imgcon-inner-wrapper">
                             <div className="split-wrap flex flex-col-reverse md:flex-row max-md:mb-0 max-lg:mb-10 w-full">
                                 <div className="w-full lg:w-7/12 md:w-full">
-                                    <div className="w-full h-[410px] max-md:h-[235px] relative">
+                                    <div className="w-full h-102.5 max-md:h-58.75 relative">
                                         {
                                             section?.sectionImage && (
                                                 <Image
@@ -174,11 +156,11 @@ export default async function Page() {
                                 </div>
 
                                 <div className="w-full lg:w-7/12 md:w-full max-md:pl-4">
-                                    <h3 className="text-[#D5D5D5] text-[20px]! font-sans font-normal leading-[27px]! text-center md:text-left mb-[30px] md:mb-10 max-w-[486px] ml-auto mr-auto md:ml-auto md:mr-0" data-aos="fade-up">
+                                    <h3 className="text-lightgray text-20! font-sans font-normal leading-6.75! text-center md:text-left mb-7.5 md:mb-10 max-w-121.5 ml-auto mr-auto md:ml-auto md:mr-0" >
                                         {section?.sectionSubHeader || ""}
                                     </h3>
 
-                                    <p className="text-[#D5D5D5] text-[16px]! font-sans leading-[normal]! text-center md:text-left max-w-[486px] ml-auto mr-auto md:ml-auto md:mr-0" data-aos="fade-up">
+                                    <p className="text-lightgray text-base! font-sans leading-normal! text-center md:text-left max-w-121.5 ml-auto mr-auto md:ml-auto md:mr-0">
                                         {section?.sectionContent || ""}
                                     </p>
                                 </div>
@@ -189,7 +171,7 @@ export default async function Page() {
                 
                 {
                     keywords.length > 0 && (
-                        <section className="ourvmv-sec w-full max-md:pt-[90px] max-md:pb-[50px] py-[120px]">
+                        <section className="ourvmv-sec w-full max-md:pb-12.5 max-md:pb-12.5 py-30">
                             <div className="container">
                                 {
                                     keywords.map((c: HomeKeyWords, index:number) => {
@@ -199,11 +181,10 @@ export default async function Page() {
                                         return(                                        
                                             <div 
                                                 key={`about-card-${index}`}
-                                                className="ourvmv flex flex-col-reverse md:flex-row items-center max-md:mb-0 mb-[120px] last:mb-0" 
-                                                data-aos="fade-up"
+                                                className="ourvmv flex flex-col-reverse md:flex-row items-center max-md:mb-0 mb-30 last:mb-0"                                                 
                                             >
                                                 <div className="md:w-1/2 w-full max-md:mb-10">
-                                                    <div className="m-wrap relative w-full h-[269px] max-md:h-[170px]">
+                                                    <div className="m-wrap relative w-full h-67.25 max-md:h-42.5">
                                                         <Image 
                                                             fill 
                                                             alt={c.image?.alt ?? ""}
@@ -215,10 +196,10 @@ export default async function Page() {
 
                                                 <div className="md:w-1/2 w-full max-md:mb-10">
                                                     <PillTag variant={'light'} className="mb-3 max-md:mx-auto px-4">{c.tag || ""}</PillTag>
-                                                    <h3 className="font-semibold font-mono mb-5! text-center md:text-left text-[45px]! max-md:text-[44px]! max-md:leading-[44px]!">
+                                                    <h3 className="font-semibold font-mono mb-5! text-center md:text-left text-45! max-md:text-44! max-md:leading-11!">
                                                         {c.header as string}
                                                     </h3>
-                                                    <p className="text-base! font-sans leading-normal! text-center max-w-[348px] mx-auto md:text-left md:mr-auto md:ml-0 md:max-w-[420px]">
+                                                    <p className="text-base! font-sans leading-normal! text-center max-w-87 mx-auto md:text-left md:mr-auto md:ml-0 md:max-w-105">
                                                         {c.content || ""}
                                                     </p>
                                                 </div>

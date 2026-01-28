@@ -14,7 +14,7 @@ const featureItem = {
             options: { hotspot: true },
             fields: [{ name: "alt", type: "string", title: "Alt Text" }],
             hidden: ({ document }: { document?: SanityDocument }) => {
-                const hiddenSlugs = ["contact", "activities", "packages", "thankyou", "blog", "partners-listing"];
+                const hiddenSlugs = ["contact", "activities", "packages", "thankyou", "blog"];
                 return hiddenSlugs.includes(document?.slug?.current);
             }
         },        
@@ -25,7 +25,7 @@ const featureItem = {
             options: { hotspot: true },
             fields: [{ name: "alt", type: "string", title: "Alt Text" }],
             hidden: ({ document }: { document?: SanityDocument }) => {
-                const hiddenSlugs = ["contact", "activities", "packages", "thankyou", "blog", "partners-listing"];
+                const hiddenSlugs = ["contact", "activities", "packages", "thankyou", "blog"];
                 return hiddenSlugs.includes(document?.slug?.current);
             }
         },
@@ -35,7 +35,7 @@ const featureItem = {
             type: "image",
             options: { hotspot: true },
             hidden: ({ document }: { document?: SanityDocument }) => {
-                const hiddenSlugs = ["contact", "refer-friend", "activities", "packages", "privacy-policy", "thankyou", "blog", "partners-listing"];
+                const hiddenSlugs = ["contact", "refer-friend", "activities", "packages", "privacy-policy", "thankyou", "blog"];
                 return hiddenSlugs.includes(document?.slug?.current);
             }
 

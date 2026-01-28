@@ -2,7 +2,7 @@ import { PageSettingsType } from "@/features/application/types/sanity";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment } from "react/jsx-runtime";
+import { Fragment } from "react";
 
 interface HeaderProps {
   settings : PageSettingsType 

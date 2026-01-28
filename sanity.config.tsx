@@ -13,18 +13,14 @@ import {apiVersion, dataset, projectId} from './src/sanity/env'
 import {schema} from './src/sanity/schemaTypes'
 import {structure} from './src/sanity/structure'
 
-import Image from 'next/image'
-
 function StudioLogo() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-      <Image
-        src="./src/sanity/static/innovation-city-logo.svg"
+      <img
+        src="/images/logo/innovation-city.jpg"
         alt="Innovation City"
-        width={50}
-        height={50}
-      />
-      <span style={{ fontWeight: 600 }}>Innovation City</span>
+        style={{marginTop: '6px'}}
+      />    
     </div>
   )
 }

@@ -114,7 +114,6 @@ export type HomeItems = {
     content:string;
     header: string;
     image: ImageType;
-    title?: string;
 }
 
 export type PackagePrice = {
@@ -164,21 +163,7 @@ export type SectionType = {
   techItems?: CardType | CardType[];
 };
 
-export interface keywordsitems{
-    badge:string;
-    content:string;
-    ctaName:string;
-    image:ImageType;
-    slug?: {
-        _type?: string;
-        current?: string;
-    };
-    title:string;
-    _key:string
-}
-
-export interface FeatureItem {
-    keywordsitems?:keywordsitems[];
+export interface FeatureItem { 
     itemHeader?: PortableTextBlock[];
     itemTitle?: string; 
     keywordstitle?: string;

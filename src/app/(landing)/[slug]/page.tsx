@@ -1,7 +1,4 @@
-import { sanityFetch } from "@/sanity/lib/live";
-import { PageDataType, PackageType } from "@/features/application/types/sanity";
 import { Fragment } from "react";
-import { getPageBySlug, getPackages } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
@@ -11,55 +8,27 @@ import { normalizeArray } from "@/lib/helpers";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import CampaignsAccordion from "@/components/layout/campaigns/campaigns-accordion/CampaignsAccordion";
-import PackagesDetails from "@/components/layout/packages/packages-details/PackagesDetails";
-import CampaignsForm from "@/components/layout/campaigns/campaigns-form/CampaignsForm";
 import { PortableTextBlock } from "sanity";
-
-/** 
- *  Fetch Sanity Data
-*/
-async function getData(
-  slug: string,
-  template: string
-): Promise<{ page: PageDataType | null; packages: PackageType[] }> {
-  try {    
-    const [{ data: page }, { data: packages }] = await Promise.all([
-      sanityFetch({
-        query: getPageBySlug,
-        params: { slug, template },
-        stega: false,
-        requestTag: slug,
-      }),
-      sanityFetch({
-        query: getPackages,
-        stega: false,
-          requestTag: slug,
-      }),
-    ])
-
-    return { page: page ?? null, packages: packages ?? [] }
-  } catch (error) {
-    console.error(`Sanity Fetch Error ${slug} : `, error)
-    return { page: null, packages: [] }
-  }
-}
-
+import CampaignsAccordion from "@/components/CampaignsAccordion";
+import PackagesDetails from "@/components/PackagesDetails";
+import CampaignsForm from "@/components/CampaignsForm";
+import { getSeoData } from "@/sanity/lib/seo";
+import { getPageWithPackages } from "@/lib/data";
 
 /**
  * Generate metadata for the page.
 */
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }>}): Promise<Metadata> {
-    const { slug } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }>}): Promise<Metadata> {    
+    const { slug } = await params; 
     const template = "campaigns";
-    const { page } = await getData(slug, template);
-    
-    const seo = page?.seo;
+    const seo  = await getSeoData(slug, template);
 
-    const title = seo?.metaTitle || "Innovation City";
-    const description = seo ? toPlainText(seo.metaDescription || []) : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
-    const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
-    const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];
+    if (!seo) return {};
+
+    const title = seo?.metaTitle;
+    const description = seo.metaDescription?.length ? toPlainText(seo.metaDescription) : undefined;
+    const ogImageUrl = urlFor(seo?.openGraphImage, { width: 1200, height: 630 });
+    const keywords = seo?.keywords?.map((k: string) => k);
 
     return {
         title,
@@ -74,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             title,
             description,
             type: "website",
-            url: seo?.openGraphUrl || "https://innovationcity.com",
+            url: seo?.openGraphUrl,
             images: ogImageUrl ? [{ url: ogImageUrl }] : []
         },
         twitter: {
@@ -96,9 +65,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         const { slug } = await params;
         const template = "campaigns";
 
-        const {page, packages} = await getData(slug, template);        
+        const { page, packages } = await getPageWithPackages(slug, template);        
         if (!page) return notFound();
-
+        
         const section = page.sections?.[0];
         if (!section) return notFound();
 
@@ -140,7 +109,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             </div>
                         </div>
 
-                        <div className="relative z-20 container sm:mt-5 mt-[85px] xl:mt-20 ls-heading-mt " data-aos="fade-up">
+                        <div className="relative z-20 container sm:mt-5 mt-[85px] xl:mt-20 ls-heading-mt">
                             <p className="text-white/80 top-title sm:text-[28px]! text-[22px]! font-mono font-bold sm:leading-[30px] leading-[15px] tracking-[-0.56px] sm:mb-3 mb-[30px] ">
                                 {section?.title}
                             </p>
@@ -176,7 +145,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
                 <section className="w-full pt-10 pb-[75px] md:pb-0 md:pt-0">
                     <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 sm:gap-6 gap-8">
-                        <div className="space-y-10" data-aos="fade-up">
+                        <div className="space-y-10">
                             <ul className="space-y-8 keywords-left">
                                 {
                                     keywords.map((k : {
@@ -237,7 +206,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
                 <section className="w-full tech-area md:mt-[120px] mt-0">
                     <div className="container">
-                        <div className="flex flex-col sm:flex-row sm:items-end items-start sm:justify-between justify-start mb-12 gap-2" data-aos="fade-up">
+                        <div className="flex flex-col sm:flex-row sm:items-end items-start sm:justify-between justify-start mb-12 gap-2">
                             {
                                 section?.techHeader && (
                                     <div className="campaigns-ft-hdr" dangerouslySetInnerHTML={{ __html: getBodyText(section?.techHeader) }}></div>
@@ -253,7 +222,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             }                            
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6" data-aos="fade-up">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {
                                 techkeywords[0] && (
                                     <div className="items-1 rounded-3xl relative">
@@ -343,7 +312,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6" data-aos="fade-up">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                             {
                                 techkeywords[4] && (
                                     <div className="items-5 rounded-3xl relative">
@@ -393,7 +362,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
                 <section className="campaign-package w-full mt-[120px]">
                     <div className="container">
-                        <div className="flex flex-col sm:flex-row sm:items-end items-start sm:justify-between justify-start mb-12 gap-2" data-aos="fade-up">
+                        <div className="flex flex-col sm:flex-row sm:items-end items-start sm:justify-between justify-start mb-12 gap-2">
                             {
                                 section?.packageHeader && (
                                     <div className="campaigns-ft-hdr" dangerouslySetInnerHTML={{ __html: getBodyText(section?.packageHeader) }}></div>
@@ -411,14 +380,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                         </div>
                            
                         <div className="w-full">
-
                             <PackagesDetails 
                                 packages={packages} 
                                 view={true}
-                                currency={section?.currency}
-                                data={section}
+                                currency={section?.currency}                                
                             />
-
                         </div>
                     </div>
                 </section>
@@ -427,30 +393,30 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                     {
                         section?.mode === "dark" ? (
                             <Fragment>
-                                <div className="w-full h-[888px] absolute hidden md:block bottom-0">
-                                    <Image fill alt="" src="/bg-bottom-wrapper.png" className="object-cover" />
+                                <div className="w-full h-222 absolute hidden md:block bottom-0">
+                                    <Image fill alt="" src="/images/gradient/bg-bottom-wrapper.png" className="object-cover" />
                                 </div>
 
-                                <div className="w-full h-[234px] absolute bottom-0 block md:hidden">
-                                    <Image fill alt="" src="/bg-bottom-wrapper-mob.png" className="object-cover" />
+                                <div className="w-full h-58.5 absolute bottom-0 block md:hidden">
+                                    <Image fill alt="" src="/images/gradient/bg-bottom-wrapper-mob.png" className="object-cover" />
                                 </div>
                             </Fragment>                           
                         )
                          :
                             <Fragment>
-                                <div className="w-full h-[888px] absolute hidden md:block bottom-0">
-                                    <Image fill alt="" src="/bg-bottom-wrapper-dollar.png" className="object-cover" />
+                                <div className="w-full h-222 absolute hidden md:block bottom-0">
+                                    <Image fill alt="" src="/images/gradient/g-bottom-wrapper-light.png" className="object-cover" />
                                 </div>
 
-                                <div className="w-full h-[234px] absolute bottom-0 block md:hidden">
-                                    <Image fill alt="" src="/bg-bottom-wrapper-mob-dollar.png" className="object-cover" />
+                                <div className="w-full h-58.5 absolute bottom-0 block md:hidden">
+                                    <Image fill alt="" src="/images/gradient/bg-bottom-wrapper-mob-light.png" className="object-cover" />
                                 </div>
                             </Fragment>   
                     }
                     
                     <div className={`${section?.mode === "dark" ? "visible" : "hidden"} text-white sm:pt-[120px] pt-20 [--scroll-bar:0px] relative z-10`}>
                         <div className="container">
-                            <div className="flex items-start justify-between gap-10" data-aos="fade-up">
+                            <div className="flex items-start justify-between gap-10">
                                 <div className="lg:w-1/2 w-full">
                                     {
                                         section?.businessHeader && (
@@ -466,7 +432,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                 <div className="relative h-full mx-auto lg:w-3/5 lg:block hidden !mr-[calc(-50vw+50%+(var(--scroll-bar)/2))] xl:max-w-[100%] max-w-[55%] rounded-[24px] lg:rounded-tr-[0px] rounded-tr-[24px]  lg:rounded-br-[0px] rounded-br-[24px] overflow-hidden">
                                     {
                                         section?.businessImage && (
-                                            <div className="w-full h-[560px]">
+                                            <div className="w-full h-140">
                                                 <Image
                                                     fill
                                                     alt={section?.businessImage?.alt || ""}
@@ -480,7 +446,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                         </div>
                     </div>                    
 
-                    <div className="text-white  md:pt-[120px] md:pb-[120px] pt-[90px] pb-[90px] relative z-10" data-aos="fade-up">
+                    <div className="text-white  md:pt-30 md:pb-30 pt-22.5 pb-22.5 relative z-10">
                         <div className="container">
                             <div className="relative w-full">
                                 <div className="w-full hidden md:block">   

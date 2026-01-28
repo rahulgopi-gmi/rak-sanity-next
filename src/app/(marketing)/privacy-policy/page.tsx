@@ -1,31 +1,11 @@
-import { PageDataType } from "@/features/application/types/sanity";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
 import { getBodyText } from "@/sanity/lib/utils";
-import { getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-
-/** Fetch Sanity Data */
-const getData = async (slug: string, template:string): Promise<PageDataType | null> => {    
-    try {
-        const { data } = await sanityFetch({
-            query: getPageBySlug,
-            params: { 
-                slug,
-                template
-            },
-            stega: false,
-        });
-        return data ?? null;
-    }
-    catch (error){        
-        console.error(`Sanity Fetch Error ${slug} : `, error);
-        return null;
-    }    
-};
+import { getSeoData } from "@/sanity/lib/seo";
+import { getPageDataOnly } from "@/lib/data";
 
 /**
  * Generate metadata for the page.
@@ -33,12 +13,14 @@ const getData = async (slug: string, template:string): Promise<PageDataType | nu
 export async function generateMetadata(): Promise<Metadata> {
     const slug = "privacy-policy";
     const template = "other";
-    const data = await getData(slug, template);
-    const seo = data?.seo;
-    const title = seo?.metaTitle || "Innovation City";
-    const description = seo ? toPlainText(seo.metaDescription || []) : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
-    const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
-    const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];    
+    const seo  = await getSeoData(slug, template);
+
+    if (!seo) return {};    
+
+    const title = seo?.metaTitle;
+    const description = seo.metaDescription?.length ? toPlainText(seo.metaDescription) : undefined;
+    const ogImageUrl = urlFor(seo?.openGraphImage, { width: 1200, height: 630 });
+    const keywords = seo?.keywords?.map((k: string) => k);
 
     return{
       title,
@@ -53,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
         title,
         description,
         type: "website",
-        url: seo?.openGraphUrl || "https://innovationcity.com",
+        url: seo?.openGraphUrl,
         images: ogImageUrl ? [{ url: ogImageUrl }] : []        
       },
       twitter: {
@@ -77,7 +59,7 @@ export default async function Page() {
     try {
         const slug = "privacy-policy";
         const template = "other";
-        const data = await getData(slug, template);
+        const data = await getPageDataOnly(slug, template);
         if (!data) return notFound();
         const section = data?.sections?.[0];   
         if (!section) return notFound();
@@ -103,7 +85,7 @@ export default async function Page() {
 
                     <div className="banner-overlay privacy-policy-banner-overlay md:h-[350px]!">
                         <div className="container">
-                            <div className="privacy-policy-banner-heading py-58 pt-16 text-center" data-aos="fade-up">
+                            <div className="privacy-policy-banner-heading py-58 pt-16 text-center">
                                 {
                                     section?.header && (
                                         <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>

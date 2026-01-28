@@ -1,41 +1,13 @@
-import ContactForm from "@/components/layout/contact/contact-form/ContactForm"
-import PackagesDetails from "@/components/layout/packages/packages-details/PackagesDetails"
 import PillTag from "@/components/ui/pill-tag";
-import { PageDataType, PackageType } from "@/features/application/types/sanity";
-import { sanityFetch } from "@/sanity/lib/live";
 import { getBodyText } from "@/sanity/lib/utils";
-import { getPackages, getPageBySlug } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
-
-/** 
- * Fetch Sanity Data
-*/
-const getData = async (slug: string, template: string): Promise<{ page: PageDataType | null; packages: PackageType[] }> => {
-    try {
-        const [{ data: page }, { data: packages }] = await Promise.all([
-            sanityFetch({
-                query: getPageBySlug,
-                params: { 
-                    slug,
-                    template
-                },
-                stega: false,
-            }),
-            sanityFetch({
-                query: getPackages,
-                stega: false,
-            })
-        ]);
-
-        return { page: page ?? null, packages: packages ?? [] };
-    }
-    catch (error) {
-        console.error(`Sanity Fetch Error ${slug}: `, error);
-        return { page: null, packages: [] };
-    }
-};
+import { urlFor } from "@/sanity/lib/image";
+import { getSeoData } from "@/sanity/lib/seo";
+import { getPageWithPackages } from "@/lib/data";
+import PackagesDetails from "@/components/PackagesDetails";
+import ContactForm from "@/components/ContactForm";
 
 /**
  * Generate metadata for the page.
@@ -43,14 +15,15 @@ const getData = async (slug: string, template: string): Promise<{ page: PageData
 export async function generateMetadata(): Promise<Metadata> {
     const slug = "packages";
     const template = "other";
-    const { page } = await getData(slug, template);
+    const seo  = await getSeoData(slug, template);
 
-    const seo = page?.seo;
-    const title = seo?.metaTitle || "Innovation City";
-    const description = seo ? toPlainText(seo.metaDescription || []) : "Set up your business easily with endless possibilities in the world's first free zone focused on AI, Web3, Robotics, Gaming & Healthtech companies.";
-    const ogImageUrl = seo?.openGraphImage?.asset?.url || "/images/Innovation-City.jpg";
-    const keywords = seo?.keywords?.map((k: string) => k) || ["innovation", "web3", "robotics", "healthtech", "artificial intelligence", "company set up", "free zone", "business license"];
+    if (!seo) return {};
 
+    const title = seo?.metaTitle;
+    const description = seo.metaDescription?.length ? toPlainText(seo.metaDescription) : undefined;
+    const ogImageUrl = urlFor(seo?.openGraphImage, { width: 1200, height: 630 });
+    const keywords = seo?.keywords?.map((k: string) => k);    
+    
     return{
       title,
       description,
@@ -64,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
         title,
         description,
         type: "website",
-        url: seo?.openGraphUrl || "https://innovationcity.com",
+        url: seo?.openGraphUrl,
         images: ogImageUrl ? [{ url: ogImageUrl }] : []        
       },
       twitter: {
@@ -88,7 +61,7 @@ export default async function Page() {
     try {
         const slug = "packages";
         const template = "other";
-        const { page, packages } = await getData(slug, template);
+        const { page, packages } = await getPageWithPackages(slug, template);
         if (!page) return notFound();
 
         const data = page?.sections?.[0];
@@ -96,11 +69,11 @@ export default async function Page() {
 
         return (
             <main className="w-full">
-                <section className="package-sec relative bg-[url('/images/gradient/bg-grd-banner.jpg')] max-md:bg-[url('/images/gradient/bg-grd-banner-mob.png')] bg-no-repeat bg-cover pt-[150px] pb-[120px] text-center overflow-hidden max-md:pt-[130] max-md:pb-[80]">
-                    <div className="container mx-auto package-top-section" data-aos="fade-up" data-aos-delay="200">
+                <section className="package-sec relative bg-[url('/images/gradient/bg-grd-banner.jpg')] max-md:bg-[url('/images/gradient/bg-grd-banner-mob.png')] bg-no-repeat bg-cover pt-37.5 pb-30 text-center overflow-hidden max-md:pt-32.5 max-md:pb-6.25">                
+                    <div className="container mx-auto package-top-section">
                         {
                             data?.title && (
-                                <PillTag className="mx-auto mb-[30px] max-md:mb-5">
+                                <PillTag className="mx-auto mb-7.5 max-md:mb-5">
                                     {data?.title}
                                 </PillTag>
                             )

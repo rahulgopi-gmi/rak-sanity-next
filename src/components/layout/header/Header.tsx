@@ -205,64 +205,97 @@ export default function Header({ settings }: HeaderProps) {
               variant={'link'}
               className="absolute cursor-pointer px-0 top-9 right-9 text-white w-3.5 h-3.5"
             >
-              <Image src="/close-icon.svg" fill alt="Close Menu" className="w-3 h-3" />
+              <Image src="/images/icons/close-icon.svg" fill alt="Close Menu" className="w-3 h-3" />
             </Button>
 
-            {
-              menu.map((item, index) => {
-                const slug = item.slug?.current || "";
-                const isContact = slug === "contact";
-                const isLast = index+1 === menu.length - 1;
-                const isActive = pathname === `/${slug}`;                              
+            {menu.map((item, index) => {
+              const slug = item.slug?.current || "";
+              const isContact = slug === "contact";
+              const isLast = index + 1 === menu.length - 1;
 
-                if (isContact) {
-                  return (
-                    <Link
-                      key={item.label}
-                      href={`/${slug}`}
-                      className="md:block text-[16px]! mt-[110px] hover:bg-white transition text-black font-sans text-xs font-semibold uppercase px-6 py-3 my-4 rounded-lg bg-[rgb(var(--primary-color))] shadow-[0_0_14px_0_rgba(255,255,255,0.19)_inset] w-full text-center"
-                    >
-                      GET STARTED
-                    </Link>
-                  );
-                }
+              const href = slug === "home" || slug === "" ? "/" : `/${slug}`;
 
+              // Parent active (only if no children)
+              const isActive =
+                !item.children &&
+                (pathname === href ||
+                  (href !== "/" && pathname.startsWith(`${href}/`)));
+              
+              const isAnyChildActive = item.children?.some((child) => {
+                if (!child?.label) return false;
+                const childHref = `/${child?.label.toLowerCase()}`;
+                return (
+                  pathname === childHref ||
+                  pathname.startsWith(`${childHref}/`)
+                );
+              });
+
+              if (isContact) {
                 return (
                   <Link
                     key={item.label}
                     href={`/${slug}`}
-                    onClick={handleMenuClose}
-                    className={`group relative font-sans text-sm font-semibold py-8 w-full text-left  ${!isLast ? "border-b border-[#DEDEDE]/15" : ""}`}
+                    className="md:block text-[16px]! mt-27.5 hover:bg-white transition text-black font-sans text-xs font-semibold uppercase px-6 py-3 my-4 rounded-lg bg-[rgb(var(--primary-color))] shadow-[0_0_14px_0_rgba(255,255,255,0.19)_inset] w-full text-center"
                   >
-                    <span className={`relative z-50 flex items-center justify-between ${isActive ? 'text-primary' : 'text-white'}`}>
-                      {item.label}
-                      {item?.children && <ChevronDown size={14} />}
-                    </span>
-                    {
-                      item?.children &&
-                      <ul 
-                        className="
-                        absolute left-0 top-16 w-56 bg-black shadow-lg z-30
-                        opacity-0
-                        pointer-events-none
-                        transition-all duration-300 ease-out
-                        group-hover:opacity-100  
-                        group-hover:mt-2 
-                        group-hover:pointer-events-auto"
-                      >
-                        {
-                          item?.children.map((child: HeaderMenuChild) => (
-                            <li key={child.label}>
-                              <Link className="text-white hover:text-primary" href={`/${child.label}`}>{child.label}</Link>
-                            </li>
-                          ))
-                        }
-                      </ul>
-                    }
+                    GET STARTED
                   </Link>
                 );
-              })
-            }
+              }
+
+              return (
+                <Link
+                  key={item.label}
+                  href={item.children ? "#" : href}
+                  onClick={handleMenuClose}
+                  className={`group relative font-sans text-sm font-semibold py-8 w-full text-left ${!isLast ? "border-b border-[#DEDEDE]/15" : ""}`}>
+                  
+                  <span
+                    className={`relative z-50 flex items-center justify-between
+                    ${isActive || isAnyChildActive ? "text-primary" : "text-white"}`}
+                  >
+                    {item.label}
+                    {item.children && <ChevronDown size={14} />}
+                  </span>
+                  
+                  {
+                    item.children && (
+                      <ul
+                        className="absolute left-0 top-6 w-56 bg-black shadow-lg z-30
+                            opacity-0 pointer-events-none
+                            transition-all duration-300 ease-out
+                            group-hover:opacity-100
+                            group-hover:mt-2
+                            group-hover:pointer-events-auto
+                          "
+                      >
+                        {
+                          item.children.map((child) => {
+                            if (!child?.label) return false;
+                            const childHref = `/${child?.label.toLowerCase()}`;
+                            const isChildActive =
+                              pathname === childHref ||
+                              pathname.startsWith(`${childHref}/`);
+
+                            return (
+                              <li key={child.label}>
+                                <Link
+                                  href={childHref}
+                                  className={`block px-4 py-2 transition
+                                  ${isChildActive ? "text-primary" : "text-white"}`}
+                                >
+                                  {child.label}
+                                </Link>
+                              </li>
+                            );
+                          })
+                        }
+                      </ul>
+                  )}
+                </Link>
+              );
+            })
+          }
+
 
             <div className="flex gap-8 mt-6 items-center mx-auto">
               {
