@@ -14,10 +14,10 @@ import type {
   PackageType, 
   ActivitiesType, 
   PostType, 
-  CategoryType 
+  CategoryType, 
+  ActivitiesMainType
 } from "@/features/application/types/sanity";
 import { sanityServerClient } from "@/sanity/lib/client.server";
-
 
 /**
  *  Define the return type for getPageWithBlog
@@ -36,6 +36,17 @@ interface BlogDetailsType {
 }
 
 /**
+ * Helper fetch function with revalidation
+ */
+const fetchWithRevalidate = async <T>(
+  query: string,
+  params: Record<string, string> = {}, // default to empty object
+  revalidateSeconds = 60
+): Promise<T> => {
+  return sanityServerClient.fetch<T>(query, params, { next: { revalidate: revalidateSeconds } });
+};
+
+/**
  * Fetch page + packages (for pages that need packages)
  */
 export const getPageWithPackages = cache(async (
@@ -44,8 +55,8 @@ export const getPageWithPackages = cache(async (
 ): Promise<{ page: PageDataType | null; packages: PackageType[] }> => {
   try {
     const [page, packages] = await Promise.all([
-      sanityServerClient.fetch(getPageBySlug, { slug, template }),
-      sanityServerClient.fetch(getPackages)
+      fetchWithRevalidate<PageDataType | null>(getPageBySlug, { slug, template }),
+      fetchWithRevalidate<PackageType[]>(getPackages)
     ]);
 
     return { page: page ?? null, packages: packages ?? [] };
@@ -84,8 +95,8 @@ export const getPageWithActivities = cache(async (
 ): Promise<{ page: PageDataType | null; activities: ActivitiesType }> => {
   try {
     const [page, activitiesData] = await Promise.all([
-      sanityServerClient.fetch(getPageBySlug, { slug, template }),
-      sanityServerClient.fetch(getActivitiesItems)
+      fetchWithRevalidate<PageDataType | null>(getPageBySlug, { slug, template }),
+      fetchWithRevalidate<{ standard: ActivitiesMainType[], premium: ActivitiesMainType[], custom: ActivitiesMainType[] }>(getActivitiesItems)
     ]);
 
     const activities: ActivitiesType = {
