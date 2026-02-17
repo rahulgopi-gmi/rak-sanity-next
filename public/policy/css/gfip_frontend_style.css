@@ -1,0 +1,42 @@
+.smart_phone_field .iti {
+    display: inherit
+}
+
+.smart_phone_field .ginput_container_phone .spf-phone {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    transition: .3s;
+    z-index: 9;
+}
+
+.smart_phone_field .ginput_container_phone {
+    position: relative
+}
+
+.smart_phone_field .ginput_container_phone .spf-phone.valid-msg:before {
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 100%;
+    background-image: url(../images/valid.svg)
+}
+
+.smart_phone_field .ginput_container_phone .spf-phone.error-msg:before {
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 100%;
+    background-image: url(../images/invalid.svg)
+}
+
+.smart_phone_field .ginput_container_phone .spf-phone.hide {
+    opacity: 0
+}
+
+.gform_wrapper .smart_phone_field.flagonly input {
+    padding-left: 50px !important
+}

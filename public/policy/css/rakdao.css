@@ -1,0 +1,1195 @@
+/* NEW MAIN MENU DARe STARTS */
+.DARe.sub-menu-nav a.nav-btn {text-transform: none;}
+.DARe.mobile-sub-menu-nav .nav-btn {text-transform: none;}
+.mobile-sub-menu-nav ul.mobile-sub-menu-alt a {line-height: normal; padding-top: 10px; padding-bottom: 10px;}
+/* NEW MENU DARe ENDS */
+
+/*MISC UPDATE*/
+.page-id-23 .informative-section-holder {
+  overflow: hidden;
+}
+.page-id-37 .informative-section-holder {
+  overflow: hidden;
+}
+/* ***** END ******/
+
+/* Begin Form 10 - Cost Calculator */
+.page-id-5880 .inner-banner h1 {text-transform: none;}
+
+#gform_wrapper_12 ::placeholder{color:#fff;}
+
+form#gform_12{position:relative;text-align:center}
+
+#gform_wrapper_12 .gf_page_steps {border-bottom: none; margin: 0 auto 50px; position: relative; display: flex; justify-content: space-between;}
+
+#gform_wrapper_12 .gf_page_steps:before {content: ''; display: inline-block; width: 85%; border-top: 2px dotted #00ffaf; position: absolute; top: 40px; left: 60px;}
+
+#gform_wrapper_12 .gf_step {margin: 20px 0px 20px 0;text-align:center; width: 122px;position: relative;}
+
+#gform_wrapper_12 .gf_step_number {background: #00249c;color: #fff;border: none;border-radius: 0;display:block;font-size: 20px;font-weight: 700;padding-top: 6px;margin: 0 auto;}
+
+#gform_wrapper_12 .gf_step_active .gf_step_number{background: #00ffaf;color: #000;}
+
+#gform_wrapper_12 .gf_step.gf_step_last{margin-right:0;}
+
+#gform_wrapper_12 .gf_step_label{color: #fff;font-size: 14px;font-weight: 600;line-height: 16px;padding-left:0;padding-top: 10px;display:block;}
+
+#gform_wrapper_12 .gform-body.gform_body {overflow-x: hidden;}
+
+#gform_wrapper_12 .gfield_html h5{font-size: 44px;color: #fff;text-align: center;padding-bottom: 24px;font-weight: 400;}
+
+#gform_wrapper_12 .gform-field-label--type-sub {display: none;}
+
+#gform_wrapper_12 input[type=text],#gform_wrapper_12 input[type=email],#gform_wrapper_12 input[type=tel]{width: 100%;font-size: 1.2rem;margin:0px;padding: 1.5rem 1rem;border-radius: 5px;border: 1px solid #fff;background: transparent;color:#fff;}
+
+#gform_wrapper_12 .ginput_container--name {margin: 0;}
+
+#gform_wrapper_12 .gfield--type-select .ginput_container_select {position: relative;}
+#gform_wrapper_12 .gfield--type-select .ginput_container_select:after {content: " "; display: block; position: absolute; right: 20px; bottom: 33px; background: 0 0; width: 0; height: 0; border-right: 5px solid #ff000000; border-top: 7px solid white; border-left: 5px solid #00800000; border-bottom: 0; z-index: 0;}
+
+#gform_wrapper_12 .cost-calculator-input input {width: 100%; margin-top: 20px; min-height: 75px; font-size: 1.4rem; text-align: center; border-radius: 5px;}
+
+#gform_wrapper_12 span#input_12_3_3_container,.gfield--type-email {text-align: right;display:inline-block;}
+
+#gform_wrapper_12 span#input_12_3_6_container,.gfield--type-phone {text-align: left;display: inline-block;}
+
+#gform_wrapper_12 .gf_step_number:before, #gform_wrapper_12 .gf_step_number:after{display:none;}
+
+#gform_wrapper_12 .gf_step_completed .gf_step_number{color: #00ffaf;}
+
+#gform_wrapper_12 input.gform_next_button {border: none;padding: 20px 63px 20px 64px;display: inline-block; border: 1px solid #00249c;}
+
+#gform_wrapper_12 input.gform_next_button:hover {background:#00ffaf;color:#00249c;}
+
+#gform_wrapper_12 input.gform_previous_button {border: none;padding: 20px 50px 20px 50px;display: inline;background:transparent;color:#fff;width:168px;border: 1px solid #00ffaf;}
+
+#gform_wrapper_12 input.gform_previous_button:hover {background:#00ffaf;color:#00249c;}
+
+#gform_wrapper_12 input#gform_submit_button_12 {border: none;padding: 20px 50px 20px 50px;display: inline;background:#00249c;color:#fff;width:168px;border: 1px solid #00249c;}
+
+#gform_wrapper_12 input#gform_submit_button_12:hover{background:#00ffaf;color:#00249c;}
+
+#gform_wrapper_12 .gfield select.large {width: 100%;display: inline-block;padding: 24px 20px;font-size: 1.4rem;margin-top: 20px;border-radius:5px;background: transparent;border: 1px solid #fff;color: #fff;text-align:center;}
+
+#gform_wrapper_12 .gfield select option {background: #03123e;padding: 10px 5px;text-align: center;}
+
+#gform_wrapper_12 .gform_page_footer.before {text-align: center; }
+
+div#gform_12_validation_container{display: none;}
+
+div#validation_message_12_3 {position: relative;border: none;background: none;text-align: left; padding: 0; margin: 5px 0 0 0;color:#00ffaf;}
+
+div#validation_message_12_5 {position: relative;border: none;background: none;text-align: left; padding: 5px 0 0 0; margin: 0;color:#00ffaf;}
+
+div#validation_message_12_4 {position: relative;border: none;background: none;text-align: left; padding: 5px 0 0 0px; margin: 0;color:#00ffaf;}
+
+#gform_wrapper_12 .gfield_validation_message, #gform_wrapper_12 .validation_message {padding: 0; text-align: left; border: none; background: transparent; color: #00ffaf;}
+
+#gform_wrapper_12 .smart_phone_field .ginput_container_phone .spf-phone {right: 200px;}
+
+/* End Form 10 - Cost Calculator */
+
+/* Begin Form 11 - Refer a friend */
+
+#gform_wrapper_11 .gfield .gform-field-label { color: #fff; font-weight: 400;}
+
+#gform_wrapper_11 .ginput_container_name {margin: 0;}
+
+#gform_wrapper_11 .ginput_container_radio .gchoice input {width: auto; margin: 0;}
+
+#gform_wrapper_11 .ginput_container_radio .gchoice {display: flex; align-items: center; gap: 10px; margin-bottom: 5px;}
+
+#gform_wrapper_11 .gform_body .ginput_container_consent {display: flex; flex-direction: row; align-items: flex-start; font-size: 16px; line-height: 1.6;}
+
+#gform_wrapper_11 .gform_body .ginput_container_consent .gfield_consent_label {font-size: 16px;}
+
+#gform_wrapper_11 .gform_body .ginput_container_consent a {color: #00ffaf;}
+
+#gform_wrapper_11 .gform_body .ginput_container_consent input#input_11_18_1 {width: 20px; height: 20px; margin-top: 5px;}
+
+#gform_wrapper_11 .gform_body .gfield.gfield--type-html {color: #fff; font-size: 16px; line-height: 1.6;}
+
+div#gform_wrapper_11 .gform_footer input.gform_button.button {border-radius: 0; background: #00249c; border: none; font-size: 16px; font-weight: 600; padding: 24px 46px; cursor: pointer;}
+
+#gform_wrapper_11 .gform_footer input.gform_button.button:hover {background-color: #00ffaf; color: #0c2696;}
+
+#gform_wrapper_11 .gform_body .ginput_container_consent .gfield_consent_label span.gfield_required {display: none;}
+
+#gform_wrapper_11 .gfield .gform-field-label .gfield_required {display: none;}
+
+#gform_11_validation_container {display: none;}
+
+#gform_wrapper_11 .gfield_error [aria-invalid=true] {border: 1px solid #FF9255;}
+
+div#validation_message_11_4 {text-align: left;}
+
+div#field_11_21 .iti__flag-container {z-index: 1;}
+
+/* End Form 11 - Refer a friend */
+
+/* BOARD MEMBER SECTION START */
+.board-member-holder {
+    margin-bottom: 25px;
+}
+.member-img-holder {
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+}
+.member-img {
+    width: 100%;
+    line-height: 0;
+}
+.member-img img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+}
+.member-text {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transition: opacity ease 0.7s;
+    background: linear-gradient(360deg, #181546 31.25%, rgba(24, 21, 70, 0) 100%);
+    padding: 1.5rem;
+    color: #fff;
+    opacity: 0;
+}
+.member-img-holder:hover .member-text {
+    opacity: 1;
+    transition: all ease 0.7s;
+}
+.member-text h4.member-name {
+    color: #fff;
+    font-size: .8rem;
+    margin-bottom: .5rem;
+    text-transform: none;
+}
+.member-text .member-designation {
+    font-size: .75rem;
+    color: #00FFAF;
+}
+/* BOARD MEMBER SECTION END */
+
+/* Begin form 13 - Submit a Referral */
+#gform_13 #input_13_1, #gform_13 #input_13_10 {
+    margin: 0;
+}
+#gform_13 .consent .gchoice {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+#gform_13 .consent .gchoice input {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    margin-top: 2px;
+}
+#gform_13 .consent label {
+    color: #fff;
+    font-weight: 400;
+    font-size: 16px;
+}
+#gform_13 .consent label a {
+    color: #00ffaf;
+    font-size: 16px;
+}
+.gform_wrapper.gravity-theme #gform_13 .gfield input, .gform_wrapper.gravity-theme #gform_13 .gfield select, .gform_wrapper.gravity-theme #gform_13 .gfield textarea {background-color:#1d2a52;border:1px solid #424d6e;border-radius: 5px;font-size: 16px;padding: 24px 20px;color: #fff;}
+div#gform_wrapper_13 .gform_footer input.gform_button.button {
+    border-radius: 0;
+    background: #00249c;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 24px 46px;
+    cursor: pointer;
+}
+#gform_wrapper_13 .gform_footer input.gform_button.button:hover {
+    background-color: #00ffaf;
+    color: #0c2696;
+}
+div#gform_13_validation_container {
+    display: none;
+}
+.gform_wrapper.gravity-theme #gform_13 .gfield_error [aria-invalid=true] {
+    border: 1px solid #FF9255;
+}
+#gform_13 .gfield--type-select .ginput_container_select {
+    position: relative;
+}
+#gform_13 .gfield--type-select .ginput_container_select:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 32px;
+    background: transparent;
+    width: 0;
+    height: 0;
+    border-right: 4px solid #ff000000;
+    border-top: 6px solid darkgrey;
+    border-left: 4px solid #00800000;
+    border-bottom: 0;
+    z-index: 0;
+}
+.gform_wrapper.gravity-theme #gform_13 .gfield select option {
+    background: #fff;
+    color: #03123e;
+}
+
+
+.quick-access-dropdown select option {
+  max-width: 100%;
+  overflow: hidden;
+  word-wrap: normal !important;
+  white-space: normal;
+}
+.quick-access-dropdown select option:before {
+  white-space: break-spaces;
+}
+/* End form 13 - Submit a Referral */
+
+/* GUIDANCE TEMPLATE START */
+.guidance-template-wrapper {
+    display: flex;
+    background: white;
+    gap: 4rem;
+    @media screen and (max-width: 1100px) {
+      gap: 3rem;
+    }
+    @media screen and (max-width: 870px) {
+      flex-direction: column-reverse;
+    }
+    .guidance-right-select {
+      max-width: 265px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 0.625rem;
+      @media screen and (max-width: 870px) {
+        max-width: 100%;
+      }
+    }
+    .guidance-content {
+      flex: 1;
+    }
+    #current-docs-title {
+      color: var(--e-global-color-text);
+    }
+    .docs-list {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      a {
+        background: #032f4c;
+        width: calc((100% / 3) - 1rem + (1rem / 3));
+        color: white;
+        font-size: 1rem;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 300ms ease-in-out;
+        &:hover {
+          opacity: 90%;
+        }
+        @media screen and (max-width: 1100px) {
+          width: calc((100% / 2) - 1rem + (1rem / 2));
+        }
+        @media screen and (max-width: 480px) {
+          width: calc((100% / 1) - 1rem + (1rem / 1));
+          font-size: 0.75rem;
+        }
+      }
+    }
+    .title {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      background-color: var(--e-global-color-text);
+    }
+    .category {
+      text-transform: capitalize;
+      cursor: pointer;
+      background: none;
+      font-size: 1rem;
+      font-family: "Gotham";
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      transition: transform 300ms ease-in-out;
+      &:hover {
+        transform: translateX(4px);
+      }
+      div {
+        background: #00ffaf;
+        width: 0.625rem;
+        height: 0.625rem;
+      }
+    }
+  }
+  
+/* GUIDANCE TEMPLATE END */
+
+/***********************************************************/
+/* TOP BANNER SECTION START */
+
+.site-header.banner-active ~ main.site-main {
+  padding-top: 44px;
+  transition: all ease 0.5s;
+  }
+  .site-header ~ main.site-main {
+  padding-top: 0;
+  transition: all ease 0.5s;
+  }
+  .top-banner {
+  height: fit-content;
+  width: 100%;
+  background: linear-gradient(90deg, #00FFAF -16.6%, #00249C 67.48%);
+  padding: 0.375rem 0;
+  }
+  .top-banner .container {
+    display: flex;
+    gap: 0.625rem;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-left: 24px;
+  }
+  .title {
+    line-height: 140%;
+    font-size: 0.875rem;
+    color: #000638;
+    font-weight: bold;
+  }
+  header.site-header .conference-btn {
+    color: #00FFAF;
+    border: 1px solid #00FFAF;
+    line-height: 100%;
+    font-size: 0.875rem;
+    padding: 0.5rem 0.875rem;
+    transition: all 300ms ease-in-out;
+    font-weight: 500; &:hover {
+    background: #00FFAF;
+    color: #000638;
+    }
+  }
+  
+  .timer-wrapper {
+    display: flex;
+    gap: 0.625rem;
+    align-items: center;
+  }
+  
+  .timer {
+    display: flex;
+    gap: 0.625rem;
+  }
+  
+  .count {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .time-label {
+    font-weight: 500;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+  
+  .time-value {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #00FFAF;
+  }
+  
+  .close-banner {
+    background: transparent;
+    border: none;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    svg {
+      transition: all 300ms ease-in-out;
+    }
+    &:hover {
+      svg {
+        rotate: 180deg;
+      }
+    }
+  }
+
+/* BOARD MEMBER SECTION END */
+
+/* HOME DARe SLIDE */
+.home-slider-rade-sale {
+  left: auto !important;
+  right: 0 !important;
+}
+/* End HOME DARe SLIDE */
+  
+  @media (max-width: 767px) {
+    .top-banner .container {
+      flex-direction: column;
+    }
+  .site-header.banner-active ~ main.site-main {padding-top: 70px;}
+  }
+  
+  @media (max-width: 767px) {
+    .title {
+      font-size: 0.75rem;
+    }
+    .time-label, .conference-btn {
+      font-size: 0.625rem;
+    }
+    .time-value {
+      font-size: 0.875rem;
+    }
+    .timer {
+      gap: 0.5rem;
+    }
+    .close-banner {
+      left: 0px;
+    }
+  }
+  
+  /* TOP BANNER SECTION END */
+  /***********************************************************/
+
+/****** DAO Association Regulation STARTS ******/
+.rulescontent > .li_marker {
+  list-style-type: none !important;
+  list-style-position: outside;
+  position: relative;
+  counter-reset: main;
+}
+.rulescontent > .li_marker > li {
+  counter-increment: main;
+  padding-left: 10px;
+}
+.rulescontent > .li_marker > li:before {
+  content: "(" counter(main, ordered-list) ") ";
+  position: absolute;
+  left: -30px;
+  display: inline-block;
+}
+
+.lower-alpha {
+  list-style-type: none !important;
+  list-style-position: outside;
+  position: relative;
+  counter-reset: l_alpha;
+}
+.lower-alpha li {
+  counter-increment: l_alpha;
+  padding-left: 20px;
+}
+.lower-alpha li:before {
+  content: "(" counter(l_alpha, lower-alpha) ") ";
+  position: absolute;
+  left: -15px;
+  display: inline-block;
+}
+
+.lower-roman {
+  list-style-type: none !important;
+  list-style-position: outside;
+  position: relative;
+  counter-reset: l_roma;
+}
+.lower-roman li {
+  counter-increment: l_roma;
+  padding-left: 20px;
+}
+.lower-roman li:before {
+  content: "(" counter(l_roma, lower-roman) ") ";
+  position: absolute;
+  left: -15px;
+  display: inline-block;
+}
+
+.upper-alpha {
+  list-style-type: none !important;
+  list-style-position: outside;
+  position: relative;
+  counter-reset: u_alpha;
+}
+.upper-alpha li {
+  counter-increment: u_alpha;
+  padding-left: 20px;
+}
+.upper-alpha li:before {
+  content: "(" counter(u_alpha, upper-alpha) ") ";
+  position: absolute;
+  left: -15px;
+  display: inline-block;
+}
+
+/****** DAO Association Regulation ENDS ******/
+
+
+@media screen and (max-width: 1367px) {
+
+    /* Begin Form 10 - Cost Calculator */
+
+    .inner-banner h1, .inner-banner h2 {font-size: 60px;}
+
+    .blogdetails_content h1, .blogdetails_content h2 {font-size: 2rem;}
+
+    .page-id-5880 .container {padding:0;}
+
+    #gform_wrapper_12 .gf_step_label {font-size: 16px;}
+
+    #gform_wrapper_12 .gf_step {margin: 20px 0px 20px 0;width: 120px;vertical-align: top;}
+
+    #gform_wrapper_12 .gf_step:nth-child(3n){margin-right:0;}
+
+    #gform_wrapper_12 .gfield_html h5 {font-size: 34px;}
+
+    #gform_wrapper_12 span#input_12_3_3_container,.gfield--type-email {text-align: left;}
+
+    #gform_wrapper_12 input[type=text] {width: 100%; margin-left: 0px;}
+
+    #gform_wrapper_12 span#input_12_3_6_container, .gfield--type-phone {text-align: left;}
+
+    #gform_wrapper_12 input[type=email], #gform_wrapper_12 input[type=tel] {width:100%}
+
+    #gform_wrapper_12 .smart_phone_field .ginput_container_phone .spf-phone {right: 24px;}
+
+    #gform_wrapper_12 input#input_12_3_6 {margin-left: 0 !important;}
+
+    div#validation_message_12_3 {padding: 0 8px;}
+
+    div#validation_message_12_4 {padding: 5px 0 0 8px;}
+
+    div#validation_message_12_5 {padding: 5px 0 0 8px;}
+
+    #gform_wrapper_12 .gfield_html h5 {font-size: 34px;}
+
+    #gform_wrapper_12 .gfield select.large {width: 100%;}
+
+    #gform_wrapper_12 input.gform_previous_button {padding: 20px 40px 20px 40px;display: inline-block; min-width: 230px;}
+
+    #gform_wrapper_12 input.gform_next_button {padding: 20px 40px 20px 40px;display: inline-block; min-width: 230px;}
+
+    #gform_wrapper_12 .gfield select option {padding: 5px 5px;text-align: center;font-size:14px;}
+
+    #gform_wrapper_12 input#gform_submit_button_12 {padding: 20px 40px 20px 40px;display: inline-block; min-width: 230px;}
+
+    /* End Form 10 - Cost Calculator */
+
+}
+
+
+
+@media screen and (max-width: 1201px) {
+
+    /* Begin Form 10 - Cost Calculator */
+
+    .page-id-5880 .inner-banner h1 {font-size: 50px;}
+
+    .blogdetails_content h1, .blogdetails_content h2 {font-size: 2rem;}
+
+    .page-id-5880 .container {padding:0;}
+
+    #gform_wrapper_12 .gf_step_label {font-size: 16px;}
+
+    #gform_wrapper_12 .gf_step {margin: 20px 0px 20px 0;width: 120px;vertical-align: top;}
+
+    #gform_wrapper_12 .gf_step:nth-child(3n){margin-right:0;}
+
+    #gform_wrapper_12 .gfield_html h5 {font-size: 34px;}
+
+    #gform_wrapper_12 span#input_12_3_3_container,.gfield--type-email {text-align: left;}
+
+    #gform_wrapper_12 input[type=text] {width: 100%; margin-left: 0px;}
+
+    #gform_wrapper_12 span#input_12_3_6_container, .gfield--type-phone {text-align: left;}
+
+    #gform_wrapper_12 input[type=email], #gform_wrapper_12 input[type=tel] {width:100%}
+
+    #gform_wrapper_12 .smart_phone_field .ginput_container_phone .spf-phone {right: 24px;}
+
+    #gform_wrapper_12 input#input_12_3_6 {margin-left: 0 !important;}
+
+    div#validation_message_12_3 {padding: 0 8px;}
+
+    div#validation_message_12_4 {padding: 5px 0 0 8px;}
+
+    div#validation_message_12_5 {padding: 5px 0 0 8px;}
+
+    #gform_wrapper_12 .gfield_html h5 {font-size: 34px;}
+
+    #gform_wrapper_12 .gfield select.large {width: 100%;}
+
+    #gform_wrapper_12 input.gform_previous_button {padding: 20px 40px 20px 40px;display: inline-block; min-width: 230px;}
+
+    #gform_wrapper_12 input.gform_next_button {padding: 20px 40px 20px 40px;display: inline-block;width: 230px;min-width: 230px;}
+
+    #gform_wrapper_12 .gfield select option {padding: 5px 5px;text-align: center;font-size:14px;}
+
+    #gform_wrapper_12 input#gform_submit_button_12 {padding: 20px 40px 20px 40px;display: inline-block;width: 230px;min-width: 230px;}
+
+    /* End Form 10 - Cost Calculator */
+
+}
+
+    
+
+@media screen and (max-width: 1025px) {
+
+    /* Begin Form 10 - Cost Calculator */
+
+    .page-id-5880 .inner-banner h1 {font-size: 48px;}
+
+    .blogdetails_content h1, .blogdetails_content h2 {font-size: 2rem;}
+
+    .page-id-5880 .container {padding:0;}
+
+    #gform_wrapper_12 .gf_step_label {font-size: 16px;}
+
+    #gform_wrapper_12 .gf_step {margin: 20px 0px 20px 0;width: 120px;vertical-align: top;}
+
+    #gform_wrapper_12 .gf_step:nth-child(3n){margin-right:0;}
+
+    #gform_wrapper_12 .gfield_html h5 {font-size: 34px;}
+
+    #gform_wrapper_12 span#input_12_3_3_container,.gfield--type-email {text-align: left;}
+
+    #gform_wrapper_12 input[type=text] {width: 100%; margin-left: 0px;}
+
+    #gform_wrapper_12 span#input_12_3_6_container, .gfield--type-phone {text-align: left;}
+
+    #gform_wrapper_12 input[type=email], #gform_wrapper_12 input[type=tel] {width:100%}
+
+    #gform_wrapper_12 .smart_phone_field .ginput_container_phone .spf-phone {right: 24px;}
+
+    #gform_wrapper_12 input#input_12_3_6 {margin-left: 0 !important;}
+
+    div#validation_message_12_3 {padding: 0 8px;}
+
+    div#validation_message_12_4 {padding: 5px 0 0 8px;}
+
+    div#validation_message_12_5 {padding: 5px 0 0 8px;}
+
+    #gform_wrapper_12 .gfield_html h5 {font-size: 34px;}
+
+    #gform_wrapper_12 .gfield select.large {width: 100%;}
+
+    #gform_wrapper_12 input.gform_previous_button {padding: 20px 40px 20px 40px;display: inline-block; min-width: 230px;}
+
+    #gform_wrapper_12 input.gform_next_button {padding: 20px 40px 20px 40px;display: inline-block; min-width: 230px;}
+
+    #gform_wrapper_12 .gfield select option {padding: 5px 5px;text-align: center;font-size:14px;}
+
+    #gform_wrapper_12 input#gform_submit_button_12 {padding: 20px 40px 20px 40px;display: inline-block; min-width: 230px;}
+
+    /* End Form 10 - Cost Calculator */
+
+}
+
+@media screen and (max-width: 768px) {
+
+    /* Begin Form 10 - Cost Calculator */
+
+    .page-id-5880 .inner-banner h1 {font-size: 40px;}
+
+    .blogdetails_content h1, .blogdetails_content h2 {font-size: 2rem;}
+
+    #gform_wrapper_12 .gf_page_steps {display: flex; flex-wrap: wrap; justify-content: center;}
+
+    #gform_wrapper_12 .gf_page_steps:before {display: none;}
+
+    .page-id-5880 .container {padding:0;}
+
+    #gform_wrapper_12 .gf_step_label {font-size: 16px;}
+
+    #gform_wrapper_12 .gf_step {margin: 20px 0px 20px 0; width: 120px; vertical-align: top;}
+
+    #gform_wrapper_12 .gf_step:nth-child(3n){margin-right:0;}
+
+    #gform_wrapper_12 .gfield_html h5 {font-size: 34px;}
+
+    #gform_wrapper_12 span#input_12_3_3_container,.gfield--type-email {text-align: left;}
+
+    #gform_wrapper_12 input[type=text] {width: 100%; margin-left: 0px;}
+
+    #gform_wrapper_12 span#input_12_3_6_container, .gfield--type-phone {text-align: left;}
+
+    #gform_wrapper_12 input[type=email], #gform_wrapper_12 input[type=tel] {width:100%}
+
+    #gform_wrapper_12 .smart_phone_field .ginput_container_phone .spf-phone {right: 24px;}
+
+    #gform_wrapper_12 input#input_12_3_6 {margin-left: 0 !important;}
+
+    div#validation_message_12_3 {padding: 0 8px;}
+
+    div#validation_message_12_4 {padding: 5px 0 0 8px;}
+
+    div#validation_message_12_5 {padding: 5px 0 0 8px;}
+
+    #gform_wrapper_12 .gfield_html h5 {font-size: 34px;}
+
+    #gform_wrapper_12 .gfield select.large {width: 100%;}
+
+    #gform_wrapper_12 .cost-calculator-input input {line-height: normal;}
+
+    #gform_wrapper_12 input.gform_previous_button {padding: 20px 40px 20px 40px;display: inline-block; min-width: 150px;}
+
+    #gform_wrapper_12 input.gform_next_button {padding: 20px 40px 20px 40px;display: inline-block; min-width: 150px;}
+
+    #gform_wrapper_12 .gfield select option {padding: 5px 5px;text-align: center;font-size:14px;}
+
+    #gform_wrapper_12 input#gform_submit_button_12 {padding: 20px 40px 20px 40px;display: inline-block; min-width: 150px;}
+
+    div#field_11_3 .iti__country {font-size: 16px;}
+
+    div#field_11_21 .iti__country {font-size: 16px;}
+
+    /* End Form 10 - Cost Calculator */
+    /* DAO Association Regulations start */
+    .page-template-template-dao-association-regulations .inner-banner h1 {font-size: 3rem;}
+    .page-template-template-rules-and-regulations .inner-banner h1 {font-size: 3rem;}
+    /*.quick-access-dropdown select option {
+      max-width: 100%;
+      overflow: hidden;
+      word-wrap: normal !important;
+      white-space: normal;
+    }
+    .quick-access-dropdown select option:before {
+      white-space: break-spaces;
+    }
+    .quick-access-dropdown select {
+      width: !00%;
+      white-space:pre-wrap;
+      }
+      .quick-access-dropdown select {
+        max-width: 100%;
+        white-space: normal;
+        text-overflow: ellipsis;
+    }*/
+    .quick-access-dropdown .select2-container {
+      background-color: #03123e;
+      border: none;
+      margin: 0;
+      width: 100%;
+      font-family: inherit;
+      font-size: 18px;
+      cursor: pointer;
+      color: #fff;
+      line-height: 32px;
+      padding: 15px 25px;
+  }
+  .quick-access-dropdown:before, .quick-access-dropdown:after {
+    display: none;
+  }
+  .quick-access-dropdown .select2-container--default .select2-selection--single {
+  background: #03123e;
+  border: none;
+  border-radius: 0;
+  }
+  .quick-access-dropdown .select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #fff;
+  font-size: 1rem;
+  }
+  .quick-access-dropdown .select2-container--default .select2-selection--single .select2-selection__arrow b {
+  top: 30px;
+  }
+  .quick-access-dropdown .select2-container .select2-selection {
+  margin-bottom: 0px;
+  }
+  .quick-access-dropdown .select2-dropdown {
+  margin-top: 50px;
+  border: 0 !important;
+  }
+  .select2-results__option--selectable {
+  font-size: 1rem;
+  line-height: 1.2rem;
+  }
+  span.select2-dropdown.select2-dropdown--below {
+  margin-top: 50px;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 30px;
+  }
+  /* DAO Association Regulations end */
+    .grid.fullholder {
+      margin: 0;
+  }
+    .faqshold .faqholder {
+      margin-top: 0;
+      overflow-x: hidden;
+  }
+  .ruleswrap .rulescontent {
+    padding: 0px 10px;
+}
+
+}
+
+@media screen and (max-width: 481px) {
+
+    /* Begin Form 10 - Cost Calculator */
+
+    .page-id-5880 .inner-banner h1 {font-size: 36px;}
+
+    .blogdetails_content h1, .blogdetails_content h2 {font-size: 2rem;}
+
+    #gform_wrapper_12 .gf_page_steps:before {display: none;}
+
+    .page-id-5880 .container {padding:0;}
+
+    #gform_wrapper_12 .gf_page_steps { display: none;}
+
+    #gform_wrapper_12 .gfield_html h5 {font-size: 34px;}
+
+    #gform_wrapper_12 span#input_12_3_3_container,.gfield--type-email {text-align: center;}
+
+    #gform_wrapper_12 input[type=text] {width: 100%;margin-left: 0; line-height: normal;}
+
+    #gform_wrapper_12 span#input_12_3_6_container, .gfield--type-phone {text-align: center;}
+
+    #gform_wrapper_12 input[type=email], #gform_wrapper_12 input[type=tel] {width:100%; line-height: normal;}
+
+    .gform_wrapper.gravity-theme .ginput_complex span {margin-bottom: 16px;}
+
+    #gform_wrapper_12 .smart_phone_field .ginput_container_phone .spf-phone {right: 24px;}
+
+    div#validation_message_12_3 {padding: 0 8px;}
+
+    div#validation_message_12_4 {padding: 5px 0 0 8px;}
+
+    div#validation_message_12_5 {padding: 5px 0 0 8px;}
+
+    #gform_wrapper_12 .gfield_html h5 {font-size: 34px;}
+
+    #gform_wrapper_12 .gfield select.large {width: 100%; margin-top: 20px;}
+
+    #gform_wrapper_12 .cost-calculator-input input {margin-top: 20px; line-height: normal;}
+
+    #gform_wrapper_12 input.gform_previous_button {padding: 20px 40px 20px 40px;display: inline-block;width: 100%;margin: 0 0 20px;}
+
+    #gform_wrapper_12 input.gform_next_button {padding: 20px 40px 20px 40px;display: inline-block;width: 100%;margin: 0;}
+
+    #gform_wrapper_12 .gfield select option {padding: 5px 5px;text-align: left;font-size:14px;}
+
+    #gform_wrapper_12 input#gform_submit_button_12 {display: inline-block;width: 270px;margin: 0;}
+
+    .iti--allow-dropdown .iti__flag-container {left: 16px;}
+
+    #gform_wrapper_11 .iti--allow-dropdown .iti__flag-container { left: 0;}
+
+    /* End Form 10 - Cost Calculator */
+
+}
+
+@media screen and (max-width: 320px) {
+
+    /* Begin Form 10 - Cost Calculator */
+
+    form#gform_12 {position: relative;text-align: left;}
+
+    .page-id-5880 .inner-banner h1 {font-size: 32px;}
+
+    .blogdetails_content h1, .blogdetails_content h2 {font-size: 2rem;}
+
+    #gform_wrapper_12 .gf_page_steps:before {display: none;}
+
+    .page-id-5880 .container {padding:0;}
+
+    #gform_wrapper_12 .gf_step_label {font-size: 12px;}
+
+    #gform_wrapper_12 .gf_step {margin: 20px 0px 20px 0;width: 120px;}
+
+    #gform_wrapper_12 .gf_step:nth-child(3n){margin-right:0px;}
+
+    #gform_wrapper_12 .gf_step:nth-child(2n){margin-right:0;}
+
+    #gform_wrapper_12 .gfield_html h5 {font-size: 34px;}
+
+    #gform_wrapper_12 span#input_12_3_3_container,.gfield--type-email {text-align: center;}
+
+    #gform_wrapper_12 .gfield--type-select .ginput_container_select:after {bottom: 30px;}
+
+    #gform_wrapper_12 input[type=text] {width: 100%; font-size: 1rem;}
+
+    #gform_wrapper_12 span#input_12_3_6_container, .gfield--type-phone {text-align: center;}
+
+    #gform_wrapper_12 input[type=email], #gform_wrapper_12 input[type=tel] {width:100%; font-size: 1rem;}
+
+    #gform_wrapper_12 .smart_phone_field .ginput_container_phone .spf-phone {right: 24px;}
+
+    div#validation_message_12_3 {padding: 0 8px;}
+
+    div#validation_message_12_4 {padding: 5px 0 0 8px;}
+
+    div#validation_message_12_5 {padding: 5px 0 0 8px;}
+
+    #gform_wrapper_12 .gfield_html h5 {font-size: 34px;}
+
+    #gform_wrapper_12 .gfield select.large {width: 100%; font-size: 1rem;}
+
+    #gform_wrapper_12 .cost-calculator-input input {font-size: 1rem; min-height: auto;}
+
+    #gform_wrapper_12 input.gform_previous_button {display:inline-block;width: 100%; margin: 0 auto 20px auto; min-width: 100%; padding: 15px;}
+
+    #gform_wrapper_12 input.gform_next_button {display: inline-block; width: 100%; margin: 0; min-width: 100%; padding: 15px;}
+
+    #gform_wrapper_12 .gfield select option {padding: 5px 5px;text-align: left;font-size:14px;}
+
+    #gform_wrapper_12 input#gform_submit_button_12 {display: inline-block;width: 100%; margin: 0 auto; min-width: 100%; padding: 15px;}
+
+    /* End Form 10 - Cost Calculator */
+
+}
+/*GUIDANCE PAGE SIDEBAR*/
+.guidance-right-select .title {
+  color: #fff;
+}
+a.category-addendum:before {
+  content: '';
+  display: block;
+  background: #00ffaf;
+  width: 0.625rem;
+  height: 0.625rem;
+}
+a.category-addendum {
+  text-transform: capitalize;
+  cursor: pointer;
+  background: none;
+  font-size: 1rem;
+  font-family: "Gotham";
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  transition: transform 300ms ease-in-out;
+  margin-top: -2px;
+  color: #000;
+}
+a.category-addendum:hover {
+  transform: translateX(4px);
+}
+
+/****** PACKAGES START ******/
+.package-wrapper {
+  --feature-space: 3rem;
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  background:#03123E;
+  display: flex;
+  justify-content: center;
+  padding: 4.375rem 0;
+}
+
+.package-wrapper .container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1360px;
+  color: var(--e-global-color-primary);
+}
+
+@media screen and (max-width: 1000px) {
+  .package-wrapper .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .package-wrapper .container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.package-wrapper .package {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.package-wrapper .package.featured .package-title {
+  background: linear-gradient(
+    252deg,
+    rgba(0, 36, 156, 0.45) 14%,
+    rgba(0, 255, 175, 0.22) 95.56%
+  );
+}
+
+@media screen and (max-width: 1000px) {
+  .package-wrapper .package.featured {
+    --feature-space: 0px;
+  }
+}
+
+.package-wrapper .package-content {
+  border: 1px solid rgba(0, 255, 175, 0.02);
+  background: rgba(3, 18, 62, 0.6);
+  > div {
+    display: flex;
+  }
+}
+
+.package-wrapper .package-trigger {
+  display: flex;
+  background: hsla(161, 100%, 50%, 0.06);
+  text-align: start;
+  cursor: pointer;
+  position: relative;
+}
+
+.package-wrapper .package-title {
+  padding: 2rem 3rem;
+  color: var(--e-global-color-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  max-width: 526px;
+  width: 100%;
+  gap: 1rem;
+}
+
+.package-wrapper .package-title h3 {
+  line-height: 125%;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.package-wrapper .package-title h3 span {
+  font-size: 2rem;
+  color: var(--e-global-color-accent);
+}
+
+.package-wrapper .package-title .package-price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.package-wrapper .package-title .package-price div {
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 100%;
+}
+
+.package-wrapper .package-title .package-price h4 {
+  font-size: 1.875rem;
+  font-weight: 500;
+  margin: 0;
+  line-height: 100%;
+}
+
+.package-wrapper .package-description {
+  border-left: 1px solid rgba(0, 255, 175, 0.06);
+  padding: 2rem 3rem;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.package-wrapper .package-description p {
+  line-height: 150%;
+  font-size: 1.125rem;
+}
+
+.package-wrapper .package-description-b {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.package-wrapper .package-description-b i {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.package-wrapper .business-setup-btn {
+  background: var(--e-global-color-secondary);
+  padding: 1.25rem 1.875rem;
+  font-weight: 500;
+  font-size: 1.125rem;
+  color: var(--e-global-color-primary);
+  width: fit-content;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.package-wrapper .business-setup-btn:hover {
+  background-color: #243ba0;
+}
+
+.package-wrapper .package-details {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.875rem;
+  padding: 2rem 3rem;
+  gap: 0.75rem;
+  flex: 1;
+  align-items: start;
+  text-align: start;
+}
+
+.package-wrapper .package-details-l-space {
+  width: 526px;
+}
+
+.package-wrapper .details-points {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  gap: 0.25rem;
+}
+
+.package-wrapper .details-points.list-style-check {
+  list-style-image: url("../images/check-mark.svg");
+}
+
+.package-wrapper .detail-title {
+  color: var(--e-global-color-accent);
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 150%;
+}
+@media screen and (max-width: 950px) {
+  .package-wrapper .package-description {
+    border-left: none;
+    border-bottom: 1px solid rgba(0, 255, 175, 0.06);
+  }
+  .package-wrapper .package-trigger {
+    flex-direction: column;
+  }
+  .package-wrapper .package-details-l-space {
+    display: none;
+  }
+}
+@media screen and (max-width: 769px) {
+  .package-wrapper .package-details,
+  .package-wrapper .package-description,
+  .package-wrapper .package-title {
+    padding: 2rem 1.5rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .package-wrapper .business-setup-btn {
+    font-size: 0.875rem;
+  }
+}
+/****** PACKAGES END ******/
