@@ -1,19 +1,33 @@
 "use server";
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import { checkRateLimit } from "@/lib/rateLimit";
+import { normalizeAndValidateEmail } from "@/lib/validators/email";
+import { headers } from "next/headers";
 
 export async function subscribe(email: string) {
   try {
-    // Validate email parameter directly
-    const normalizedEmail = email?.toLowerCase();
+    const headersList = await headers();
+    const ip = headersList.get("x-forwarded-for")?.split(",")[0] ??
+      headersList.get("x-real-ip") ?? "unknown";
 
-    if (!normalizedEmail || !EMAIL_REGEX.test(normalizedEmail)) {
-      return { success: false, error: "Please provide a valid email address" };
+    // Rate limit
+    if (!checkRateLimit(ip)) {
+      return {
+        success: false,
+        error: "Too many requests. Please try again later.",
+      };
+    }
+
+    // Email validation (moved out)
+    const emailCheck = normalizeAndValidateEmail(email);
+
+    if (!emailCheck.valid) {
+      return { success: false, error: emailCheck.error };
     }
 
     // Mailchimp payload
     const data = {
-      email_address: normalizedEmail,
+      email_address: emailCheck.email,
       status: "subscribed",
       status_if_new: "subscribed",
     };

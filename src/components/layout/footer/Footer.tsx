@@ -4,14 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 
-interface HeaderProps {
+interface FooterProps {
   settings : PageSettingsType 
 }
 
-export default function Footer({ settings }: HeaderProps) {
+export default function Footer({ settings }: FooterProps) {
 
     const socials = settings?.socialLinks || [];
-    const footerMenu = settings?.footerMenu || [];    
+    const footerMenu = settings?.footerMenu || [];
 
     return(
         <footer
@@ -32,13 +32,15 @@ export default function Footer({ settings }: HeaderProps) {
                                         target="_blank" 
                                         className="flex mr-0"
                                     >
-                                        <div className="w-4 h-4 hover:opacity-50 cursor-pointer relative">
-                                            <Image 
-                                                src={urlFor(s?.icon) || ""}
-                                                fill
-                                                alt={s?.platform || ""}
-                                                className="object-contain"
-                                            />
+                                        <div className="w-4 h-4 cursor-pointer relative group">
+                                            <div className="w-full h-full relative group-hover:scale-125 transition-all duration-300">
+                                                <Image
+                                                    src={urlFor(s?.icon) || ""}
+                                                    alt={s?.platform || ""}
+                                                    className="object-contain"
+                                                    fill
+                                                />
+                                            </div>
                                         </div>
                                     </Link>
                                 )
@@ -56,7 +58,9 @@ export default function Footer({ settings }: HeaderProps) {
                                 <Fragment key={f?.label || i}>
                                     <Link 
                                         href={f?.url || "#"}
-                                        className="hover:opacity-50 cursor-pointer no-underline text-[rgba(255,255,255,0.53)] font-sans text-[14px] font-normal leading-normal hover:text-[rgba(255,255,255,0.8)]"
+                                        className="cursor-pointer no-underline text-white/50 font-sans text-sm! font-normal leading-normal! hover:text-white/70"
+                                        target={f.target}
+                                        rel={f.target === "_blank" ? "noopener noreferrer" : undefined}
                                     >
                                         {f?.label}
                                     </Link>

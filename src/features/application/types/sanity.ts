@@ -372,6 +372,7 @@ export interface HeaderMenuChild {
 export interface FooterMenuItem {
     label?: string;
     url?: string;
+    target?: string;
 }
 
 export interface SocialLink {

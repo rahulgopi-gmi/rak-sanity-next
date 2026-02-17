@@ -116,8 +116,9 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                     setSubmitting(false);
                     resetForm();
                 } 
-                else {
-                    toast.error("Error sending message");
+                else {                    
+                    const errorCheck = await res.json();                        
+                    toast.error(errorCheck.error);
                     setSubmitting(false);                
                 }
             } 
@@ -163,7 +164,7 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                                 enableSearch={true}
                                 value={countryCode.replace("+", "")}
                                 disableCountryCode={false}
-                                disableDropdown={false}                    
+                                disableDropdown={false}                                
                                 onChange={(_, countryData:CountryData) => {                            
                                     setCountry(countryData?.countryCode);
                                     setCountryCode(countryData?.dialCode);
@@ -188,7 +189,7 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                                     background: "transparent",
                                     border: "0",
                                     borderRadius: "14px 0 0 14px",
-                                    width: "60px"
+                                    width: "100px"
                                 }}
                                 dropdownStyle={{
                                     background: "#111",
@@ -260,7 +261,7 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                 <div className="mb-8 w-full bottom-text">
                     <p className="font-sans text-[12px]! font-normal leading-[22.4px]! mb-6">
                         By submitting the form, you agree to the&nbsp;
-                        <Link href="https://freezone.innovationcity.com/rules-and-regulations/" target="_blank" className={`${mode === "dark" ? "hover:text-primary/80" : "hover:text-[#32a0b9]"} text-primary  inline-block font-montserrat text-[12px] font-normal leading-[22.4px] underline`}>
+                        <Link href="https://innovationcity.com/policy/terms-conditions.html" target="_blank" className={`${mode === "dark" ? "hover:text-primary/80" : "hover:text-[#32a0b9]"} text-primary  inline-block font-montserrat text-[12px] font-normal leading-[22.4px] underline`}>
                             Terms and Conditions
                         </Link>&nbsp;
                         and&nbsp;

@@ -8,6 +8,7 @@ import { getSeoData } from "@/sanity/lib/seo";
 import { getPageWithPackages } from "@/lib/data";
 import PackagesDetails from "@/components/PackagesDetails";
 import ContactForm from "@/components/ContactForm";
+import NotFound from "@/app/not-found";
 
 /**
  * Generate metadata for the page.
@@ -81,7 +82,10 @@ export default async function Page() {
 
                         {
                             data?.header && (
-                                <div className="xl:px-44" dangerouslySetInnerHTML={{ __html: getBodyText(data?.header) }}></div>
+                                <div 
+                                    className="xl:px-44 [&_h2]:text-white [&_h2]:font-extrabold [&_h2]:font-mono [&_h2]:text-center [&_h2]:uppercase [&_h2]:mb-8 max-md:[&_h2]:text-35! max-md:[&_h2]:leading-8.75! max-md:[&_br]:hidden"
+                                    dangerouslySetInnerHTML={{ __html: getBodyText(data?.header) }}
+                                />
                             )
                         }
                     </div>
@@ -114,8 +118,6 @@ export default async function Page() {
     }
     catch (error) {
         console.error("Page render failed:", error);
-        return <div className="w-full h-screen flex items-center justify-center">
-            <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
-        </div>;
+        return <NotFound />;
     }
 }

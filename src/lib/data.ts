@@ -1,21 +1,23 @@
 import { cache } from "react";
-import { 
-    getPageBySlug, 
-    getPackages, 
-    getActivitiesItems,
-    getAllPostsQuery,
-    getCategories,
-    getAllPostsBySlideQuery,
-    getPostBySlug,
-    getRelatedPosts
+import {
+  getPageBySlug,
+  getPackages,
+  getActivitiesItems,
+  getAllPostsQuery,
+  getCategories,
+  getAllPostsBySlideQuery,
+  getPostBySlug,
+  getRelatedPosts,
+  globalSettingsQuery
 } from "@/sanity/queries/pages";
-import type { 
-  PageDataType, 
-  PackageType, 
-  ActivitiesType, 
-  PostType, 
-  CategoryType, 
-  ActivitiesMainType
+import type {
+  PageDataType,
+  PackageType,
+  ActivitiesType,
+  PostType,
+  CategoryType,
+  ActivitiesMainType,
+  PageSettingsType
 } from "@/features/application/types/sanity";
 import { sanityServerClient } from "@/sanity/lib/client.server";
 
@@ -23,16 +25,16 @@ import { sanityServerClient } from "@/sanity/lib/client.server";
  *  Define the return type for getPageWithBlog
 */
 interface GetDataResult {
-    page: PageDataType | null;
-    posts: PostType[];
-    categories: CategoryType[];
-    slidePosts: PostType[];
+  page: PageDataType | null;
+  posts: PostType[];
+  categories: CategoryType[];
+  slidePosts: PostType[];
 }
 
 interface BlogDetailsType {
-    page: PostType | null;
-    categories: CategoryType[];
-    related: PostType [];
+  page: PostType | null;
+  categories: CategoryType[];
+  related: PostType[];
 }
 
 /**
@@ -74,11 +76,7 @@ export const getPageDataOnly = cache(async (
   template: string
 ): Promise<PageDataType | null> => {
   try {
-    const page: PageDataType | null = await sanityServerClient.fetch(getPageBySlug, {
-      slug,
-      template,
-    });
-
+    const page = await fetchWithRevalidate<PageDataType | null>(getPageBySlug, { slug, template });
     return page ?? null;
   } catch (error) {
     console.error(`Sanity Fetch Error ${slug}: `, error);
@@ -118,10 +116,10 @@ export const getPageWithActivities = cache(async (
 export const getPageWithBlog = cache(async (slug: string, template: string): Promise<GetDataResult> => {
   try {
     const [page, posts, categories, slidePosts] = await Promise.all([
-      sanityServerClient.fetch(getPageBySlug, { slug, template }),
-      sanityServerClient.fetch(getAllPostsQuery),
-      sanityServerClient.fetch(getCategories),
-      sanityServerClient.fetch(getAllPostsBySlideQuery)
+      fetchWithRevalidate<PageDataType | null>(getPageBySlug, { slug, template }),
+      fetchWithRevalidate<PostType[]>(getAllPostsQuery),
+      fetchWithRevalidate<CategoryType[]>(getCategories),
+      fetchWithRevalidate<PostType[]>(getAllPostsBySlideQuery)
     ]);
 
     return {
@@ -147,15 +145,15 @@ export const getPageWithBlog = cache(async (slug: string, template: string): Pro
 export const getPageWithBlogDetails = cache(async (slug: string): Promise<BlogDetailsType> => {
   try {
     const [page, categories] = await Promise.all([
-      sanityServerClient.fetch(getPostBySlug, { slug }),
-      sanityServerClient.fetch(getCategories)
+      fetchWithRevalidate<PostType | null>(getPostBySlug, { slug }),
+      fetchWithRevalidate<CategoryType[]>(getCategories)
     ]);
 
     let related: PostType[] = [];
 
     if (page?.categories?.[0]?._id) {
       const categoryId = page.categories[0]._id;
-      related = await sanityServerClient.fetch(getRelatedPosts, { categoryId, slug }) ?? [];
+      related = await fetchWithRevalidate<PostType[]>(getRelatedPosts, { categoryId, slug }) ?? [];
     }
 
     return {
@@ -172,3 +170,20 @@ export const getPageWithBlogDetails = cache(async (slug: string): Promise<BlogDe
     };
   }
 });
+
+/** 
+ *  Fetch settings
+*/
+
+export const getSettings = cache(async (): Promise<PageSettingsType | null> => {
+  try {
+    const settings = await fetchWithRevalidate<PageSettingsType | null>(
+      globalSettingsQuery
+    );
+
+    return settings ?? null;
+  } catch (error) {
+    console.error(`Sanity Fetch Error (Settings): `, error);
+    return null;
+  }
+})

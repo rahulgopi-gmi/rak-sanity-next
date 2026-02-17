@@ -1,29 +1,17 @@
 "use client";
-import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { CategoryType, PostType } from '@/features/application/types/sanity';
 import { urlFor } from '@/sanity/lib/image';
 import { getBodyText } from '@/sanity/lib/utils';
-import { Button } from '@/components/ui/button';
 import { formatDate } from '@/lib/date';
 import Link from 'next/link';
+import { Button } from './ui/button';
 
 export default function BlogSwiper({ post }: { post: PostType[] }) {
-    const prevRef = useRef<HTMLButtonElement>(null);
-    const nextRef = useRef<HTMLButtonElement>(null);
-    const [swiperInstance, setSwiperInstance] = useState<SwiperClass | null>(null);
-
-    useEffect(() => {
-        if (!swiperInstance) return;
-
-        swiperInstance.navigation.destroy();
-        swiperInstance.navigation.init();
-        swiperInstance.navigation.update();
-    }, [swiperInstance]);
 
     return(
         <div className="w-full">
@@ -41,30 +29,23 @@ export default function BlogSwiper({ post }: { post: PostType[] }) {
                     el: ".custom-pagination",
                     clickable: false,
                 }}
-                // navigation={{
-                //     prevEl: prevRef.current,
-                //     nextEl: nextRef.current,
-                // }}
-                onBeforeInit={(swiper: SwiperClass) => {
-                    if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
-                        swiper.params.navigation.prevEl = prevRef.current;
-                        swiper.params.navigation.nextEl = nextRef.current;
-                    }
-                }}                
+                navigation={{
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                }}                                      
                 breakpoints={{
                     768: { slidesPerView: 1 },
                     1024: { slidesPerView: 1 },
                     1200: { slidesPerView: 1 },
-                }}
-                onSwiper={setSwiperInstance}
-                className="mySwiper max-w-full mx-auto"
+                }}                
+                className="blog-swiper max-w-full mx-auto"
             >
                 {
                     post.map((posts: PostType)=> (
                         <SwiperSlide key={posts?._id} className="slide-custom cursor-pointer">
                             <Link  href={`blog/${posts?.slug}`}>
                                 <div className="grid grid-cols-1 lg:grid-cols-5 items-center">
-                                    <div className="w-full col-span-3 md:h-full h-125! relative overflow-hidden group rounded-2xl">                                       
+                                    <div className="w-full col-span-3 max-md:h-87.5! h-125 relative overflow-hidden group rounded-2xl">                                       
                                         {
                                             posts?.mainImage && (
                                                 <Image
@@ -102,12 +83,12 @@ export default function BlogSwiper({ post }: { post: PostType[] }) {
                                         </h2>
                                                                             
                                         <div
-                                            className="blog-content-view line-clamp-3"
+                                            className="blog-content-view line-clamp-3 mt-5"
                                             dangerouslySetInnerHTML={{ __html: getBodyText(posts?.body) }}
                                         >
                                         </div>
 
-                                        <h4 className="text-xs! leading-[100%]! font-normal font-sans text-white capitalize mb-0">
+                                        <h4 className="text-xs! mt-5 leading-[100%]! font-normal font-sans text-white capitalize mb-0">
                                             {posts?.author?.name || 'Unknown Author'}
                                         </h4>
                                     </div>
@@ -116,19 +97,19 @@ export default function BlogSwiper({ post }: { post: PostType[] }) {
                         </SwiperSlide>
                     ))
                 }
-            </Swiper>
+            </Swiper>            
 
             {
                 post.length > 1 && (
                     <div className="w-full flex items-center gap-4 mt-6 justify-center">
-                        <Button type="button" ref={prevRef} className="swiper-button-prev swiper-btn-blog">
+                        <Button type="button" className="swiper-button-prev swiper-btn-blog swiper-button-prev">
                             <svg width="19" height="13" viewBox="0 0 19 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M17.6426 6.5L0.499721 6.5" stroke="#5FC2D5" strokeLinecap="round" strokeLinejoin="round"/>
                                 <path d="M6.5 0.5L0.5 6.5L6.5 12.5" stroke="#5FC2D5" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                         </Button>
 
-                        <Button type="button" ref={nextRef} className="swiper-button-next swiper-btn-blog">                   
+                        <Button type="button" className="swiper-button-next swiper-btn-blog swiper-button-next">                   
                             <svg width="19" height="13" viewBox="0 0 19 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M0.5 6.5L17.6429 6.5" stroke="#5FC2D5" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M11.6426 0.5L17.6426 6.5L11.6426 12.5" stroke="#5FC2D5" strokeLinecap="round" stroke-linejoin="round" />
@@ -136,7 +117,7 @@ export default function BlogSwiper({ post }: { post: PostType[] }) {
                         </Button>
                     </div>
                 )
-            }            
+            }
         </div>
     )
 }

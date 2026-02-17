@@ -9,7 +9,7 @@ import { getBodyText } from "@/sanity/lib/utils";
 import { urlFor } from "@/sanity/lib/image";
 import { Button } from "@/components/ui/button";
 import PillTag from "@/components/ui/pill-tag";
-import { ArrowRight } from "lucide-react";
+
 
 export default function Hero({ data }: { data: SectionHeroType }) {
     const text = getBodyText(data?.itemHeader)
@@ -97,7 +97,7 @@ export default function Hero({ data }: { data: SectionHeroType }) {
     return (
         <div className="w-full">
             <section className="second-fold-wrapper-outer">
-                <div id="about" className="section-space-top section-space-sub-bottom m-0 bg-[linear-gradient(180deg,#1F1F1F_0%,#030303_50%,#000_100%)] relative max-lg:text-center">
+                <div id="about" className="section-space-top second-fold-wrapper section-space-sub-bottom m-0 bg-[#1c1c1c] lg:bg-transparent relative max-lg:text-center">
                     <div className="container mx-auto relative z-10">
                         {
                             aboutItems.map((a: HomeAboutType, index: number) => (
@@ -116,7 +116,7 @@ export default function Hero({ data }: { data: SectionHeroType }) {
 
                                     <div className="lg:w-1/2 px-2">
                                         <PillTag className="mb-7! max-lg:mx-auto px-4">{a?.title || ""}</PillTag>
-                                        <div dangerouslySetInnerHTML={{ __html: getBodyText(a?.header) || "" }}></div>
+                                        <div className="home-hdr max-md:[&_h2]:text-35! max-md:[&_h2]:leading-8.75!" dangerouslySetInnerHTML={{ __html: getBodyText(a?.header) || "" }}></div>
                                         <div className="about-section" dangerouslySetInnerHTML={{ __html: getBodyText(a?.content) || "" }}></div>
                                         <Link href={`#${a.ctaLink}`}>
                                             <Button type="button" className="text-base!">{a.ctaName || ""}</Button>
@@ -164,7 +164,7 @@ export default function Hero({ data }: { data: SectionHeroType }) {
             <section id="sectors" className="who-this-for-wrapper section-space-top section-space-bottom text-center bg-white relative">
                 <div className="container mx-auto relative z-10">
                     <PillTag className="mx-auto mb-7.5 px-4" variant={'light'}>{data?.itemTitle || ""}</PillTag>
-                    <div className="who-this-for-header mb-7.5" ref={elementRef || ""}></div>
+                    <div className="who-this-for-header mb-7.5 min-h-36.25 max-md:min-h-auto" ref={elementRef || ""}></div>
 
                     <div className="services-main-wrapper max-w-299 m-auto [@media(max-width:991px)]:px-7.5 [@media(max-width:991px)]:py-0">
                         <div className="absolute w-92.5 h-64.25 z-10 flex flex-wrap align-center-animation items-center justify-center [@media(max-width:1200px)]:hidden">
@@ -198,7 +198,7 @@ export default function Hero({ data }: { data: SectionHeroType }) {
                                                         {t?.header || ""}
                                                     </h3>
 
-                                                    <div className="w-20 h-20 relative transition-all duration-300 mb-8 group-hover:mb-6 [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
+                                                    <div className="w-20 h-20 relative transition-all duration-300 mb-8 [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
                                                         {img}
                                                     </div>                                                    
 
@@ -206,11 +206,11 @@ export default function Hero({ data }: { data: SectionHeroType }) {
                                                         {t?.content || ""}
                                                     </p>
 
-                                                    <div className="w-11.75 h-11.75 mr-auto max-md:mx-auto">
+                                                    {/* <div className="w-11.75 h-11.75 mr-auto max-md:mx-auto">
                                                         <Button size={'icon-sm'} className="rounded-full w-11.75 h-11.75 mt-3 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
                                                             <ArrowRight size={4} />
                                                         </Button>
-                                                    </div> 
+                                                    </div>  */}
                                                 </div>
                                             </div>
                                         )
@@ -230,20 +230,21 @@ export default function Hero({ data }: { data: SectionHeroType }) {
                                                     </h3>
 
                                                     <div className="flex items-end max-w-125 [@media(max-width:1200px)]:max-w-full [@media(max-width:1200px)]:flex-wrap [@media(max-width:1200px)]:flex-col-reverse [@media(max-width:1200px)]:justify-center [@media(max-width:1200px)]:text-center">
-                                                        <p className="text-black font-sans text-base! not-italic font-normal leading-[100%] mb-0 relative">
-                                                            {t?.content}                                                            
-                                                        </p>                                                        
+                                                        <div className="flex flex-col">
+                                                            <p className="text-black max-md:max-w-full max-w-[80%] transition-all duration-300 mt-5 group-hover:mt-0 max-md:group-hover:mt-4 font-sans text-base! not-italic font-normal leading-[100%] mb-0 relative">
+                                                                {t?.content}
+                                                            </p>              
+                                                            {/* <div className="w-11.75 h-11.75 mr-auto max-md:mx-auto">
+                                                                <Button size={'icon-sm'} className="rounded-full w-11.75 h-11.75 mt-3 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                                                                    <ArrowRight size={4} />
+                                                                </Button>
+                                                            </div>  */}
+                                                        </div>                                          
 
-                                                        <div className="md:w-30 w-21.25 h-21.25 relative [@media(max-width:1200px)]:mb-6.25 [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
+                                                        <div className="md:w-30 w-21.25 mb-auto h-21.25 relative [@media(max-width:1200px)]:mb-6.25 [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
                                                             {img}
                                                         </div>
-                                                    </div>
-
-                                                    <div className="w-11.75 h-11.75 mr-auto max-md:mx-auto">
-                                                        <Button size={'icon-sm'} className="rounded-full w-11.75 h-11.75 mt-3 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                                            <ArrowRight size={4} />
-                                                        </Button>
-                                                    </div> 
+                                                    </div>                                                 
                                                 </div>
                                             </div>
                                         )
@@ -263,7 +264,7 @@ export default function Hero({ data }: { data: SectionHeroType }) {
                                                         {t?.header}
                                                     </h3>
 
-                                                    <div className="w-20 h-20 relative transition-all duration-300 mb-8 group-hover:mb-6 ml-auto [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
+                                                    <div className="w-20 h-20 relative transition-all duration-300 mb-8 ml-auto [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
                                                         {img}
                                                     </div>
 
@@ -271,11 +272,11 @@ export default function Hero({ data }: { data: SectionHeroType }) {
                                                         {t?.content}
                                                     </p>
 
-                                                    <div className="w-11.75 h-11.75 ml-auto max-md:mx-auto">
+                                                    {/* <div className="w-11.75 h-11.75 ml-auto max-md:mx-auto">
                                                         <Button size={'icon-sm'} className="rounded-full w-11.75 h-11.75 mt-3 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
                                                             <ArrowRight size={4} />
                                                         </Button>
-                                                    </div>    
+                                                    </div>     */}
                                                 </div>
                                             </div>
                                         )
@@ -295,7 +296,7 @@ export default function Hero({ data }: { data: SectionHeroType }) {
                                                         {t?.header}
                                                     </h3>
 
-                                                    <div className="w-20 h-20 relative transition-all duration-300 mb-10.5 group-hover:mb-8 [@media(max-width:1200px)]:mb-6.25 [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
+                                                    <div className="w-20 h-20 relative transition-all duration-300 mb-10.5 [@media(max-width:1200px)]:mb-6.25 [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
                                                         {img}
                                                     </div>
 
@@ -303,11 +304,11 @@ export default function Hero({ data }: { data: SectionHeroType }) {
                                                         {t?.content}
                                                     </p>
 
-                                                    <div className="w-11.75 h-11.75 mr-auto max-md:mx-auto">
+                                                    {/* <div className="w-11.75 h-11.75 mr-auto max-md:mx-auto">
                                                         <Button size={'icon-sm'} className="rounded-full w-11.75 h-11.75 mt-3 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
                                                             <ArrowRight size={4} />
                                                         </Button>
-                                                    </div> 
+                                                    </div>  */}
                                                 </div>
                                             </div>
                                         )
@@ -327,7 +328,7 @@ export default function Hero({ data }: { data: SectionHeroType }) {
                                                         {t?.header}
                                                     </h3>
 
-                                                    <div className="w-21.75 h-20 relative transition-all duration-300 mb-10.5 group-hover:mb-8 ml-auto [@media(max-width:1200px)]:mb-6.25 [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
+                                                    <div className="w-21.75 h-20 relative transition-all duration-300 mb-10.5 ml-auto [@media(max-width:1200px)]:mb-6.25 [@media(max-width:1200px)]:ml-auto [@media(max-width:1200px)]:mr-auto">
                                                         {img}
                                                     </div>
 
@@ -335,11 +336,11 @@ export default function Hero({ data }: { data: SectionHeroType }) {
                                                         {t.content}
                                                     </p>
 
-                                                    <div className="w-11.75 h-11.75 ml-auto max-md:mx-auto">
+                                                    {/* <div className="w-11.75 h-11.75 ml-auto max-md:mx-auto">
                                                         <Button size={'icon-sm'} className="rounded-full w-11.75 h-11.75 mt-3 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
                                                             <ArrowRight size={4} />
                                                         </Button>
-                                                    </div> 
+                                                    </div>  */}
                                                 </div>
                                             </div>
                                         )

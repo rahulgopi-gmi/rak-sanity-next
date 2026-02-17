@@ -2,6 +2,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import LandingLayoutClient from "./LandingLayoutClient";
 import { PageSettingsType } from "@/features/application/types/sanity";
 import { globalSettingsQuery } from "@/sanity/queries/pages";
+import NotFound from "../not-found";
 
 /** 
  *  Fetch Global Settings
@@ -32,11 +33,7 @@ export default async function MarketingLayout({
     const settings = await getData();
 
     if (!settings) {
-        return (
-            <div className="w-full h-screen flex items-center justify-center">
-                <p>Something went wrong. Please try again later.</p>
-            </div>
-        );
+        return <NotFound />
     }
 
     return (       

@@ -12,15 +12,17 @@ import { getPageWithBlog } from "@/lib/data";
 import BlogNewsLetter from "@/components/BlogNewsletter";
 import BlogSwiper from "@/components/BlogSwiper";
 import BlogItems from "@/components/BlogItems";
+import NotFound from "@/app/not-found";
+
+const PAGE_SLUG = "blog";
+const TEMPLATE = "other";
 
 /**
  * Generate metadata for the page.
 */
-export async function generateMetadata(): Promise<Metadata> {
-    const slug = "blog";
-    const template = "other";
+export async function generateMetadata(): Promise<Metadata> {   
 
-    const seo  = await getSeoData(slug, template);
+    const seo = await getSeoData(PAGE_SLUG, TEMPLATE);
 
     if (!seo) return {};
 
@@ -64,12 +66,23 @@ export async function generateMetadata(): Promise<Metadata> {
 */
 export default async function Page() {
     try {        
-        const slug = "blog";
-        const template = "other";
-        const { page, posts, categories, slidePosts } = await getPageWithBlog(slug, template);
+        const { page, posts, categories, slidePosts } = await getPageWithBlog(PAGE_SLUG, TEMPLATE);
         if (!page) return notFound();
 
-        const section: FeatureItem | undefined = page?.sections?.[0];        
+        const section: FeatureItem | undefined = page?.sections?.[0];  
+
+        /**
+         * Filter Only Categories That Have Posts
+        */
+        const usedCategoryIds = new Set(
+            (posts ?? []).flatMap((post) =>
+                post.categories?.map((cat) => cat._id) ?? []
+            )
+        );
+
+        const visibleCategories = (categories ?? []).filter(
+            (category) => usedCategoryIds.has(category._id)
+        );       
 
         return(
             <main className="bg-black">
@@ -85,27 +98,31 @@ export default async function Page() {
                             <div className="max-w-225 mx-auto blog-top-section">
                                 {
                                     section?.header && (
-                                        <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>
+                                        <div 
+                                            className="[&_h2]:text-white [&_h2]:font-extrabold [&_h2]:font-mono [&_h2]:text-center [&_h2]:uppercase [&_h2]:mb-8 max-md:[&_h2]:text-35! max-md:[&_h2]:leading-8.75! max-md:[&_br]:hidden"
+                                            dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }} 
+                                        />
                                     )
                                 }
                                 
                                 {
                                     section?.body && (
                                         <div 
-                                            dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}                                             
-                                            className="mt-7 text-lightgray text-base! font-normal font-sans normal-case px-10 leading-[normal]!"
-                                        >
-                                        </div>
+                                            dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}  
+                                            className="w-full flex justify-center [&_p]:text-lightgray [&_p]:font-sans [&_p]:text-center [&_p]:mb-4 [&_p]:leading-6! [&_p]:text-base!"
+                                        />
                                     )
                                 }
                             </div>
                         </div>
                     </div>
 
-                    <div className="relative pt-7.5 pb-115.25 w-full px-7.5 max-md:px-4">
-                        <BlogSwiper
-                            post={slidePosts}
-                        />
+                    <div className="relative pt-7.5 pb-115.25 w-full">
+                        <div className="container">
+                            <BlogSwiper
+                                post={slidePosts}
+                            />
+                        </div>
                     </div>
                 </section>
 
@@ -114,7 +131,7 @@ export default async function Page() {
                         <div className="w-full pb-24">                            
                             <BlogItems 
                                 posts={posts}
-                                categories={categories}
+                                categories={visibleCategories}
                             />
                         </div>                        
                     </div>                  
@@ -150,8 +167,6 @@ export default async function Page() {
     } 
     catch (error) {        
         console.error("Page render failed:", error);
-        return <div className="w-full h-screen flex items-center justify-center">
-            <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
-        </div>;
+        return <NotFound />;
     }
 }

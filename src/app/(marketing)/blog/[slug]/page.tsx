@@ -13,6 +13,7 @@ import BlogRelated from "@/components/BlogRelated";
 import BlogForm from "@/components/BlogForm";
 import BlogNewsLetter from "@/components/BlogNewsletter";
 import BlogSideList from "@/components/BlogSideList";
+import NotFound from "@/app/not-found";
 
 /**
  * Fetch SEO only
@@ -74,13 +75,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     const { slug } = await params;
 
     try {
-        const { page, categories, related } = await getPageWithBlogDetails(slug);
+        const { page, related } = await getPageWithBlogDetails(slug);
         if (!page) return notFound();       
         const sideList = getBodyJSON(page?.body);
 
         return (
             <main className="bg-black w-full">
-                <section className="relative w-full max-md:bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-[url('/images/gradient/bg-grd-banner.jpg')] max-md:bg-cover bg-contain bg-no-repeat with-overlay pt-52.75 pb-95">
+                <section className="relative w-full max-md:bg-[url('/images/gradient/bg-grd-banner.jpg')] bg-[url('/images/gradient/bg-grd-banner.jpg')] max-md:bg-cover bg-contain bg-no-repeat with-overlay pt-31.25 pb-95">
                     <div className="container">
                          <div className="text-white">
                             <div className="flex items-center gap-3">
@@ -111,7 +112,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             </p>
 
                             <div className="mt-8">
-                                <div className="w-full h-119.5 relative">
+                                <div className="h-119.5 max-md:h-87.5 relative w-full">
                                     {
                                         page?.mainImage && (
                                             <Image
@@ -122,7 +123,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                             />
                                         )
                                     }
-                                    
                                 </div>
                             </div>
                          </div>
@@ -131,7 +131,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
                 <section className="text-white pt-0 -mt-86.25 md:-mt-85 pb-7.5 md:pb-15 relative z-10">
                     <div className="container grid grid-cols-1 lg:grid-cols-[250px_1fr_350px] gap-6">
-                        <div className="space-y-10">
+                        <div className="space-y-10 lg:sticky lg:top-24 lg:self-start">
                             <div className="rounded-10 border-[1.701px] border-white/10 bg-white/3 p-6">
                                 <h3 className="text-white font-sans text-base! font-normal! leading-6! mb-4">
                                     Contents
@@ -178,12 +178,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
                                 <div className="flex flex-wrap gap-3">
                                     {
-                                        categories.map((list, index) =>(
-                                            <span
-                                                key={`categories-list-${index}`}
-                                                className="px-6 py-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/9 text-white font-sans text-xs font-normal leading-4.5">
-                                                {list.title}
-                                            </span>
+                                        page?.categories &&
+                                            page?.categories.map((list, index) =>(
+                                                <span
+                                                    key={`categories-list-${index}`}
+                                                    className="px-6 py-2 rounded-full border border-white/20 bg-white/5 text-white font-sans text-xs font-normal leading-4.5">
+                                                    {list.title}
+                                                </span>
                                         ))
                                     }
                                 </div>
@@ -220,9 +221,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     } 
     catch (error) {
         console.error("Page render failed:", error);
-        return <div className="w-full h-screen flex items-center justify-center">
-            <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
-        </div>;
+        return <NotFound />;
     }    
 }
 

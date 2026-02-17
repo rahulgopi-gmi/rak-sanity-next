@@ -1,6 +1,7 @@
 import { dataset, projectId } from "../env";
 import { PortableTextBlock } from "next-sanity";
 import type { PortableTextSpan } from "sanity";
+
 // ---------------- Slug helper ----------------
 export const slugify = (str: string) =>
   str
@@ -12,12 +13,12 @@ export const slugify = (str: string) =>
 
 // ---------------- Browser-safe scroll ----------------
 export const scrollToId = (id: string, offset = 0) => {
+  if(!id) return;
   const el = document.getElementById(id);
   if (!el) return;
   const top = el.getBoundingClientRect().top + window.scrollY - offset;
   window.scrollTo({ top, behavior: "smooth" });
 };
-
 // ---------------- Extract H2 from Portable Text ----------------
 
 
@@ -105,9 +106,38 @@ export const getBodyText = (body: any[] = []) => {
     }
 
     /* ---------------- TEXT BLOCK ---------------- */
-    if (block._type !== "block" || !block.children) return;
+    if (block._type !== "block" || !block.children) return;    
+    const text = block.children
+      .map((child: any) => {
+        let childText = child.text;
 
-    const text = block.children.map((c: any) => c.text).join("");
+        if (child.marks?.length) {
+          child.marks.forEach((mark: string) => {
+
+            // Find mark definition (for links)
+            const markDef = block.markDefs?.find(
+              (def: any) => def._key === mark
+            );
+            
+            if (markDef?._type === "link" && markDef?.href) {
+              childText = `<a href="${markDef.href}" target="_blank" rel="noopener noreferrer">${childText}</a>`;
+            }
+
+            /* Bold */
+            if (mark === "strong") {
+              childText = `<strong>${childText}</strong>`;
+            }
+
+            /* Italic */
+            if (mark === "em") {
+              childText = `<em>${childText}</em>`;
+            }
+          });
+        }
+
+        return childText;
+      })
+      .join("");
 
     /* -------- LIST ITEMS -------- */
     if (block.listItem === "bullet") {

@@ -2,7 +2,7 @@
 
 import { scrollToId, slugify } from "@/sanity/lib/utils";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ListProps {
     type: string;
@@ -22,6 +22,33 @@ export default function BlogSideList({ list }: { list : ListProps[] }) {
     const getLinkClasses = (id: string) =>
         `block px-4 py-2 rounded-[4px] text-[14px] font-sans font-normal leading-[21px] cursor-pointer ${activeId === id ? "bg-primary hover:bg-primary/70 text-black" : "text-[rgba(255,255,255,0.70)] hover:bg-primary hover:text-black"
         }`;
+
+    useEffect(() => {
+        const sectionIds = ["introduction", ...list.map((item) => slugify(item.text))];
+
+        const handleScroll = () => {
+        let closestId = "introduction";
+        let closestDistance = Infinity;
+
+        for (const id of sectionIds) {
+            const el = document.getElementById(id);
+            if (!el) continue;
+
+            const distance = Math.abs(el.getBoundingClientRect().top - 120); // 120 = offset
+            if (distance < closestDistance) {
+            closestDistance = distance;
+            closestId = id;
+            }
+        }
+
+        setActiveId(closestId);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [list]);    
 
     return(
         <ul className="space-y-2">

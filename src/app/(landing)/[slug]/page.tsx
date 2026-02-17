@@ -159,7 +159,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                             key={k.header}
                                             className="flex items-center gap-6"
                                         >
-                                            <div className="w-[60px] h-[60px] flex items-center justify-center bg-[#5FC2D5]/20 rounded-2xl rounded-br-none p-4">
+                                            <div className="w-15 h-15 flex items-center justify-center bg-[#5FC2D5]/20 rounded-2xl rounded-br-none p-4">
                                                 <div className="w-6 h-6 relative">
                                                     {
                                                         k?.icon && (
@@ -187,24 +187,26 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                 )
                             }
                             
-                            <div className="campaigns-notify bg-[#0000000A] border-l-[3px] border-[#6FCCDD] rounded-r-xl p-6 max-w-[444px] !mb-5">
-                                <p className="font-sans font-normal text-[16px]! leading-[28px]! tracking-[1%] text-[#101010]">
+                            <div className="campaigns-notify bg-[#0000000A] border-l-[3px] border-[rgb(111,204,221)] rounded-r-xl p-6 max-w-[444px] !mb-5">
+                                <p className="font-sans font-normal text-[16px]! leading-7! tracking-[1%] text-[#101010]">
                                     If you’re interested in working at Innovation City,
                                     please&nbsp;
-                                    <Link href="https://www.linkedin.com/company/innovationcityinc/jobs" className="font-sans font-semibold text-[16px] leading-[28px] tracking-[1%] underline decoration-black decoration-[1px]">
+                                    <Link href="https://www.linkedin.com/company/innovationcityinc/jobs" target="_blank" className="font-sans font-semibold text-[16px] leading-[28px] tracking-[1%] underline decoration-black decoration-[1px]">
                                         apply here.
                                     </Link>
                                 </p>
                             </div>
                         </div>
 
-                        <div className="w-full" id="contact">
-                            <CampaignsForm mode={section?.mode}/>
+                        <div className="w-full" id="contact" tabIndex={-1}>
+                            <div id="contact-view">
+                                <CampaignsForm mode={section?.mode}/>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <section className="w-full tech-area md:mt-[120px] mt-0">
+                <section className="w-full tech-area md:mt-30 mt-0">
                     <div className="container">
                         <div className="flex flex-col sm:flex-row sm:items-end items-start sm:justify-between justify-start mb-12 gap-2">
                             {
@@ -215,9 +217,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
                             {
                                 section?.techCtaName && (
-                                    <Link href={`#${section?.techCtaLink}`} className="sm:mt-0 mt-[24px]">
-                                        <Button type="button" size={'sm'} className="uppercase">{section?.techCtaName}</Button>
-                                    </Link>
+                                    <Link href={`#${section?.techCtaLink}-view`} className="sm:mt-0 mt-6">
+                                        <Button 
+                                            type="button" 
+                                            size={'sm'} 
+                                            className="uppercase"                                            
+                                        >{section?.techCtaName}</Button>
+                                    </Link>                                    
                                 )
                             }                            
                         </div>
@@ -509,8 +515,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     }
     catch(error){
         console.error("Page render failed:", error);
-        return <div className="w-full h-screen flex items-center justify-center">
-            <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
-        </div>;
+        return notFound();
     }    
 }

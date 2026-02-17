@@ -8,6 +8,7 @@ import { urlFor } from "@/sanity/lib/image";
 import { getSeoData } from "@/sanity/lib/seo";
 import { getPageWithActivities } from "@/lib/data";
 import ActivitiesTab from "@/components/ActivitiesTab";
+import NotFound from "@/app/not-found";
 
 /**
  * Generate metadata for the page.
@@ -73,7 +74,7 @@ export default async function Page() {
             <main className="w-full">
                 <section className="relative w-full bg-black bg-[url('/images/gradient/bg-grd-banner.jpg')] max-md:bg-[url('/images/gradient/bg-grd-banner-mob.png')] bg-cover max-md:bg-contain bg-no-repeat with-overlay">
                     <div className="container max-auto">
-                        <div className="activities-top-section activities-top-section-wd mx-auto flex flex-col items-center justify-center text-center pt-37.5 pb-7.5">
+                        <div className="max-w-2xl max-md:max-w-full mx-auto flex flex-col items-center justify-center text-center pt-37.5 pb-7.5">
                             {
                                 section.title && (
                                     <PillTag className="mx-auto mb-6.25 max-md:mb-5">
@@ -84,13 +85,19 @@ export default async function Page() {
 
                             {
                                 section.header && (
-                                    <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>
+                                    <div
+                                        className="[&_h2]:text-white [&_h2]:font-extrabold [&_h2]:font-mono [&_h2]:text-center [&_h2]:uppercase [&_h2]:mb-8 max-md:[&_h2]:text-35! max-md:[&_h2]:leading-8.75! max-md:[&_br]:hidden"
+                                        dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}
+                                    />
                                 )
                             }
 
                             {
                                 section.header && (
-                                    <div dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}></div>
+                                    <div
+                                        className="w-full flex justify-center [&_p]:text-white [&_p]:font-sans [&_p]:text-center [&_p]:mb-4 [&_p]:leading-6! [&_p]:text-base!"
+                                        dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}
+                                    /> 
                                 )
                             }
                         </div>
@@ -110,8 +117,6 @@ export default async function Page() {
     }
     catch(error){        
         console.error("Page render failed:", error);
-        return <div className="w-full h-screen flex items-center justify-center">
-            <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
-        </div>;
+        return <NotFound />;
     }    
 }   

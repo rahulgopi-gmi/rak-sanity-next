@@ -109,8 +109,9 @@
                         resetForm();
                         setSubmitting(false);
                     }
-                    else {
-                        toast.error("Error sending message");                    
+                    else {                       
+                        const errorCheck = await res.json();                        
+                        toast.error(errorCheck.error);                    
                         setSubmitting(false);             
                     }
                 } 

@@ -111,7 +111,8 @@ export default function ContactForm({ formonly = true }: Props) {
                     resetForm();
                 } 
                 else {
-                    toast.error("Error sending message");
+                    const errorCheck = await res.json();
+                    toast.error(errorCheck.error);
                     setSubmitting(false);                
                 }
             }

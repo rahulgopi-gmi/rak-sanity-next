@@ -5,7 +5,7 @@ import { PageSettingsType } from "@/features/application/types/sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 import { globalSettingsQuery } from "@/sanity/queries/pages";
 import { toPlainText } from "next-sanity";
-import { Suspense } from 'react';
+import Script from "next/script";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -50,8 +50,8 @@ export async function generateMetadata(): Promise<Metadata> {
       referrer: "strict-origin-when-cross-origin",
       icons: {
         icon: [
-          { url: "/favicon.ico" },
-          { url: "/icons/icon", type: "image/png", sizes: "32x32" },
+          { url: "/favicon.ico", sizes: "any", type: "image/x-icon", },
+          //{ url: "/icons/icon", sizes: "32x32", type: "image/png" },
         ],
         shortcut: "/favicon.ico",
         apple: [
@@ -92,23 +92,38 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/nhg7tow.css" />
+        <Script
+          id="gtm-script"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+               (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                  "gtm.start": new Date().getTime(),
+                  event: "gtm.js",
+                });
+                var f = d.getElementsByTagName(s)[0],
+                  j = d.createElement(s),
+                  dl = l != "dataLayer" ? "&l=" + l : "";
+                j.async = true;
+                j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+                f.parentNode.insertBefore(j, f);
+              })(window, document, "script", "dataLayer", "GTM-N7K7J8FT");
+            `,
+          }}
+        />        
       </head>
-      <body
-        className={`${montserrat.variable} ${inter.variable} antialiased`}
-      >       
-      <Suspense fallback={
-          <div className="fixed inset-0 flex flex-col items-center justify-center bg-gray-50 z-50">           
-            <div className="text-center">             
-              <p className="text-gray-600 text-sm!">
-                Please wait while we prepare the page.
-              </p>
-            </div>            
-            <div className="mt-6 border-4 border-gray-300 border-t-gray-800 rounded-full w-10 h-10 animate-spin"></div>
-          </div>
-        }
-      >
-        {children}
-      </Suspense>        
+      <body className={`${montserrat.variable} ${inter.variable} antialiased`}>  
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-N7K7J8FT"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+          {children}           
       </body>
     </html>
   );

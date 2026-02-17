@@ -5,8 +5,6 @@ import Footer from "@/components/layout/footer/Footer";
 import { Toaster } from "react-hot-toast";
 import { PageSettingsType } from "@/features/application/types/sanity";
 import { Fragment } from "react";
-import { FadeUp } from "@/components/layout/motion/FadeUp";
-import { usePathname } from "next/navigation";
 
 export default function MarketingLayoutClient({
   settings,
@@ -14,14 +12,11 @@ export default function MarketingLayoutClient({
 }: {
   settings: PageSettingsType;
   children: React.ReactNode;
-}) {
-  const pathname = usePathname();  
+}) {  
   return (
     <Fragment>
-        <Header settings={settings} />
-        <FadeUp key={pathname}>
-            {children}        
-        </FadeUp>
+        <Header settings={settings} />       
+          {children}
         <Toaster
           position="bottom-right"
           toastOptions={{

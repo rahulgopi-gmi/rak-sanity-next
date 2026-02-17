@@ -16,7 +16,12 @@ interface BlogItemsProps {
 const DEFAULT_COUNT = 9;
 
 export default function BlogItems(
-    { posts, categories = [], initialCount = DEFAULT_COUNT , loadMoreCount = DEFAULT_COUNT }: BlogItemsProps) {          
+    { 
+        posts, 
+        categories = [], 
+        initialCount = DEFAULT_COUNT , 
+        loadMoreCount = DEFAULT_COUNT 
+    }: BlogItemsProps) {          
     
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);    
     const [visibleCount, setVisibleCount] = useState<number>(initialCount);

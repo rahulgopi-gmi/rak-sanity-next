@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import PillTag from "@/components/ui/pill-tag";
 import { getSeoData } from "@/sanity/lib/seo";
 import { getPageDataOnly } from "@/lib/data";
+import NotFound from "@/app/not-found";
 
 /**
  * Generate metadata for the page.
@@ -85,13 +86,18 @@ export default async function Page() {
 
                         {
                             section.header && (                      
-                                <div className="xl:px-20" dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }}></div>
+                                <div 
+                                    className="xl:px-20 [&_h2]:text-white [&_h2]:font-extrabold [&_h2]:font-mono [&_h2]:text-center [&_h2]:uppercase [&_h2]:mb-8 max-md:[&_h2]:text-35! max-md:[&_h2]:leading-8.75! max-md:[&_br]:hidden"
+                                    dangerouslySetInnerHTML={{ __html: getBodyText(section?.header) }} />
                             )
                         }
 
                         {
                             section.body && (
-                                <div className="w-full flex justify-center" dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}></div>
+                                <div 
+                                    className="w-full flex justify-center [&_p]:text-white [&_p]:font-sans [&_p]:text-center [&_p]:max-w-131.25 [&_p]:mb-4 [&_p]:leading-6! [&_p]:text-base!" 
+                                    dangerouslySetInnerHTML={{ __html: getBodyText(section?.body) }}
+                                />
                             )
                         }    
 
@@ -171,7 +177,7 @@ export default async function Page() {
                 
                 {
                     keywords.length > 0 && (
-                        <section className="ourvmv-sec w-full max-md:pb-12.5 max-md:pb-12.5 py-30">
+                        <section className="ourvmv-sec w-full max-md:pb-12.5 py-30">
                             <div className="container">
                                 {
                                     keywords.map((c: HomeKeyWords, index:number) => {
@@ -216,8 +222,6 @@ export default async function Page() {
     } 
     catch (error) {        
         console.error("Page render failed:", error);
-        return <div className="w-full h-screen flex items-center justify-center">
-            <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
-        </div>;
+        return <NotFound />;
     }
 }

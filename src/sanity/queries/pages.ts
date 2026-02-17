@@ -210,7 +210,7 @@ export const globalSettingsQuery = groq`
     alt
   },
   headerMenu[] { label, slug, children[]{label, slug} },
-  footerMenu[] { label, url },
+  footerMenu[] { label, url, target },
   socialLinks[] { platform, url, icon{ asset->{url} } },
   contactEmail,
   phone,

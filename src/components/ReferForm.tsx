@@ -33,6 +33,7 @@ export default function ReferForm() {
     const utm_content = searchParams.get("utm_content") || "";
     const referrer_name_parms = searchParams.get("referrer_name") || "";
     const referrer_email_parms = searchParams.get("referrer_email") || "";
+    const relationship_manager_parms = searchParams.get("owner") || "";
 
     const initialValues = {
         first_name : "",
@@ -43,6 +44,7 @@ export default function ReferForm() {
         referrer_phone: "",
         referrer_email: "",
         referrer_has_company_registered: null,
+        relationship_manager: relationship_manager_parms,
     }
 
     const validationSchema = Yup.object({
@@ -78,7 +80,8 @@ export default function ReferForm() {
         referrer_email: Yup.string().email("Invalid email").required("Referral Email is required"),
         referrer_has_company_registered: Yup.boolean()
             .nullable()
-            .required("Please select Yes or No"),    
+            .required("Please select Yes or No"), 
+        relationship_manager: Yup.string()
     });    
 
     const formik = useFormik({
@@ -92,7 +95,8 @@ export default function ReferForm() {
                     referrer_phone, 
                     first_name,
                     phone,
-                    email
+                    email,
+                    relationship_manager
                 } = values;               
 
                 let refFirst = "";
@@ -133,6 +137,7 @@ export default function ReferForm() {
                     referrer_name: first_name,                    
                     referrer_phone: referalPhone(phone, countryCode),
                     referrer_email: email,
+                    ...(relationship_manager ? { lead_owner: relationship_manager } : {}),
                     ...(utm_source && { utm_source }),
                     ...(utm_medium && { utm_medium }),
                     ...(utm_campaign && { utm_campaign }),
@@ -155,7 +160,8 @@ export default function ReferForm() {
                     setSubmitting(false);
                 } 
                 else {
-                    toast.error("Error sending message");                    
+                    const errorCheck = await res.json();                        
+                    toast.error(errorCheck.error);                   
                     setSubmitting(false);             
                 }
             }
@@ -420,6 +426,31 @@ export default function ReferForm() {
                 }
             </div>
 
+            {
+                formik.values.relationship_manager && (
+                    <div className="w-full mb-9">
+                        <Label htmlFor="relationship_manager" className="mb-3!">Relationship Manager</Label>
+                        <Input
+                            type="text"
+                            placeholder="Relationship Manager"
+                            name="relationship_manager"
+                            id="relationship_manager"
+                            value={formik.values.relationship_manager}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            className="text-white! font-medium! leading-4! text-[14px]! rounded-[8px]!"
+                            disabled
+                        />
+
+                        {
+                            formik.touched.relationship_manager && formik.errors.relationship_manager &&
+                            (<Error className="mt-3">{formik.errors.relationship_manager}</Error>)
+                        }
+                    </div>
+                )
+            }
+            
+
             <div className="w-full mb-8">
                 <p className="text-[#FFFFFF99] text-[12px]! font-sans font-normal leading-[22.4px]!">
                     By submitting the form, you agree to the <Link href="https://freezone.innovationcity.com/rules-and-regulations/" target="_blank" className="text-primary hover:text-primary/80">Terms and Conditions</Link> and <Link href="/privacy-policy" className="text-primary hover:text-primary/80">Privacy Policy</Link> of INC. You consent to INC collecting
@@ -431,7 +462,7 @@ export default function ReferForm() {
                 <Button 
                     type="submit" 
                     disabled={formik.isSubmitting}
-                    className="text-[12px]! font-bold! text-[#212121]! h-[42px] w-[130px] max-md:w-full"
+                    className="text-[12px]! font-bold! text-[#212121]! h-10.5 w-32.5 max-md:w-full"
                 >Submit</Button>
                 {
                     formik.isSubmitting &&

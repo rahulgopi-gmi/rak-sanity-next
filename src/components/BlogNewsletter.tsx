@@ -2,19 +2,19 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Fragment } from "react";
+import { Fragment, useTransition, useState } from "react";
 import { Mail } from "lucide-react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Error } from "@/components/ui/error";
 import { Spinner } from "@/components/ui/spinner";
 import toast from "react-hot-toast";
-import { useTransition } from "react";
 import { subscribe } from "@/app/actions/subscribe";
 
 export default function BlogNewsLetter(props : { view : boolean}) {
     const { view } = props;
     const [isPending, startTransition] = useTransition();
+    const [status, setStatus] = useState("");
 
     const initialValues = {
         email: "",       
@@ -34,15 +34,16 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                 try {
                     const result = await subscribe(values.email);
                     if (result.success) {
-                        toast.success("Subscribed successfully!");
+                        setStatus("Subscribed successfully!");
                         resetForm();
                     } 
-                    else {
-                        toast.error(result.error || "Subscription failed.");
+                    else {                        
+                        setStatus(result.error || "Subscription failed.")
                     }
                 } catch (error) {
                     console.error(error);
                     toast.error("Something went wrong. Please try again.");
+                    setStatus("Something went wrong. Please try again.");
                 }
                 setSubmitting(false);
             });            
@@ -55,7 +56,7 @@ export default function BlogNewsLetter(props : { view : boolean}) {
             view ?
             (
                 <form onSubmit={formik.handleSubmit}>
-                    <div className="mt-8 flex items-center [@media(min-width:300px)_and_(max-width:400px)]:flex-col gap-4 w-full border border-[rgba(95,194,213,0.30)] rounded-2xl bg-black/40 pl-4 pr-2  py-[18px] sm:py-2">
+                    <div className="mt-8 flex items-center [@media(min-width:300px)_and_(max-width:400px)]:flex-col gap-4 w-full border border-[rgba(95,194,213,0.30)] rounded-2xl bg-black/40 pl-4 pr-2  py-4.5 sm:py-2">
                         <div className="flex w-full items-center gap-4">
                             <span className="text-white/40 text-xl">
                                 <Mail />
@@ -85,6 +86,11 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                         formik.touched.email && formik.errors.email &&
                         (<Error className="mt-1">{formik.errors.email}</Error>)
                     } 
+                    {
+                        status && (
+                            <Error className="mt-1">{status}</Error>                            
+                        )
+                    }
                 </form>
             )
             :
@@ -97,7 +103,10 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                         name="email"
                         id="email"
                         value={formik.values.email}
-                        onChange={formik.handleChange}
+                        onChange={(e) => {
+                            formik.setFieldValue("email", e.target.value);
+                            setStatus("");
+                        }}
                         onBlur={formik.handleBlur}
                     />
 
@@ -117,6 +126,11 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                             (formik.isSubmitting || isPending) && <Spinner className="text-black" />
                         }
                     </Button>
+                    {
+                        status && (
+                            <Error className="text-xs! mt-3">{status}</Error>                            
+                        )
+                    }
                 </form>                               
             )
         }

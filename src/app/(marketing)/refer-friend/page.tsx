@@ -9,6 +9,7 @@ import Image from "next/image";
 import { getSeoData } from "@/sanity/lib/seo";
 import { getPageDataOnly } from "@/lib/data";
 import ReferForm from "@/components/ReferForm";
+import NotFound from "@/app/not-found";
 
 /**
  * Generate metadata for the page.
@@ -160,8 +161,6 @@ export default async function Page() {
     }
     catch(error){
         console.error("Page render failed:", error);        
-        return <div className="w-full h-screen flex items-center justify-center">
-            <p className="text-sm! text-center">Something went wrong. Please try again later.</p>
-        </div>;
+        return <NotFound />;
     }
 }

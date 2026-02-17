@@ -1,5 +1,5 @@
 import ContactForm from "@/components/ContactForm";
-import Hero from "@/components/layout/hero/Hero";
+import Hero from "@/components/Hero";
 import PackagesDetails from "@/components/PackagesDetails";
 import PillTag from "@/components/ui/pill-tag";
 import { HomeBannerType, FeatureItem, SectionHeroType } from "@/features/application/types/sanity";
@@ -12,6 +12,8 @@ import { getVideoUrl } from "@/sanity/lib/video";
 import { Metadata } from "next";
 import { toPlainText } from "next-sanity";
 import { notFound } from "next/navigation";
+import NotFound from "../not-found";
+
 
 /**
  * Generate metadata for the page.
@@ -95,11 +97,11 @@ export default async function Page() {
             <main className="w-full">
                 {
                     banners.map((b)=>(
-                        <section key={`banner-${b._key}`} className="home-banner relative [@media(min-width:1025px)]:h-screen">
+                        <section key={`banner-${b._key}`} className="home-banner relative h-auto">
                             {
                                 b.videoDesktop && (
                                     <video
-                                        className=" block w-full h-full [@media(max-width:992px)]:h-203.5 [@media(max-width:992px)]:object-cover [@media(min-width:1025px)]:object-cover"
+                                        className=" block w-full h-full [@media(max-width:992px)]:h-203.5 [@media(max-width:992px)]:object-cover [@media(min-width:1025px)]:object-cover [@media(min-width:1025px)]:h-screen"
                                         width="100%"
                                         height="100%"
                                         playsInline
@@ -114,9 +116,9 @@ export default async function Page() {
                                 )
                             }
 
-                            <div className="w-full h-full absolute top-0 left-0 flex flex-wrap items-end pb-25">
+                            <div className="w-full h-full absolute [@media(min-width:1366px)]:top-16 top-0 left-0 flex flex-wrap items-end pb-34">
                                 <div className="container mx-auto" data-aos="fade-up" data-aos-delay="200">
-                                    <div className="mt-20 mx-auto mb-0 text-center uppercase aos-init aos-animate" data-aos="fade-up">
+                                    <div className="mx-auto text-center uppercase aos-init aos-animate" data-aos="fade-up">
                                         {
                                             b.header && (                                            
                                                 <div className="w-full flex justify-center" dangerouslySetInnerHTML={{ __html: getBodyText(b.header) }}></div>
@@ -170,8 +172,6 @@ export default async function Page() {
     } 
     catch (error) {
         console.error("Page render failed:", error);
-        return <div className="w-full h-screen flex items-center justify-center">
-            <p>Something went wrong. Please try again later.</p>
-        </div>;
+        return <NotFound />;
     }
 }
