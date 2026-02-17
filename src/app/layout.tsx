@@ -5,6 +5,7 @@ import { PageSettingsType } from "@/features/application/types/sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 import { globalSettingsQuery } from "@/sanity/queries/pages";
 import { toPlainText } from "next-sanity";
+import { Suspense } from 'react';
 import Script from "next/script";
 
 const montserrat = Montserrat({
@@ -123,7 +124,20 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-          {children}           
+
+        <Suspense fallback={
+            <div className="fixed inset-0 flex flex-col items-center justify-center bg-gray-50 z-50">           
+              <div className="text-center">             
+                <p className="text-gray-600 text-sm!">
+                  Please wait while we prepare the page.
+                </p>
+              </div>            
+              <div className="mt-6 border-4 border-gray-300 border-t-gray-800 rounded-full w-10 h-10 animate-spin"></div>
+            </div>
+          }
+        >
+          {children}
+        </Suspense>        
       </body>
     </html>
   );
