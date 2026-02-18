@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { Error } from "@/components/ui/error";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -22,6 +22,47 @@ export default function ReferForm() {
     const [countryCode, setCountryCode] = useState<string>("971");         
     const [referCountryCode, setReferCountryCode] = useState<string>("971");
     const [referCompanyRegistered, setReferCompanyRegistered] = useState<string>("");
+
+    const phoneRef = useRef<HTMLDivElement>(null);
+    const referPhoneRef = useRef<HTMLDivElement>(null);
+
+    const [openUpward, setOpenUpward] = useState(false);
+    const [referOpenUpward, setReferOpenUpward] = useState(false);
+
+    const checkDropdownPosition = (
+        ref: React.RefObject<HTMLDivElement | null>,
+        setDirection: React.Dispatch<React.SetStateAction<boolean>>
+    ) => {
+
+        if (!ref.current) return;
+
+        const rect = ref.current.getBoundingClientRect();
+        const spaceBelow = window.innerHeight - rect.bottom;
+        const spaceAbove = rect.top;
+
+        if (spaceBelow < 300 && spaceAbove > spaceBelow) {
+            setDirection(true);
+        } else {
+            setDirection(false);
+        }
+    }
+
+    useEffect(() => {
+        const handleScrollResize = () => {
+            checkDropdownPosition(phoneRef, setOpenUpward);
+            checkDropdownPosition(referPhoneRef, setReferOpenUpward);
+        };
+
+        window.addEventListener("scroll", handleScrollResize, true);
+        window.addEventListener("resize", handleScrollResize);
+
+        return () => {
+            window.removeEventListener("scroll", handleScrollResize, true);
+            window.removeEventListener("resize", handleScrollResize);
+        };
+    }, []);
+
+
 
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -200,7 +241,15 @@ export default function ReferForm() {
             <div className="w-full mb-7 refer-phone">
                 <Label htmlFor="phone" className="mb-3!">Your Phone Number</Label>
                  <div className="w-full flex gap-1">
-                        <div className="w-32">
+                        <div 
+                            className="w-32"
+                            ref={phoneRef}
+                            onClick={() =>
+                                setTimeout(() =>
+                                    checkDropdownPosition(phoneRef, setOpenUpward),
+                                0)
+                            }
+                        >
                         <PhoneInput
                             country={country}
                             enableSearch={true}
@@ -212,6 +261,9 @@ export default function ReferForm() {
                                 setCountryCode(countryData?.dialCode);
                                 formik.setFieldValue("phone", "");
                             }}
+                            dropdownClass={
+                                openUpward ? "phone-dropdown-up" : "phone-dropdown-down"
+                            }
                             containerStyle={{
                                 width: "100%"
                             }}
@@ -343,7 +395,15 @@ export default function ReferForm() {
             <div className="w-full mb-7 refer-phone">
                 <Label htmlFor="referrer_phone" className="mb-3!">Referral Phone Number</Label>  
                 <div className="w-full flex gap-1">
-                    <div className="w-32">
+                    <div 
+                        className="w-32"
+                        ref={referPhoneRef}
+                        onClick={() =>
+                            setTimeout(() =>
+                                checkDropdownPosition(referPhoneRef, setReferOpenUpward),
+                                0)
+                        }
+                    >
                         <PhoneInput
                             country={referCountry}
                             enableSearch={true}
@@ -355,6 +415,9 @@ export default function ReferForm() {
                                 setReferCountryCode(countryData?.dialCode);
                                 formik.setFieldValue("referrer_phone", "");
                             }}
+                            dropdownClass={
+                                referOpenUpward ? "phone-dropdown-up" : "phone-dropdown-down"
+                            }
                             containerStyle={{
                                 width: "100%"
                             }}

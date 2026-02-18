@@ -6,7 +6,7 @@
     import { Label } from "@/components/ui/label";
     import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
     import { useFormik } from "formik";
-    import { useState } from "react";
+    import { useEffect, useRef, useState } from "react";
     import { isValidPhoneNumber } from "react-phone-number-input";
     import { useRouter, useSearchParams } from "next/navigation";
     import { Spinner } from "@/components/ui/spinner";
@@ -21,6 +21,43 @@
         const [countryCode, setCountryCode] = useState("971");        
         const searchParams = useSearchParams();
         const router = useRouter();
+        const phoneRef = useRef<HTMLDivElement>(null);
+        const [openUpward, setOpenUpward] = useState(false);
+    
+        const checkDropdownPosition = () => {
+                if (!phoneRef.current) return;
+        
+                const rect = phoneRef.current.getBoundingClientRect();
+                const spaceBelow = window.innerHeight - rect.bottom;
+                const spaceAbove = rect.top;
+        
+                if (spaceBelow < 300 && spaceAbove > spaceBelow) {
+                    setOpenUpward(true);
+                } 
+                else {
+                setOpenUpward(false);
+            }
+        }
+
+        useEffect(() => {
+            const handleScrollOrResize = () => {            
+                const dropdown = document.querySelector(
+                    ".react-tel-input .country-list"
+                ) as HTMLElement | null;
+
+                if (dropdown && dropdown.style.display !== "none") {
+                    checkDropdownPosition();
+                }
+            };
+
+            window.addEventListener("scroll", handleScrollOrResize, true);
+            window.addEventListener("resize", handleScrollOrResize);
+
+            return () => {
+                window.removeEventListener("scroll", handleScrollOrResize, true);
+                window.removeEventListener("resize", handleScrollOrResize);
+            };
+        }, []);
 
         const utm_source = searchParams.get("utm_source") || "";
         const utm_medium = searchParams.get("utm_medium") || "";
@@ -165,7 +202,13 @@
                 <div className="space-y-2 blog-form-phone">                
                     <Label size="sm" htmlFor="mobile number" className="font-medium">Mobile Number*</Label>
                     <div className="w-full flex gap-1">
-                        <div className="w-32 blog-det-frm">
+                        <div 
+                            className="w-32 blog-det-frm"
+                            ref={phoneRef}
+                            onClick={() => {
+                                setTimeout(checkDropdownPosition, 0);
+                            }}
+                        >
                             <PhoneInput
                                 country={country}
                                 enableSearch={true}
@@ -177,6 +220,9 @@
                                     setCountryCode(countryData?.dialCode);
                                     formik.setFieldValue("phone", "");
                                 }}
+                                dropdownClass={
+                                    openUpward ? "phone-dropdown-up" : "phone-dropdown-down"
+                                }
                                 containerStyle={{
                                     width: "100%"
                                 }}

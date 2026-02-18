@@ -2,7 +2,7 @@
 
 import { useFormik } from "formik";
 import { Error } from "@/components/ui/error";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import Link from "next/link";
@@ -36,6 +36,43 @@ export default function ContactForm({ formonly = true }: Props) {
     const [country, setCountry] = useState("ae"); 
     const [countryCode, setCountryCode] = useState("971");
     const router = useRouter();
+    const phoneRef = useRef<HTMLDivElement>(null);
+    const [openUpward, setOpenUpward] = useState(false);
+    
+    const checkDropdownPosition = () => {
+            if (!phoneRef.current) return;
+    
+            const rect = phoneRef.current.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - rect.bottom;
+            const spaceAbove = rect.top;
+      
+            if (spaceBelow < 300 && spaceAbove > spaceBelow) {
+                  setOpenUpward(true);
+            } 
+            else {
+              setOpenUpward(false);
+        }
+    }
+
+    useEffect(() => {
+        const handleScrollOrResize = () => {            
+            const dropdown = document.querySelector(
+                ".react-tel-input .country-list"
+            ) as HTMLElement | null;
+
+            if (dropdown && dropdown.style.display !== "none") {
+                checkDropdownPosition();
+            }
+        };
+
+        window.addEventListener("scroll", handleScrollOrResize, true);
+        window.addEventListener("resize", handleScrollOrResize);
+
+        return () => {
+            window.removeEventListener("scroll", handleScrollOrResize, true);
+            window.removeEventListener("resize", handleScrollOrResize);
+        };
+    }, []);
     
     const initialValues = {
         first_name : "",
@@ -214,14 +251,23 @@ export default function ContactForm({ formonly = true }: Props) {
 
                             <div className="w-full phone-section">
                                 <div className="w-full flex gap-1">
-                                    <div className="w-32">
-                                        <PhoneInput
+                                    <div 
+                                        className="w-32"
+                                        ref={phoneRef}
+                                        onClick={() => {
+                                            setTimeout(checkDropdownPosition, 0);
+                                        }}
+                                    >
+                                        <PhoneInput                                            
                                             country={country}
                                             enableSearch={true}
                                             value={countryCode.replace("+", "")}
                                             disableCountryCode={false}
                                             disableDropdown={false}
-                                            inputClass={formonly ? "phone-input" : "phone-input-cs"}                   
+                                            inputClass={formonly ? "phone-input" : "phone-input-cs"} 
+                                            dropdownClass={
+                                                openUpward ? "phone-dropdown-up" : "phone-dropdown-down"
+                                            }
                                             onChange={(_, countryData:CountryData) => {
                                                 setCountry(countryData?.countryCode);
                                                 setCountryCode(countryData?.dialCode);
