@@ -93,6 +93,7 @@
 :root {
   /* color */
   --primary-color: 94, 190, 211;
+  --secondary-color: #6fccdd;
 
   /* font-family */
   --font-proxima-nova-awo1: "proxima-nova", sans-serif;
@@ -714,6 +715,9 @@ html {
   padding-left: 22px;
   list-style: none;
 }
+.pricing-swiper-sec.pricing-swiper-white .swiper-slide ul li {
+  background-image: url("../images/tick-icon.svg");
+}
 
 .pricing-swiper-sec .swiper-slide {
   height: 616px;
@@ -770,4 +774,16 @@ html {
   position: relative;
   bottom: 0 !important;
   margin-top: 35px;
+}
+
+.form-bg-light {
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: linear-gradient(
+      154deg,
+      rgba(255, 255, 255, 0) -32.33%,
+      rgba(111, 204, 221, 0.4) 93.87%
+    ),
+    #fff;
+  backdrop-filter: blur(20px);
 }
