@@ -14,10 +14,7 @@ import { subscribe } from "@/app/actions/subscribe";
 export default function BlogNewsLetter(props : { view : boolean}) {
     const { view } = props;
     const [isPending, startTransition] = useTransition();
-    const [status, setStatus] = useState<{
-        type: "success" | "error" | "";
-        message: string;
-    }>({ type: "", message: "" });
+    const [status, setStatus] = useState("");
 
     const initialValues = {
         email: "",       
@@ -37,25 +34,16 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                 try {
                     const result = await subscribe(values.email);
                     if (result.success) {
-                        setStatus({ type: "success", message: "Subscribed successfully!" });
-                        setTimeout(() => {
-                            setStatus({ type: "", message: "" });
-                            resetForm();
-                        }, 3000);  
+                        setStatus("Subscribed successfully!");
+                        resetForm();
                     } 
                     else {                        
-                        setStatus({
-                            type: "error",
-                            message: result.error || "Subscription failed.",
-                        });
+                        setStatus(result.error || "Subscription failed.")
                     }
                 } catch (error) {
                     console.error(error);
                     toast.error("Something went wrong. Please try again.");
-                    setStatus({
-                        type: "error",
-                        message: "Something went wrong. Please try again.",
-                    });
+                    setStatus("Something went wrong. Please try again.");
                 }
                 setSubmitting(false);
             });            
@@ -81,12 +69,7 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                                 name="email"
                                 id="email"
                                 value={formik.values.email}
-                                onChange={(e) => {
-                                    formik.setFieldValue("email", e.target.value);
-                                    if (status.message) {
-                                        setStatus({ type: "", message: "" });
-                                    }
-                                }}
+                                onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 autoComplete="off"
                             />
@@ -104,15 +87,8 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                         (<Error className="mt-1">{formik.errors.email}</Error>)
                     } 
                     {
-                        status.message && (
-                            <p
-                                className={`text-sm! font-semibold font-sans mt-1 ${status.type === "success"
-                                    ? "text-green-500"
-                                    : "text-red-500"
-                                    }`}
-                            >
-                                {status.message}
-                            </p>
+                        status && (
+                            <Error className="mt-1">{status}</Error>                            
                         )
                     }
                 </form>
@@ -129,9 +105,7 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                         value={formik.values.email}
                         onChange={(e) => {
                             formik.setFieldValue("email", e.target.value);
-                            if (status.message) {
-                                setStatus({ type: "", message: "" });
-                            } 
+                            setStatus("");
                         }}
                         onBlur={formik.handleBlur}
                     />
@@ -153,15 +127,8 @@ export default function BlogNewsLetter(props : { view : boolean}) {
                         }
                     </Button>
                     {
-                        status.message && (
-                            <p
-                                className={`mt-1 text-sm! font-semibold font-sans ${status.type === "success"
-                                    ? "text-green-500"
-                                    : "text-red-500"
-                                    }`}
-                            >
-                                {status.message}
-                            </p>
+                        status && (
+                            <Error className="text-xs! mt-3">{status}</Error>                            
                         )
                     }
                 </form>                               

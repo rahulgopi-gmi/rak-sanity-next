@@ -116,7 +116,7 @@ export default async function Page() {
                                 )
                             }
 
-                            <div className="w-full h-full absolute top-0 left-0 flex flex-wrap items-end pb-6 xl:pb-4">
+                            <div className="w-full h-full absolute [@media(min-width:1366px)]:top-16 top-0 left-0 flex flex-wrap items-end pb-34">
                                 <div className="container mx-auto" data-aos="fade-up" data-aos-delay="200">
                                     <div className="mx-auto text-center uppercase aos-init aos-animate" data-aos="fade-up">
                                         {
