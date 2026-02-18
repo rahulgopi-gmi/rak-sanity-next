@@ -133,12 +133,10 @@ export default function ActivitiesTab({ keywords, activities }: ActivitiesTabPro
                                 value={tab.header ? tab.header.toLowerCase() : ""}
                                 className="flex-1 h-20.5 max-md:h-full data-[state=active]:border-b-0! border-b! group-data-[state=active]:justify-start border-[rgba(255,255,255,0.18)]! flex flex-col text-left whitespace-normal py-5 px-4! max-md:px-4 max-md:py-4 group"
                             >
-                                <span className="uppercase font-sans font-semibold max-md:leading-[100%] max-md:text-sm! group-data-[state=active]:max-md:mt-0 max-md:mt-auto">{tab.header}</span>
-                                <div className="hidden sm:block">
-                                    <p className="hidden group-data-[state=active]:block text-xs! leading-[normal] font-sans mt-0 font-normal text-lightgray text-center">
-                                        {tab.content}
-                                    </p>
-                                </div>
+                                <span className="uppercase font-sans font-semibold max-md:leading-[100%] max-md:text-sm! group-data-[state=active]:max-md:mt-0">{tab.header}</span>
+                                <p className="hidden group-data-[state=active]:block text-xs! leading-[normal] font-sans mt-0 font-normal text-lightgray text-center">
+                                    {tab.content}
+                                </p>
                             </TabsTrigger>
                         ))
                     }
