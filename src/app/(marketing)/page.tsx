@@ -1,5 +1,5 @@
 import ContactForm from "@/components/ContactForm";
-import Hero from "@/components/layout/hero/Hero";
+import Hero from "@/components/Hero";
 import PackagesDetails from "@/components/PackagesDetails";
 import PillTag from "@/components/ui/pill-tag";
 import { HomeBannerType, FeatureItem, SectionHeroType } from "@/features/application/types/sanity";
