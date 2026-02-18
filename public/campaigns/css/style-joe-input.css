@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.form-bg {
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(
+      154deg,
+      rgba(0, 0, 0, 0) -32.33%,
+      rgba(87, 82, 163, 0.4) 93.87%
+    ),
+    #000;
+}
+
+.form-bg-dollar {
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: linear-gradient(
+      154deg,
+      rgba(255, 255, 255, 0) -32.33%,
+      rgba(111, 204, 221, 0.4) 93.87%
+    ),
+    #fff;
+}
+
+.main-header-font {
+  color: #fff;
+  font-family: "Proxima Nova", sans-serif;
+  font-size: 72px;
+  font-weight: 800;
+  line-height: 62px;
+  letter-spacing: -1.8px;
+
+  /* Experimental properties */
+  leading-trim: both;
+  text-edge: cap;
+
+  /* Ensure only supported browsers apply them */
+  -webkit-leading-trim: both; /* Safari */
+  -webkit-text-edge: cap; /* Safari */
+}
+@media (min-width: 1600px) {
+  .ls-heading-mt {
+    margin-top: 130px !important;
+  }
+  .ls-box-mt {
+    margin-top: 166px !important;
+  }
+  .launch-heading-top {
+    top: 150px;
+  }
+}
+@media (max-width: 375px) {
+  .main-header-fsize {
+    font-size: 50px;
+    line-height: 50px;
+  }
+  .rt-box {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .rt-padding {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .launch-pd {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .h-width {
+    max-width: 233px;
+  }
+  .col-min-w {
+    min-width: 315px;
+  }
+}
+
+.box-bg {
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(
+      153deg,
+      rgba(0, 0, 0, 0) 16.67%,
+      rgba(87, 82, 163, 0.4) 100%
+    ),
+    #000;
+}
+
+.box-bg-dollar {
+  border-radius: 24px;
+  background: linear-gradient(
+      153deg,
+      rgba(255, 255, 255, 0) 16.67%,
+      rgba(111, 204, 221, 0.4) 100%
+    ),
+    #fff;
+}
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1200px !important;
+  }
+}

@@ -1,0 +1,24 @@
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="72" height="72" rx="36" fill="url(#paint0_linear_10165_1485)" fill-opacity="0.5"/>
+<rect x="0.5" y="0.5" width="71" height="71" rx="35.5" stroke="white" stroke-opacity="0.18"/>
+<path d="M36 49.3333V52.6666" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M36 19.3333V22.6666" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M44.333 49.3333V52.6666" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M44.333 19.3333V22.6666" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M19.333 36H22.6663" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M19.333 44.3333H22.6663" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M19.333 27.6667H22.6663" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M49.333 36H52.6663" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M49.333 44.3333H52.6663" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M49.333 27.6667H52.6663" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M27.667 49.3333V52.6666" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M27.667 19.3333V22.6666" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M46.0003 22.6667H26.0003C24.1594 22.6667 22.667 24.1591 22.667 26.0001V46.0001C22.667 47.841 24.1594 49.3334 26.0003 49.3334H46.0003C47.8413 49.3334 49.3337 47.841 49.3337 46.0001V26.0001C49.3337 24.1591 47.8413 22.6667 46.0003 22.6667Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M40.9997 29.3333H30.9997C30.0792 29.3333 29.333 30.0794 29.333 30.9999V40.9999C29.333 41.9204 30.0792 42.6666 30.9997 42.6666H40.9997C41.9201 42.6666 42.6663 41.9204 42.6663 40.9999V30.9999C42.6663 30.0794 41.9201 29.3333 40.9997 29.3333Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<defs>
+<linearGradient id="paint0_linear_10165_1485" x1="6.11321" y1="11.2075" x2="65.2075" y2="58.7547" gradientUnits="userSpaceOnUse">
+<stop stop-color="#5752A3" stop-opacity="0"/>
+<stop offset="1" stop-color="#5752A3"/>
+</linearGradient>
+</defs>
+</svg>
