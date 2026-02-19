@@ -2,11 +2,69 @@ import PillTag from "@/components/ui/pill-tag";
 import Image from "next/image";
 import styles from './styles.module.css'
 import Link from "next/link";
+import { Metadata } from "next";
+import { getSeoData } from "@/sanity/lib/seo";
+import { toPlainText } from "next-sanity";
+import { urlFor } from "@/sanity/lib/image";
+import { getPageDataOnly } from "@/lib/data";
+import { notFound } from "next/navigation";
+
+/**
+ * Generate metadata for the page.
+*/
+export async function generateMetadata(): Promise<Metadata> {
+    const slug = "privacy-policy";
+    const template = "other";
+    const seo  = await getSeoData(slug, template);
+
+    if (!seo) return {};    
+
+    const title = seo?.metaTitle;
+    const description = seo.metaDescription?.length ? toPlainText(seo.metaDescription) : undefined;
+    const ogImageUrl = urlFor(seo?.openGraphImage, { width: 1200, height: 630 });
+    const keywords = seo?.keywords?.map((k: string) => k);
+
+    return{
+      title,
+      description,
+      keywords,
+      referrer: "strict-origin-when-cross-origin",
+      robots: {
+        index: true,
+        follow: true,
+      },
+      openGraph: {
+        title,
+        description,
+        type: "website",
+        url: seo?.openGraphUrl,
+        images: ogImageUrl ? [{ url: ogImageUrl }] : []        
+      },
+      twitter: {
+          card: "summary_large_image",
+          title,
+          description,
+          images: ogImageUrl ? [ogImageUrl] : [],
+      },
+      other: seo?.facebookAppId
+        ? {
+            "fb:app_id": seo.facebookAppId,
+          }
+        : undefined        
+    } satisfies Metadata;
+}
 
 /**
  * Page Component
 */
 export default async function Page() {
+    const slug = "privacy-policy";
+    const template = "other";
+    const data = await getPageDataOnly(slug, template);
+    if (!data) return notFound();
+    const section = data?.sections?.[0];   
+    if (!section) return notFound();
+
     return(
         <main className="w-full">
             <div className="w-full h-100 relative hidden md:block bg-black">
