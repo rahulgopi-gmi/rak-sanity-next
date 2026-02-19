@@ -16,6 +16,7 @@ import { Error } from "@/components/ui/error";
 import { Spinner } from "@/components/ui/spinner";
 import type { CountryData } from "react-phone-input-2";
 
+
 type CampaignsFormTYPE = {
     mode?: string;
 }
@@ -135,9 +136,9 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
             onSubmit={formik.handleSubmit} 
             className="flex justify-center lg:justify-end"
         >
-            <div className="w-full max-w-[588px] mr-0 rounded-3xl form-bg p-8 shadow-xl py-14 sm:px-[38px] px-[30px]">
+            <div className="w-full max-w-147 mr-0 rounded-3xl form-bg p-8 shadow-xl py-14 sm:px-9.5 px-7.5">
                 <div className="mb-8 w-full">
-                    <Label size="sm" className="font-semibold">Your Name</Label>
+                    <Label size="sm" className="font-semibold" htmlFor="first_name">Your Name</Label>
                     <Input
                         type="text"
                         placeholder="Your Name"
@@ -156,7 +157,7 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                 </div>
 
                 <div className="mb-8 w-full campaigns-form-phone">
-                    <Label size="sm" className="font-semibold">Your Phone Number</Label>
+                    <Label size="sm" className="font-semibold" htmlFor="phone_number">Your Phone Number</Label>
                     <div className="w-full flex gap-1">
                         <div className="w-32">
                             <PhoneInput
@@ -185,6 +186,7 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                                     fontSize: "16px",
                                     pointerEvents: "none"
                                 }}
+                                buttonClass="[&_.country-list_.search]:bg-white"
                                 buttonStyle={{
                                     background: "transparent",
                                     border: "0",
@@ -199,7 +201,8 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                         </div>
 
                         <div className="w-full">
-                            <Input                                
+                            <Input   
+                            id="phone_number"                             
                                 type="tel"
                                 placeholder="Enter Phone Number"
                                 value={formik.values.phone}
@@ -222,7 +225,7 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                 </div>
 
                 <div className="mb-8 w-full">
-                    <Label size="sm" className="font-semibold">Your Email Address</Label>
+                    <Label size="sm" className="font-semibold" htmlFor="email">Your Email Address</Label>
                     <Input
                         type="email" 
                         name="email"
@@ -241,8 +244,9 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                 </div>
                                 
                 <div className="mb-8 w-full">
-                    <Label size="sm" className="font-semibold">Business Activity</Label>
+                    <Label size="sm" className="font-semibold" htmlFor="business_activity">Business Activity</Label>
                     <Input
+                    id="business_activity"
                         type="text"
                         name="business_activity"
                         value={formik.values.business_activity}
@@ -267,18 +271,17 @@ export default function CampaignsForm({ mode } : CampaignsFormTYPE){
                         and&nbsp;
                         <Link href="/privacy-policy" className={` ${mode === "dark" ? "hover:text-primary/80" : "hover:text-[#32a0b9]"} text-primary inline-block font-sans text-[12px] font-normal leading-[22.4px]! underline`}>
                             Privacy Policy
-                        </Link> 
-                        of INC. You consent to INC collecting your name, email address, phone number
+                        </Link> of INC. You consent to INC collecting your name, email address, phone number
                         and contacting you either by the email address or phone number supplied.
                     </p>
                 </div>
             
-                <div className="flex justify-center max-md:justify-start items-center gap-5 md:justify-start mt-4">
+                <div className="flex max-md:justify-center items-center gap-5 md:justify-start mt-4">
                     <Button type="submit" disabled={formik.isSubmitting}>Submit</Button>        
                     {
                         formik.isSubmitting &&
                         (
-                            <div id="loader" className="w-[30px]">
+                            <div id="loader" className="w-7.5">
                                 <Spinner />
                             </div>
                         )
